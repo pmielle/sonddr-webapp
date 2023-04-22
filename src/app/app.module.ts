@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IdeasViewComponent } from './views/ideas-view/ideas-view.component';
+import { HomeViewComponent } from './views/home-view/home-view.component';
 import { LoginViewComponent } from './views/login-view/login-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -15,7 +15,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 @NgModule({
   declarations: [
     AppComponent,
-    IdeasViewComponent,
+    HomeViewComponent,
     LoginViewComponent
   ],
   imports: [
