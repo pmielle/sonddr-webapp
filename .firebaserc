@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sonddr-23d8b": {
+      "hosting": {
+        "sonddr-webapp": [
+          "sonddr-23d8b"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sonddr-23d8b"
+  }
+}
