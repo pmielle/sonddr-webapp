@@ -1,3 +1,4 @@
+<app-status-bar></app-status-bar>
 <app-tab-icons [tabs]="tabs" [(selected)]="selectedTab"></app-tab-icons>
 <div id="tabs">
     <div *ngFor="let tab of tabs" class="tab" [class.selected]="tab.name == selectedTab.name">

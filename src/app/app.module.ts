@@ -16,6 +16,8 @@ import { SearchViewComponent } from './views/search-view/search-view.component';
 import { MessagesViewComponent } from './views/messages-view/messages-view.component';
 import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
 import { MatIconModule } from '@angular/material/icon';
+import { StatusBarComponent } from './components/status-bar/status-bar.component';
+import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { MatIconModule } from '@angular/material/icon';
     IdeasViewComponent,
     SearchViewComponent,
     MessagesViewComponent,
-    NotificationsViewComponent
+    NotificationsViewComponent,
+    StatusBarComponent,
+    ProfilePictureComponent
   ],
   imports: [
     BrowserModule,
