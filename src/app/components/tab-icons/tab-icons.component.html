@@ -1,4 +1,6 @@
-<div class="tab-icon" *ngFor="let tab of tabs" (click)="selectedChange.next(tab)">
-    <mat-icon>{{ tab.icon }}</mat-icon>
-    <span>{{ tab.name }}</span>
+<div id="tab-icons" class="flex column gap">
+    <div class="tab-icon" class="flex column small-gap" *ngFor="let tab of tabs" (click)="selectedChange.next(tab)">
+        <mat-icon>{{ tab.icon }}</mat-icon>
+        <span>{{ tab.name }}</span>
+    </div>
 </div>
