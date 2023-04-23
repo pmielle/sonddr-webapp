@@ -1,6 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Goal } from 'src/app/interfaces/goal';
-import { DatabaseService } from 'src/app/services/database.service';
+import { Tab } from 'src/app/interfaces/tab';
+import { IdeasViewComponent } from '../ideas-view/ideas-view.component';
+import { SearchViewComponent } from '../search-view/search-view.component';
+import { MessagesViewComponent } from '../messages-view/messages-view.component';
+import { NotificationsViewComponent } from '../notifications-view/notifications-view.component';
 
 @Component({
   selector: 'app-ideas-view',
@@ -11,15 +14,19 @@ export class HomeViewComponent {
   
   // dependencies
   // --------------------------------------------
-  db = inject(DatabaseService);
+  // ...
 
   // attributes
   // --------------------------------------------
-  goals?: Goal[];
+  tabs: Tab[] = [
+    {name: "Ideas", icon: "lightbulb", component: IdeasViewComponent},
+    {name: "Search", icon: "search", component: SearchViewComponent},
+    {name: "Messages", icon: "chat_bubble", component: MessagesViewComponent},
+    {name: "Notifications", icon: "notifications", component: NotificationsViewComponent},
+  ];
+  selectedTab: Tab = this.tabs[0];
 
   // lifecycle hooks
   // --------------------------------------------
-  constructor() {
-    this.db.getGoals().then((goals) => this.goals = goals);
-  }
+  constructor() { }
 }

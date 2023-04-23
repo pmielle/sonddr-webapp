@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
@@ -11,12 +10,24 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
+import { TabIconsComponent } from './components/tab-icons/tab-icons.component';
+import { IdeasViewComponent } from './views/ideas-view/ideas-view.component';
+import { SearchViewComponent } from './views/search-view/search-view.component';
+import { MessagesViewComponent } from './views/messages-view/messages-view.component';
+import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeViewComponent,
-    LoginViewComponent
+    LoginViewComponent,
+    TabIconsComponent,
+    IdeasViewComponent,
+    SearchViewComponent,
+    MessagesViewComponent,
+    NotificationsViewComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +36,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

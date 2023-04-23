@@ -1,0 +1,7 @@
+#tabs {
+
+    .tab:not(.selected) {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
