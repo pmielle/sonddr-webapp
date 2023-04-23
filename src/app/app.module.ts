@@ -18,7 +18,9 @@ import { NotificationsViewComponent } from './views/notifications-view/notificat
 import { MatIconModule } from '@angular/material/icon';
 import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
-
+import { FabComponent } from './components/fab/fab.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
     MessagesViewComponent,
     NotificationsViewComponent,
     StatusBarComponent,
-    ProfilePictureComponent
+    ProfilePictureComponent,
+    FabComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,8 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     MatIconModule,
+    MatButtonModule,
+    MatRippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
-<div id="tab-icons" class="flex column gap">
-    <div class="tab-icon" class="flex column small-gap" *ngFor="let tab of tabs" (click)="selectedChange.next(tab)">
+<div id="tab-icons" class="flex column large-gap">
+    <div *ngFor="let tab of tabs" (click)="selectedChange.next(tab)" class="tab-icon pointer flex column small-gap" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
         <mat-icon>{{ tab.icon }}</mat-icon>
         <span>{{ tab.name }}</span>
     </div>
