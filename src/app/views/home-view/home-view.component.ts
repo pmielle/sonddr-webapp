@@ -19,10 +19,10 @@ export class HomeViewComponent {
   // attributes
   // --------------------------------------------
   tabs: Tab[] = [
-    {name: "Ideas", icon: "lightbulb", component: IdeasViewComponent},
-    {name: "Search", icon: "search", component: SearchViewComponent},
-    {name: "Messages", icon: "forum", component: MessagesViewComponent},
-    {name: "Notifications", icon: "notifications", component: NotificationsViewComponent},
+    {name: "ideas", icon: "lightbulb", component: IdeasViewComponent},
+    {name: "search", icon: "search", component: SearchViewComponent},
+    {name: "messages", icon: "forum", component: MessagesViewComponent},
+    {name: "notifications", icon: "notifications", component: NotificationsViewComponent},
   ];
   selectedTab: Tab = this.tabs[0];
 

@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet"/>
 <div id="tab-icons" class="flex column large-gap">
-    <div *ngFor="let tab of tabs" (click)="selectedChange.next(tab)" class="tab-icon pointer flex column small-gap" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
-        <mat-icon [fontSet]="selected.name == tab.name ? 'material-icons' : 'material-icons-outlined'">{{ tab.icon }}</mat-icon>
-        <span>{{ tab.name }}</span>
+    <div *ngFor="let tab of tabs" (click)="selectedChange.next(tab)" class="tab-icon pointer flex column small-gap" [class.selected]="selected == tab" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+        <mat-icon [fontSet]="selected == tab ? 'material-icons' : 'material-icons-outlined'">{{ tab.icon }}</mat-icon>
+        <span class="label">{{ tab.name }}</span>
     </div>
 </div>

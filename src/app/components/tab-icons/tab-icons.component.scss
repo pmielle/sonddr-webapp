@@ -1,0 +1,5 @@
+.tab-icon {
+    width: 100px;
+
+    &:not(.selected) .label { font-weight: lighter; }
+}
