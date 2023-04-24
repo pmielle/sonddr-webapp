@@ -21,7 +21,7 @@ export class HomeViewComponent {
   tabs: Tab[] = [
     {name: "Ideas", icon: "lightbulb", component: IdeasViewComponent},
     {name: "Search", icon: "search", component: SearchViewComponent},
-    {name: "Messages", icon: "chat_bubble", component: MessagesViewComponent},
+    {name: "Messages", icon: "forum", component: MessagesViewComponent},
     {name: "Notifications", icon: "notifications", component: NotificationsViewComponent},
   ];
   selectedTab: Tab = this.tabs[0];
