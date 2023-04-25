@@ -1,8 +1,9 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Auth, User, user, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable, map, tap } from 'rxjs';
+import { Observable, from, map, switchMap, tap } from 'rxjs';
 import { IUser } from '../interfaces/i-user';
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,13 @@ export class AuthenticationService implements OnDestroy {
   // --------------------------------------------
   router = inject(Router);
   auth = inject(Auth);
+  db = inject(DatabaseService);
 
   // attributes
   // --------------------------------------------
   user$: Observable<IUser|undefined> = user(this.auth).pipe(
     tap((user) => this._onFirebaseUserChange(user)),
-    map((user) => this._firebaseUserToIUser(user))
+    switchMap((user) => from(this._firebaseUserToIUser(user)))
   );
 
   // lifecycle hooks
@@ -32,12 +34,14 @@ export class AuthenticationService implements OnDestroy {
     signInWithPopup(this.auth, new GoogleAuthProvider());
   }
 
-  _firebaseUserToIUser(user: User|null): IUser|undefined {
+  async _firebaseUserToIUser(user: User|null): Promise<IUser|undefined> {
     if (user) {
-      return {
-        id: user.uid,
-        name: user.displayName || user.uid,
-      } as IUser;
+      let existingUser = await this.db.getUser(user.uid);
+      if (existingUser) {        
+        return existingUser;
+      } else {
+        return this.db.createUser(user.uid, user.displayName || user.uid);
+      }
     } else {
       return undefined;
     }
