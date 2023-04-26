@@ -37,7 +37,9 @@ export class HomeViewComponent implements OnDestroy {
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
-    this.notificationsSub = this.notifications$.subscribe((x) => console.log(x) );
+    this.notificationsSub = this.notifications$.subscribe(
+      (notifications) => this._onNotificationsChange(notifications)
+    );
   }
 
   ngOnDestroy() {
@@ -46,6 +48,20 @@ export class HomeViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  _onNotificationsChange(notifications: INotification[]) {
+    let tab = this.tabs.find((t) => t.name == "notifications");
+    if (tab == undefined) {
+      console.error("\"notifications\" tab not found: cannot update its badge");
+      return;
+    }
+    tab.badge = this._toBadge(notifications.length)
+  }
+
+  _toBadge(n: number): string {
+    if (n > 99) { return "99+" }
+    return `${n}`;
+  }
+
   _getNotifications(): Observable<INotification[]> {
     return this.auth.user$.pipe(
       switchMap((user) => {
