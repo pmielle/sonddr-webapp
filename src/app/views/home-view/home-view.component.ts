@@ -54,7 +54,8 @@ export class HomeViewComponent implements OnDestroy {
       console.error("\"notifications\" tab not found: cannot update its badge");
       return;
     }
-    tab.badge = this._toBadge(notifications.length)
+    let n = notifications.length
+    tab.badge = n > 0 ? this._toBadge(n) : undefined;
   }
 
   _toBadge(n: number): string {

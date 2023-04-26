@@ -3,7 +3,7 @@
     <div *ngFor="let tab of tabs" (click)="selectedChange.next(tab)" class="tab-icon pointer flex column small-gap" [class.selected]="selected == tab" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
         <div class="icon-container flex">
             <mat-icon [fontSet]="selected == tab ? 'material-icons' : 'material-icons-outlined'">{{ tab.icon }}</mat-icon>
-            <span *ngIf="tab.badge" class="badge mat-caption">{{ tab.badge }}</span>
+            <span *ngIf="tab.badge" @fadeSlideInOut class="badge mat-caption">{{ tab.badge }}</span>
         </div>
         <span class="label">{{ tab.name }}</span>
     </div>
