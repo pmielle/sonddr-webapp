@@ -1,6 +1,6 @@
 <div class="flex align-start">
     <div class="left-column flex column large-gap">
-        <div class="logo pointer bg contain" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32"></div>
+        <div class="logo pointer bg contain" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" (click)="onLogoClick()"></div>
         <app-tab-icons [tabs]="tabs" [(selected)]="selectedTab"></app-tab-icons>
         <app-fab></app-fab>
     </div>

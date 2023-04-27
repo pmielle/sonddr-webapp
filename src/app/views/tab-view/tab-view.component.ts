@@ -6,10 +6,10 @@ import { MessagesViewComponent } from '../messages-view/messages-view.component'
 import { NotificationsViewComponent } from '../notifications-view/notifications-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { Observable, Subscription, firstValueFrom, of, switchMap } from 'rxjs';
+import { Observable, Subscription, filter, firstValueFrom, of, switchMap } from 'rxjs';
 import { INotification } from 'src/app/interfaces/i-notification';
 import { Discussion } from 'src/app/interfaces/discussion';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ideas-view',
@@ -32,11 +32,13 @@ export class TabViewComponent implements OnDestroy {
     {name: "messages", icon: "forum", component: MessagesViewComponent},
     {name: "notifications", icon: "notifications", component: NotificationsViewComponent},
   ];
-  selectedTab: Tab = this.tabs[0];
+  defaultTab = this.tabs[0];
+  selectedTab = this.defaultTab;
   notifications$ = this._getNotifications();
   notificationsSub: Subscription;
   discussions$ = this._getDiscussions();
   discussionsSub: Subscription;
+  routerSub: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -48,15 +50,24 @@ export class TabViewComponent implements OnDestroy {
     this.discussionsSub = this.discussions$.subscribe(
       (discussions) => this._updateBadge("messages", discussions.length)
     );
+    this.routerSub = this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((_) => {
+      this.selectedTab = this.defaultTab;
+    });
   }
 
   ngOnDestroy() {
     this.notificationsSub.unsubscribe();
     this.discussionsSub.unsubscribe();
+    this.routerSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  onLogoClick() {
+    this.router.navigate(["/"]);
+    this.selectedTab = this.defaultTab;
+  }
+
   _redirectIfNotLoggedIn() {
     firstValueFrom(this.auth.user$).then((user) => {
       if (!user) {
