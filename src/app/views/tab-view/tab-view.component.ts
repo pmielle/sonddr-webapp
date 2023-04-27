@@ -6,9 +6,10 @@ import { MessagesViewComponent } from '../messages-view/messages-view.component'
 import { NotificationsViewComponent } from '../notifications-view/notifications-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { Observable, Subscription, of, switchMap } from 'rxjs';
+import { Observable, Subscription, firstValueFrom, of, switchMap } from 'rxjs';
 import { INotification } from 'src/app/interfaces/i-notification';
 import { Discussion } from 'src/app/interfaces/discussion';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ideas-view',
@@ -21,6 +22,7 @@ export class TabViewComponent implements OnDestroy {
   // --------------------------------------------
   auth = inject(AuthenticationService);
   db = inject(DatabaseService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -39,6 +41,7 @@ export class TabViewComponent implements OnDestroy {
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
+    this._redirectIfNotLoggedIn();
     this.notificationsSub = this.notifications$.subscribe(
       (notifications) => this._updateBadge("notifications", notifications.length)
     );
@@ -54,6 +57,14 @@ export class TabViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  _redirectIfNotLoggedIn() {
+    firstValueFrom(this.auth.user$).then((user) => {
+      if (!user) {
+        this.router.navigate(["login"])
+      }
+    })
+  }
+
   _updateBadge(name: string, n: number) {
     let tab = this.tabs.find((t) => t.name == name);
     if (tab == undefined) {
