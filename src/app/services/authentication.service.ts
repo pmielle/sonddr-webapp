@@ -49,7 +49,7 @@ export class AuthenticationService implements OnDestroy {
 
   _onFirebaseUserChange(user: User|null) {
     if (user) {
-      this.router.navigate(["ideas"]);
+      this.router.navigate([""]);
     } else {
       this.router.navigate(["login"]);
     }

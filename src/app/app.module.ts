@@ -21,6 +21,9 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
 import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { GoalViewComponent } from './views/goal-view/goal-view.component';
+import { DiscussionViewComponent } from './views/discussion-view/discussion-view.component';
+import { HomeViewComponent } from './views/home-view/home-view.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { MatRippleModule } from '@angular/material/core';
     NotificationsViewComponent,
     StatusBarComponent,
     ProfilePictureComponent,
-    FabComponent
+    FabComponent,
+    GoalViewComponent,
+    DiscussionViewComponent,
+    HomeViewComponent
   ],
   imports: [
     BrowserModule,
