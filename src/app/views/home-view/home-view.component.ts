@@ -6,9 +6,9 @@ import { MessagesViewComponent } from '../messages-view/messages-view.component'
 import { NotificationsViewComponent } from '../notifications-view/notifications-view.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { Observable, Subscription, of, pipe, switchMap } from 'rxjs';
-import { IUser } from 'src/app/interfaces/i-user';
+import { Observable, Subscription, of, switchMap } from 'rxjs';
 import { INotification } from 'src/app/interfaces/i-notification';
+import { Discussion } from 'src/app/interfaces/discussion';
 
 @Component({
   selector: 'app-ideas-view',
@@ -33,28 +33,33 @@ export class HomeViewComponent implements OnDestroy {
   selectedTab: Tab = this.tabs[0];
   notifications$ = this._getNotifications();
   notificationsSub: Subscription;
+  discussions$ = this._getDiscussions();
+  discussionsSub: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
     this.notificationsSub = this.notifications$.subscribe(
-      (notifications) => this._onNotificationsChange(notifications)
+      (notifications) => this._updateBadge("notifications", notifications.length)
+    );
+    this.discussionsSub = this.discussions$.subscribe(
+      (discussions) => this._updateBadge("messages", discussions.length)
     );
   }
 
   ngOnDestroy() {
     this.notificationsSub.unsubscribe();
+    this.discussionsSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
-  _onNotificationsChange(notifications: INotification[]) {
-    let tab = this.tabs.find((t) => t.name == "notifications");
+  _updateBadge(name: string, n: number) {
+    let tab = this.tabs.find((t) => t.name == name);
     if (tab == undefined) {
-      console.error("\"notifications\" tab not found: cannot update its badge");
+      console.error(`${name} tab not found: cannot update its badge`);
       return;
     }
-    let n = notifications.length
     tab.badge = n > 0 ? this._toBadge(n) : undefined;
   }
 
@@ -68,6 +73,18 @@ export class HomeViewComponent implements OnDestroy {
       switchMap((user) => {
         if (user) {
           return this.db.getNotifications(user.id);
+        } else {
+          return of([]);
+        }
+      })
+    );
+  }
+
+  _getDiscussions(): Observable<Discussion[]> {
+    return this.auth.user$.pipe(
+      switchMap((user) => {
+        if (user) {
+          return this.db.getDiscussions(user.id);
         } else {
           return of([]);
         }

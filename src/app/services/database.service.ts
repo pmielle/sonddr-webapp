@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
-import { Observable, firstValueFrom, of } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
 import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
 import { CollectionReference } from '@angular/fire/firestore';
+import { Discussion } from '../interfaces/discussion';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,10 @@ export class DatabaseService {
     return this._setDocument<IUser>(userDoc, payload);
   }
 
+  getDiscussions(userId: string): Observable<Discussion[]> {
+    return this._streamCollection<Discussion>(query(collection(this.firestore, `discussions`), where("userIds", "array-contains", userId)));
+  }
+
   getNotifications(userId: string): Observable<INotification[]> {
     return this._streamCollection<INotification>(collection(this.firestore, `users/${userId}/notifications`));
   }
@@ -71,7 +76,7 @@ export class DatabaseService {
     return await firstValueFrom(data$) as T;
   }
 
-  _streamCollection<T>(icollection: CollectionReference): Observable<T[]> {
+  _streamCollection<T>(icollection: Query): Observable<T[]> {
     return collectionData(icollection, {idField: "id"}) as Observable<T[]>;
   }
 
