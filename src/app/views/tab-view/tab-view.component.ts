@@ -12,10 +12,10 @@ import { Discussion } from 'src/app/interfaces/discussion';
 
 @Component({
   selector: 'app-ideas-view',
-  templateUrl: './home-view.component.html',
-  styleUrls: ['./home-view.component.scss']
+  templateUrl: './tab-view.component.html',
+  styleUrls: ['./tab-view.component.scss']
 })
-export class HomeViewComponent implements OnDestroy {
+export class TabViewComponent implements OnDestroy {
   
   // dependencies
   // --------------------------------------------

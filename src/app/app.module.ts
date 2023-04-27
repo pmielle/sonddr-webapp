@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeViewComponent } from './views/home-view/home-view.component';
+import { TabViewComponent } from './views/tab-view/tab-view.component';
 import { LoginViewComponent } from './views/login-view/login-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -25,7 +25,7 @@ import { MatRippleModule } from '@angular/material/core';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeViewComponent,
+    TabViewComponent,
     LoginViewComponent,
     TabIconsComponent,
     IdeasViewComponent,
