@@ -1,12 +1,12 @@
 <div id="container" class="flex align-start">
     <div id="left-column" class="flex column large-gap">
         <div class="logo pointer bg contain" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" (click)="onLogoClick()"></div>
-        <app-tab-icons [tabs]="tabs" [(selected)]="selectedTab"></app-tab-icons>
+        <app-tab-icons></app-tab-icons>
         <app-fab></app-fab>
     </div>
     <div id="tabs">
-        <div *ngFor="let tab of tabs" class="tab" [class.selected]="tab.name == selectedTab.name">
-            <ng-template [ngComponentOutlet]="tab.component"></ng-template>
+        <div *ngFor="let t of this.tab.tabs" class="tab" [class.selected]="t.name == this.tab.selectedTab.name">
+            <ng-template [ngComponentOutlet]="t.component"></ng-template>
         </div>
     </div>
 </div>

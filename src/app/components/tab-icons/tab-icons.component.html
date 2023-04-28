@@ -1,10 +1,10 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet"/>
 <div id="container" class="flex column large-gap">
-    <div *ngFor="let tab of tabs" (click)="selectedChange.next(tab)" class="tab-icon pointer flex column small-gap" [class.selected]="selected == tab" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+    <div *ngFor="let t of this.tab.tabs" (click)="onTabIconClick(t)" class="tab-icon pointer flex column small-gap" [class.selected]="t == this.tab.selectedTab" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
         <div class="icon-container flex">
-            <mat-icon [fontSet]="selected == tab ? 'material-icons' : 'material-icons-outlined'">{{ tab.icon }}</mat-icon>
-            <span *ngIf="tab.badge" @fadeSlideInOut class="badge mat-caption">{{ tab.badge }}</span>
+            <mat-icon [fontSet]="t == this.tab.selectedTab ? 'material-icons' : 'material-icons-outlined'">{{ t.icon }}</mat-icon>
+            <span *ngIf="t.badge" @fadeSlideInOut class="badge mat-caption">{{ t.badge }}</span>
         </div>
-        <span class="label">{{ tab.name }}</span>
+        <span class="label">{{ t.name }}</span>
     </div>
 </div>

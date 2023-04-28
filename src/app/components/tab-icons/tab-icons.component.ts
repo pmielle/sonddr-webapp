@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { fadeSlideInOut } from 'src/app/animations/in-out';
 import { Tab } from 'src/app/interfaces/tab';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-tab-icons',
@@ -12,13 +13,21 @@ import { Tab } from 'src/app/interfaces/tab';
 })
 export class TabIconsComponent {
 
+  // dependencies
+  // --------------------------------------------
+  tab = inject(TabService);
+
   // attributes
   // --------------------------------------------
-  @Input('tabs') tabs!: Tab[];
-  @Input() selected!: Tab;
-  @Output() selectedChange = new EventEmitter<Tab>();
+  // ...
+
+  // lifecycle hooks
+  // --------------------------------------------
+  // ...
 
   // methods
   // --------------------------------------------
-  // ...
+  onTabIconClick(tab: Tab) {
+    this.tab.selectedTab = tab;
+  }
 }
