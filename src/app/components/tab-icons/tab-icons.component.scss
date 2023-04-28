@@ -1,5 +1,5 @@
 .tab-icon {
-    width: 100px;
+    width: 90px;
 
     &:not(.selected) .label { font-weight: lighter; }
 
@@ -20,3 +20,20 @@
         }
     }
 }
+
+// responsive
+// ----------------------------------------------
+
+// small screens
+@media only screen and (max-width: 700px) {
+    #container {
+        width: 100vw;
+        flex-direction: row;
+        gap: 0px;
+        justify-content: space-between;
+    }
+}
+
+// large screens
+@media only screen and (min-width: 1200px) { }
+

@@ -12,7 +12,7 @@ import { Discussion } from 'src/app/interfaces/discussion';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-ideas-view',
+  selector: 'app-tab-view',
   templateUrl: './tab-view.component.html',
   styleUrls: ['./tab-view.component.scss']
 })
