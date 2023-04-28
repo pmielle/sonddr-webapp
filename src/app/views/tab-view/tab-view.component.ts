@@ -44,15 +44,9 @@ export class TabViewComponent implements OnDestroy {
   // --------------------------------------------
   constructor() {
     this._redirectIfNotLoggedIn();
-    this.notificationsSub = this.notifications$.subscribe(
-      (notifications) => this._updateBadge("notifications", notifications.length)
-    );
-    this.discussionsSub = this.discussions$.subscribe(
-      (discussions) => this._updateBadge("messages", discussions.length)
-    );
-    this.routerSub = this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((_) => {
-      this.selectedTab = this.defaultTab;
-    });
+    this.notificationsSub = this._onNotificationsChange();
+    this.discussionsSub = this._onDiscussionsChange();
+    this.routerSub = this._onRouteChange();
   }
 
   ngOnDestroy() {
@@ -66,6 +60,24 @@ export class TabViewComponent implements OnDestroy {
   onLogoClick() {
     this.router.navigate(["/"]);
     this.selectedTab = this.defaultTab;
+  }
+
+  _onNotificationsChange(): Subscription {
+    return this.notifications$.subscribe(
+      (notifications) => this._updateBadge("notifications", notifications.length)
+    );
+  }
+
+  _onDiscussionsChange(): Subscription {
+    return this.discussions$.subscribe(
+      (discussions) => this._updateBadge("messages", discussions.length)
+    );
+  }
+
+  _onRouteChange(): Subscription {
+    return this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((_) => {
+      this.selectedTab = this.defaultTab;
+    });
   }
 
   _redirectIfNotLoggedIn() {
