@@ -11,7 +11,7 @@ let ideaTab: Tab = {
   name: "ideas", 
   icon: "lightbulb", 
   component: IdeasViewComponent, 
-  fab: {icon: "add", color: "red", label: "Share\nan idea"},
+  fab: {icon: "add", color: "var(--primary-color)", label: "Share\nan idea"},
 }
 
 let searchTab: Tab = {
