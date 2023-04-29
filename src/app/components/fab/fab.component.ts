@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FabMode } from 'src/app/interfaces/fab-mode';
+import { FabService } from 'src/app/services/fab.service';
 
 @Component({
   selector: 'app-fab',
@@ -10,15 +11,11 @@ export class FabComponent {
 
   // dependencies
   // --------------------------------------------
-  // ...
+  fab = inject(FabService);
 
   // attributes
   // --------------------------------------------
-  mode: FabMode|undefined = {
-    color: "red",
-    label: "Share<br> an idea",
-    icon: "add"
-  };
+  // ...
 
   // lifecycle hooks
   // --------------------------------------------
