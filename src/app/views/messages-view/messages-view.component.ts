@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { messagesTab } from 'src/app/interfaces/tab';
+import { FabService } from 'src/app/services/fab.service';
 
 @Component({
   selector: 'app-messages-view',

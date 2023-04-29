@@ -18,6 +18,7 @@ export class FabService implements OnDestroy {
   // attributes
   // --------------------------------------------
   tabStacks: { [tab: string]: (FabMode|undefined)[] } = {};
+  defaultTab = this.tab.defaultTab;
   routerSub: Subscription;
 
   // lifecycle hooks
@@ -33,10 +34,23 @@ export class FabService implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  setModeStack(mode: FabMode|undefined, tab?: Tab) {  // hypothesis: tabStacks are always init with only 1 element
-    if (tab === undefined) {
-      tab = this.tab.defaultTab;
+  pushToModeStack(mode: FabMode|undefined, tab?: Tab) {
+    tab = tab || this.defaultTab;
+    this.tabStacks[tab.name].push(mode);
+  }
+
+  popModeStack(tab?: Tab) {
+    tab = tab || this.defaultTab;
+    let stack = this.tabStacks[tab.name];
+    if (stack.length <= 1) {
+      console.error(`Cannot .pop ${tab.name}: its modeStack is already a single element`);
+      return;
     }
+    stack.pop();
+  }
+
+  setModeStack(mode: FabMode|undefined, tab?: Tab) {  // hypothesis: tabStacks are always init with only 1 element
+    tab = tab || this.defaultTab;
     this.tabStacks[tab.name] = [mode];
   }
 

@@ -7,12 +7,12 @@ export interface FabMode {
 export let homeMode: FabMode = {
     icon: "add",
     color: "var(--primary-color)",
-    label: "Share\nan idea",
+    label: "Share<br>an idea",
 };
 
 export let goalMode: FabMode = {
     icon: "add",
     color: "green",
     //color: "var(--primary-color)",
-    label: "Share\nan idea",
+    label: "Share<br>an idea",
 };
