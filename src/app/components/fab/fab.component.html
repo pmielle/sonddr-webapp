@@ -1,6 +1,6 @@
-<div id="container" *ngIf="this.fab.mode as mode" class="flex column small-gap">
-    <button [style.backgroundColor]="mode.color" mat-fab>
+<div id="container" class="flex column small-gap">
+    <button *ngIf="this.fab.mode as mode" [style.backgroundColor]="mode.color" mat-fab @fadeSlideInOut>
         <mat-icon>{{ mode.icon }}</mat-icon>
     </button>
-    <div id="label" [style.color]="mode.color" [innerHTML]="mode.label"></div>
+    <div *ngIf="this.fab.mode as mode" id="label" [style.color]="mode.color" [innerHTML]="mode.label"></div>
 </div>

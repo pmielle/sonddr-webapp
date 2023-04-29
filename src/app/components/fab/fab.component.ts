@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { FabMode } from 'src/app/interfaces/fab-mode';
+import { fadeSlideInOut } from 'src/app/animations/in-out';
 import { FabService } from 'src/app/services/fab.service';
 
 @Component({
   selector: 'app-fab',
   templateUrl: './fab.component.html',
-  styleUrls: ['./fab.component.scss']
+  styleUrls: ['./fab.component.scss'],
+  animations: [fadeSlideInOut],
 })
 export class FabComponent {
 

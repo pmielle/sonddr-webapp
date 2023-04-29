@@ -1,8 +1,8 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet"/>
 <div id="container" class="flex column large-gap">
-    <div *ngFor="let t of this.tab.tabs" (click)="onTabIconClick(t)" class="tab-icon pointer flex column small-gap" [class.selected]="t == this.tab.selectedTab" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+    <div *ngFor="let t of this.tab.tabs" (click)="onTabIconClick(t)" class="tab-icon pointer flex column small-gap" [class.selected]="t == (this.tab.selectedTab | async)" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
         <div class="icon-container flex">
-            <mat-icon [fontSet]="t == this.tab.selectedTab ? 'material-icons' : 'material-icons-outlined'">{{ t.icon }}</mat-icon>
+            <mat-icon [fontSet]="t == (this.tab.selectedTab | async) ? 'material-icons' : 'material-icons-outlined'">{{ t.icon }}</mat-icon>
             <span *ngIf="t.badge" @fadeSlideInOut class="badge mat-caption">{{ t.badge }}</span>
         </div>
         <span class="label">{{ t.name }}</span>
