@@ -1,7 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
-import { Observable, Subscription, filter, firstValueFrom, of, switchMap } from 'rxjs';
+import { Observable, Subscription, firstValueFrom, of, switchMap } from 'rxjs';
 import { INotification } from 'src/app/interfaces/i-notification';
 import { Discussion } from 'src/app/interfaces/discussion';
 import { Router } from '@angular/router';
@@ -45,7 +45,7 @@ export class TabViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   onLogoClick() {
-    if (this.tab.selectedTab.getValue() !== this.tab.defaultTab) {
+    if (this.tab.selectedTab !== this.tab.defaultTab) {
       this.tab.goToTab(this.tab.defaultTab);
     }
     this.router.navigate(["/"]);

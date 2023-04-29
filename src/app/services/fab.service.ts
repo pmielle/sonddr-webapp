@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { FabMode, goalMode, homeMode } from '../interfaces/fab-mode';
 import { TabService } from './tab.service';
-import { BehaviorSubject, Subscription, filter, map } from 'rxjs';
+import { Subscription, filter, map } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class FabService implements OnDestroy {
 
   // attributes
   // --------------------------------------------
-  tabStacks = new BehaviorSubject<{ [tab: string]: FabMode[] }>({});
+  tabStacks: { [tab: string]: (FabMode|undefined)[] } = {};
   routerSub: Subscription;
 
   // lifecycle hooks
@@ -49,20 +49,16 @@ export class FabService implements OnDestroy {
           console.error(`Unexpected route ${e.urlAfterRedirects}: cannot set the correct fab mode`);
           newMode = undefined;
       }
-      let value = this.tabStacks.getValue();
-      value[this.tab.defaultTab.name] = newMode ? [newMode] : [];
-      this.tabStacks.next(value);
+      this.tabStacks[this.tab.defaultTab.name] = [newMode];
     });
   }
 
   _initTabStacks() {
-    let value = this.tabStacks.getValue();
     this.tab.tabs.forEach((t) => {
-      value[t.name] = [];
+      this.tabStacks[t.name] = [];
       if (t.fab) {
-        value[t.name].push(t.fab);
+        this.tabStacks[t.name].push(t.fab);
       }
     });
-    this.tabStacks.next(value);
   }
 }

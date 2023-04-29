@@ -28,7 +28,7 @@ export class TabIconsComponent {
   // methods
   // --------------------------------------------
   onTabIconClick(tab: Tab) {
-    if (this.tab.selectedTab.getValue() !== tab) {
+    if (this.tab.selectedTab !== tab) {
       this.tab.goToTab(tab);
       return;
     }

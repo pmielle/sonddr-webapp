@@ -4,7 +4,7 @@ import { IdeasViewComponent } from '../views/ideas-view/ideas-view.component';
 import { MessagesViewComponent } from '../views/messages-view/messages-view.component';
 import { NotificationsViewComponent } from '../views/notifications-view/notifications-view.component';
 import { SearchViewComponent } from '../views/search-view/search-view.component';
-import { BehaviorSubject, Subscription, filter } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 
 let ideaTab: Tab = {
@@ -43,7 +43,7 @@ export class TabService implements OnDestroy {
   // --------------------------------------------
   tabs: Tab[] = [ideaTab, searchTab, messagesTab, notificationsTab];
   defaultTab = this.tabs[0];
-  selectedTab = new BehaviorSubject<Tab>(this.defaultTab);
+  selectedTab = this.defaultTab;
   routerSub: Subscription;
 
   // lifecycle hooks
@@ -59,7 +59,7 @@ export class TabService implements OnDestroy {
   // methods
   // --------------------------------------------
   goToTab(t: Tab) {
-    this.selectedTab.next(t);
+    this.selectedTab = t;
   } 
 
   _onRouteChange(): Subscription {
