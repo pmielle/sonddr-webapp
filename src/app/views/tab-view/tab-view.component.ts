@@ -45,6 +45,9 @@ export class TabViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   onLogoClick() {
+    if (this.tab.selectedTab.getValue() !== this.tab.defaultTab) {
+      this.tab.goToTab(this.tab.defaultTab);
+    }
     this.router.navigate(["/"]);
   }
 

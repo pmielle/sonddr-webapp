@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { fadeSlideInOut } from 'src/app/animations/in-out';
 import { Tab } from 'src/app/interfaces/tab';
 import { TabService } from 'src/app/services/tab.service';
@@ -14,6 +15,7 @@ export class TabIconsComponent {
   // dependencies
   // --------------------------------------------
   tab = inject(TabService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -26,6 +28,14 @@ export class TabIconsComponent {
   // methods
   // --------------------------------------------
   onTabIconClick(tab: Tab) {
-    this.tab.goToTab(tab);
+    if (this.tab.selectedTab.getValue() !== tab) {
+      this.tab.goToTab(tab);
+      return;
+    }
+    if (window.screen.width <= 700) {
+      if (tab === this.tab.defaultTab) {
+        this.router.navigate(["/"]);
+      }
+    }
   }
 }
