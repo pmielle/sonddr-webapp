@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Auth, User, user, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable, from, map, switchMap, tap } from 'rxjs';
+import { Observable, from, switchMap } from 'rxjs';
 import { IUser } from '../interfaces/i-user';
 import { DatabaseService } from './database.service';
 
@@ -19,7 +19,6 @@ export class AuthenticationService implements OnDestroy {
   // attributes
   // --------------------------------------------
   user$: Observable<IUser|undefined> = user(this.auth).pipe(
-    tap((user) => this._onFirebaseUserChange(user)),
     switchMap((user) => from(this._firebaseUserToIUser(user)))
   );
 
@@ -44,14 +43,6 @@ export class AuthenticationService implements OnDestroy {
       }
     } else {
       return undefined;
-    }
-  }
-
-  _onFirebaseUserChange(user: User|null) {
-    if (user) {
-      this.router.navigate(["/"]);
-    } else {
-      this.router.navigate(["login"]);
     }
   }
 }
