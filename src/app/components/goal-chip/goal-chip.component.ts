@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Goal } from 'src/app/interfaces/goal';
+import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-goal-chip',
@@ -7,6 +8,10 @@ import { Goal } from 'src/app/interfaces/goal';
   styleUrls: ['./goal-chip.component.scss']
 })
 export class GoalChipComponent {
+
+  // dependencies
+  // --------------------------------------------
+  color = inject(ColorService);
 
   // attributes
   // --------------------------------------------
