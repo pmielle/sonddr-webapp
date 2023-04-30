@@ -28,13 +28,22 @@ export class TabIconsComponent {
   // methods
   // --------------------------------------------
   onTabIconClick(tab: Tab) {
+    // switch tab if needed
     if (this.tab.selectedTab !== tab) {
       this.tab.goToTab(tab);
       return;
     }
+    // otherwise, on mobile
     if (window.screen.width <= 700) {
+      // handle default tab (ideas) tap
       if (tab === this.tab.defaultTab) {
-        this.router.navigate(["/"]);
+        // go back to home if not already
+        if (this.router.url !== "/") {
+          this.router.navigate(["/"]);
+          return;
+        }
+        // otherwise, scroll back to top
+        tab.html?.scrollTo({top: 0, behavior: "smooth"});
       }
     }
   }
