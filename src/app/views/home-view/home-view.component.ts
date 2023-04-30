@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Goal } from 'src/app/interfaces/goal';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-home-view',
@@ -7,4 +9,23 @@ import { Component } from '@angular/core';
 })
 export class HomeViewComponent {
 
+  // dependencies
+  // --------------------------------------------
+  db = inject(DatabaseService);
+
+  // attributes
+  // --------------------------------------------
+  goals: Goal[] = [];
+
+  // lifecycle hooks
+  // --------------------------------------------
+  constructor() {
+    this._loadGoals();
+  }
+
+  // methods
+  // --------------------------------------------
+  async _loadGoals() {
+    this.goals = await this.db.getGoals();
+  }
 }

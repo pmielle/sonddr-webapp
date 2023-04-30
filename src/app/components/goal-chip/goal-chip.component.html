@@ -1,0 +1,4 @@
+<div *ngIf="this.goal as g" id="container" class="flex small-gap pointer" [style.backgroundColor]="g.color" mat-ripple>
+    <mat-icon>{{ g.icon }}</mat-icon>
+    <div *ngIf="this.noLabel === false" id="label">{{ g.name }}</div>
+</div>
