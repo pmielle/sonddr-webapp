@@ -1,3 +1,11 @@
 <div id="container" class="flex">
+
+    <!-- either static or dynamic background -->
+    <div *ngIf="this.scrollContainer === null else dynamicBackground" class="background static"></div>
+    <ng-template #dynamicBackground>
+        <div class="background dynamic" [class.opaque]="this.scrolled"></div>
+    </ng-template>
+    
+    <!-- content -->
     <ng-content></ng-content>
 </div>

@@ -5,7 +5,7 @@
         <app-fab></app-fab>
     </div>
     <div id="tabs">
-        <div *ngFor="let t of this.tab.tabs" class="tab" [class.selected]="t.name == this.tab.selectedTab.name">
+        <div *ngFor="let t of this.tab.tabs" class="tab" [class.selected]="t.name == this.tab.selectedTab.name" #tabs>
             <ng-template [ngComponentOutlet]="t.component"></ng-template>
         </div>
     </div>

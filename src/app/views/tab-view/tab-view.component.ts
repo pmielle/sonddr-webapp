@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, QueryList, ViewChildren, inject } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { Observable, Subscription, firstValueFrom, of, switchMap } from 'rxjs';
@@ -6,13 +6,14 @@ import { INotification } from 'src/app/interfaces/i-notification';
 import { Discussion } from 'src/app/interfaces/discussion';
 import { Router } from '@angular/router';
 import { TabService } from 'src/app/services/tab.service';
+import { Tab } from 'src/app/interfaces/tab';
 
 @Component({
   selector: 'app-tab-view',
   templateUrl: './tab-view.component.html',
   styleUrls: ['./tab-view.component.scss']
 })
-export class TabViewComponent implements OnDestroy {
+export class TabViewComponent implements AfterViewInit, OnDestroy {
   
   // dependencies
   // --------------------------------------------
@@ -23,6 +24,8 @@ export class TabViewComponent implements OnDestroy {
 
   // attributes
   // --------------------------------------------
+  @ViewChildren('tabs') tabsRef?: QueryList<ElementRef>;
+  
   notifications$ = this._getNotifications();
   notificationsSub: Subscription;
   discussions$ = this._getDiscussions();
@@ -34,6 +37,14 @@ export class TabViewComponent implements OnDestroy {
     this._redirectIfNotLoggedIn();
     this.notificationsSub = this._onNotificationsChange();
     this.discussionsSub = this._onDiscussionsChange();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.tabsRef?.forEach((tabRef, i) => {
+        this.tab.tabs[i].html = tabRef.nativeElement as HTMLElement;
+      });
+    }, 0);  // otherwise EpressionChangedAfterItHasBeenCheckedError
     
   }
 

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Goal } from 'src/app/interfaces/goal';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-home-view',
@@ -14,6 +15,7 @@ export class HomeViewComponent {
   // --------------------------------------------
   db = inject(DatabaseService);
   auth = inject(AuthenticationService);
+  tab = inject(TabService);
 
   // attributes
   // --------------------------------------------

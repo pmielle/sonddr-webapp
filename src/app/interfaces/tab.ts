@@ -1,3 +1,4 @@
+import { BehaviorSubject, Observable } from "rxjs";
 import { IdeasViewComponent } from "../views/ideas-view/ideas-view.component";
 import { MessagesViewComponent } from "../views/messages-view/messages-view.component";
 import { NotificationsViewComponent } from "../views/notifications-view/notifications-view.component";
@@ -10,6 +11,7 @@ export interface Tab {
     badge?: string,
     component: any,
     fab?: FabMode,
+    html?: HTMLElement,
 }
 
 export let ideaTab: Tab = {
