@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
 import { Observable, firstValueFrom } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
@@ -51,7 +51,7 @@ export class DatabaseService {
   }
 
   async getGoals(): Promise<Goal[]> {
-    return this._getCollection<Goal>(this.goalCollection);
+    return this._getCollection<Goal>(query(this.goalCollection, orderBy("order", "asc")));
   }
 
   // utilities
@@ -66,7 +66,7 @@ export class DatabaseService {
     return docRef.exists();
   }
 
-  async _getCollection<T>(icollection: CollectionReference): Promise<T[]> {
+  async _getCollection<T>(icollection: Query): Promise<T[]> {
     let data$ = collectionData(icollection, {idField: "id"});
     return await firstValueFrom(data$) as T[];
   }
