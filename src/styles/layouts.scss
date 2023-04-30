@@ -25,4 +25,6 @@
     &.small-gap { gap: var(--small-spacing); }
     &.gap { gap: var(--spacing); }
     &.large-gap { gap: var(--large-spacing); }
+
+    .spacer { flex: 1; }
 }

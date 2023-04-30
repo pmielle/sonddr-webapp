@@ -2,4 +2,6 @@
 
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas reprehenderit veniam voluptate quibusdam excepturi eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores eligendi maiores!</p>
 
-<app-goal-chip *ngFor="let g of this.goals" [goal]="g"></app-goal-chip>
+<app-h-scroll>
+    <app-goal-chip *ngFor="let g of this.goals" [goal]="g"></app-goal-chip>
+</app-h-scroll>

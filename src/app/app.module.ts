@@ -25,6 +25,7 @@ import { GoalViewComponent } from './views/goal-view/goal-view.component';
 import { DiscussionViewComponent } from './views/discussion-view/discussion-view.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
+import { HScrollComponent } from './components/h-scroll/h-scroll.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
     GoalViewComponent,
     DiscussionViewComponent,
     HomeViewComponent,
-    GoalChipComponent
+    GoalChipComponent,
+    HScrollComponent
   ],
   imports: [
     BrowserModule,
