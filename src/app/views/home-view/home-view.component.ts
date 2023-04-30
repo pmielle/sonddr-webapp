@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Goal } from 'src/app/interfaces/goal';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class HomeViewComponent {
   // dependencies
   // --------------------------------------------
   db = inject(DatabaseService);
+  auth = inject(AuthenticationService);
 
   // attributes
   // --------------------------------------------

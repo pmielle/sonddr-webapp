@@ -10,5 +10,5 @@ export class ProfilePictureComponent {
   
   // bindings
   // --------------------------------------------
-  @Input('user') user?: IUser;
+  @Input('user') user!: IUser;
 }

@@ -16,7 +16,6 @@ import { SearchViewComponent } from './views/search-view/search-view.component';
 import { MessagesViewComponent } from './views/messages-view/messages-view.component';
 import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
 import { MatIconModule } from '@angular/material/icon';
-import { StatusBarComponent } from './components/status-bar/status-bar.component';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -26,6 +25,7 @@ import { DiscussionViewComponent } from './views/discussion-view/discussion-view
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
 import { HScrollComponent } from './components/h-scroll/h-scroll.component';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 @NgModule({
   declarations: [
@@ -37,14 +37,14 @@ import { HScrollComponent } from './components/h-scroll/h-scroll.component';
     SearchViewComponent,
     MessagesViewComponent,
     NotificationsViewComponent,
-    StatusBarComponent,
     ProfilePictureComponent,
     FabComponent,
     GoalViewComponent,
     DiscussionViewComponent,
     HomeViewComponent,
     GoalChipComponent,
-    HScrollComponent
+    HScrollComponent,
+    TopBarComponent
   ],
   imports: [
     BrowserModule,
