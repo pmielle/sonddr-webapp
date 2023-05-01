@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy, OrderByDirection } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
 import { Observable, firstValueFrom } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
@@ -7,6 +7,7 @@ import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
 import { CollectionReference } from '@angular/fire/firestore';
 import { Discussion } from '../interfaces/discussion';
+import { Idea } from '../interfaces/idea';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class DatabaseService {
   // attributes
   // --------------------------------------------
   goalCollection = collection(this.firestore, "goals");
+  ideaCollection = collection(this.firestore, "ideas");
 
   // lifecycle hooks
   // --------------------------------------------
@@ -27,6 +29,10 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async getIdeas(orderByField: string): Promise<Idea[]> {    
+    return this._getCollection(query(this.ideaCollection, orderBy(orderByField, "desc")));
+  }
+
   async getUser(id: string): Promise<IUser|undefined> {
     let userDoc = doc(this.firestore, `users/${id}`);
     if (await this._exists(userDoc)) {

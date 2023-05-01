@@ -26,6 +26,8 @@ import { HomeViewComponent } from './views/home-view/home-view.component';
 import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
 import { HScrollComponent } from './components/h-scroll/h-scroll.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { IdeaListComponent } from './components/idea-list/idea-list.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
     HomeViewComponent,
     GoalChipComponent,
     HScrollComponent,
-    TopBarComponent
+    TopBarComponent,
+    IdeaListComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
     MatIconModule,
     MatButtonModule,
     MatRippleModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

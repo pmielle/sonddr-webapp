@@ -1,0 +1,8 @@
+<mat-form-field appearance="fill">
+    <mat-label>Order by</mat-label>
+    <mat-select [(value)]="this.orderByField">
+        <mat-option *ngFor="let field of this.IdeaOrderBy | keyvalue" [value]="field.value">
+            {{ field.key }}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
