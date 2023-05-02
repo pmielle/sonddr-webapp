@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { FabMode, goalMode, homeMode } from '../interfaces/fab-mode';
+import { FabMode, goalMode, homeMode, ideaMode } from '../interfaces/fab-mode';
 import { TabService } from './tab.service';
 import { Subscription, filter, map } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
@@ -17,7 +17,7 @@ export class FabService implements OnDestroy {
 
   // attributes
   // --------------------------------------------
-  tabStacks: { [tab: string]: (FabMode|undefined)[] } = {};
+  tabStacks: { [tab: string]: (FabMode | undefined)[] } = {};
   defaultTab = this.tab.defaultTab;
   routerSub: Subscription;
 
@@ -34,7 +34,7 @@ export class FabService implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  pushToModeStack(mode: FabMode|undefined, tab?: Tab) {
+  pushToModeStack(mode: FabMode | undefined, tab?: Tab) {
     tab = tab || this.defaultTab;
     this.tabStacks[tab.name].push(mode);
   }
@@ -49,7 +49,7 @@ export class FabService implements OnDestroy {
     stack.pop();
   }
 
-  setModeStack(mode: FabMode|undefined, tab?: Tab) {  // hypothesis: tabStacks are always init with only 1 element
+  setModeStack(mode: FabMode | undefined, tab?: Tab) {  // hypothesis: tabStacks are always init with only 1 element
     tab = tab || this.defaultTab;
     this.tabStacks[tab.name] = [mode];
   }
@@ -64,10 +64,12 @@ export class FabService implements OnDestroy {
     });
   }
 
-  _chooseFabOfRoute(route: string): FabMode|undefined {
-    switch(route) {
-      case "/goal": 
+  _chooseFabOfRoute(route: string): FabMode | undefined {
+    switch (route) {
+      case "/goal":
         return goalMode;
+      case "/idea":
+        return ideaMode;
       case "/":
         return homeMode;
         break;

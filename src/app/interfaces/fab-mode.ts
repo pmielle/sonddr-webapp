@@ -12,7 +12,12 @@ export let homeMode: FabMode = {
 
 export let goalMode: FabMode = {
     icon: "add",
-    color: "green",
-    //color: "var(--primary-color)",
+    color: "var(--primary-color)",
     label: "Share<br>an idea",
+};
+
+export let ideaMode: FabMode = {
+    icon: "favorite_outline",
+    color: "gray",
+    label: "Upvote",
 };

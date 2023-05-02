@@ -1,8 +1,15 @@
-<mat-form-field appearance="fill">
-    <mat-label>Order by</mat-label>
-    <mat-select [(value)]="this.orderByField">
-        <mat-option *ngFor="let field of this.IdeaOrderBy | keyvalue" [value]="field.value">
-            {{ field.key }}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+<div class="flex">
+    <div class="spacer"></div>
+    <mat-form-field appearance="fill">
+        <mat-label>Order by</mat-label>
+        <mat-select [(value)]="this.orderByField">
+            <mat-option *ngFor="let field of this.IdeaOrderBy | keyvalue" [value]="field.value">
+                {{ field.key }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div id="content">
+    <app-idea-card *ngFor="let idea of this.ideas" [idea]="idea"></app-idea-card>
+</div>

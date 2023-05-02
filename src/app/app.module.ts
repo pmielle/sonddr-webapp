@@ -28,6 +28,8 @@ import { HScrollComponent } from './components/h-scroll/h-scroll.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { IdeaListComponent } from './components/idea-list/idea-list.component';
 import {MatSelectModule} from '@angular/material/select';
+import { IdeaCardComponent } from './components/idea-card/idea-card.component';
+import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import {MatSelectModule} from '@angular/material/select';
     GoalChipComponent,
     HScrollComponent,
     TopBarComponent,
-    IdeaListComponent
+    IdeaListComponent,
+    IdeaCardComponent,
+    IdeaViewComponent
   ],
   imports: [
     BrowserModule,
