@@ -1,8 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
+import { Subscription, filter } from 'rxjs';
 import { Goal } from 'src/app/interfaces/goal';
 import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
+import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { FabService } from 'src/app/services/fab.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -10,13 +13,14 @@ import { TabService } from 'src/app/services/tab.service';
   templateUrl: './home-view.component.html',
   styleUrls: ['./home-view.component.scss']
 })
-export class HomeViewComponent {
+export class HomeViewComponent implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
   db = inject(DatabaseService);
   auth = inject(AuthenticationService);
   tab = inject(TabService);
+  fab = inject(FabService);
 
   // attributes
   // --------------------------------------------
@@ -28,16 +32,32 @@ export class HomeViewComponent {
     this._ideaOrderBy = value; 
     this._onideaOrderByChange();
   }
+  fabClickSub: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
     this._loadGoals();
     this._loadIdeas();
+    this.fabClickSub = this._subscribeToFabClick();
+  }
+
+  ngOnDestroy() {
+    this.fabClickSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  _onFabClick() {
+    console.log("click!!!!");
+  }
+
+  _subscribeToFabClick(): Subscription {
+    return this.fab.click$.pipe(filter(t => t === ideaTab)).subscribe(
+      () => { this._onFabClick(); }
+    );
+  }
+
   async _onideaOrderByChange() {
     this._refreshIdeas();
   }

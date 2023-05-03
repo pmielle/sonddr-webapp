@@ -1,5 +1,5 @@
 <div id="container" class="flex column small-gap">
-    <button *ngIf="this.chooseMode() as mode" [style.backgroundColor]="mode.color" mat-fab @fadeSlideInOut>
+    <button *ngIf="this.chooseMode() as mode" (click)="this.fab.click$.next(this.tab.selectedTab)" [style.backgroundColor]="mode.color" mat-fab @fadeSlideInOut>
         <mat-icon>{{ mode.icon }}</mat-icon>
     </button>
     <div *ngIf="this.chooseMode() as mode" id="label" [style.color]="mode.color" [innerHTML]="mode.label"></div>

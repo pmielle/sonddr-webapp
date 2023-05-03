@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { FabMode, goalMode, homeMode, ideaMode } from '../interfaces/fab-mode';
 import { TabService } from './tab.service';
-import { Subscription, filter, map } from 'rxjs';
+import { Subject, Subscription, filter, map } from 'rxjs';
 import { NavigationEnd, Router } from '@angular/router';
 import { Tab } from '../interfaces/tab';
 
@@ -18,6 +18,7 @@ export class FabService implements OnDestroy {
   // attributes
   // --------------------------------------------
   tabStacks: { [tab: string]: (FabMode | undefined)[] } = {};
+  click$ = new Subject<Tab>();
   defaultTab = this.tab.defaultTab;
   routerSub: Subscription;
 
