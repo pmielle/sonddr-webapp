@@ -29,6 +29,9 @@ export class FabComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  onClick() {    
+    this.fab.click$.next(this.tab.selectedTab);
+  }
   chooseMode(): FabMode|undefined {
     let stack = this.fab.tabStacks[this.tab.selectedTab.name];
     return stack[stack.length - 1];

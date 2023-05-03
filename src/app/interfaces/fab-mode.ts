@@ -4,6 +4,12 @@ export interface FabMode {
     color: string,
 }
 
+export let addMode: FabMode = {
+    icon: "checkmark",
+    color: "green",
+    label: "Share",
+};
+
 export let homeMode: FabMode = {
     icon: "add",
     color: "var(--primary-color)",

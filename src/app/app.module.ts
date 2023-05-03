@@ -30,6 +30,7 @@ import { IdeaListComponent } from './components/idea-list/idea-list.component';
 import {MatSelectModule} from '@angular/material/select';
 import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
+import { AddViewComponent } from './views/add-view/add-view.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { IdeaViewComponent } from './views/idea-view/idea-view.component';
     TopBarComponent,
     IdeaListComponent,
     IdeaCardComponent,
-    IdeaViewComponent
+    IdeaViewComponent,
+    AddViewComponent
   ],
   imports: [
     BrowserModule,

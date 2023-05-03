@@ -1,4 +1,5 @@
 import { Component, OnDestroy, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Goal } from 'src/app/interfaces/goal';
 import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
@@ -21,6 +22,7 @@ export class HomeViewComponent implements OnDestroy {
   auth = inject(AuthenticationService);
   tab = inject(TabService);
   fab = inject(FabService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -49,7 +51,7 @@ export class HomeViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   _onFabClick() {
-    console.log("click!!!!");
+    this.router.navigate(["add"]);
   }
 
   _subscribeToFabClick(): Subscription {

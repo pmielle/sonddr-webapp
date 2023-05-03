@@ -5,12 +5,14 @@ import { TabViewComponent } from './views/tab-view/tab-view.component';
 import { GoalViewComponent } from './views/goal-view/goal-view.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
+import { AddViewComponent } from './views/add-view/add-view.component';
 
 const routes: Routes = [
   {path: "", component: TabViewComponent, children: [
     {path: "", component: HomeViewComponent},
     {path: "goal/:id", component: GoalViewComponent},
     {path: "idea", component: IdeaViewComponent},
+    {path: "add", component: AddViewComponent},
   ]},
   {path: "login", component: LoginViewComponent},
 ];

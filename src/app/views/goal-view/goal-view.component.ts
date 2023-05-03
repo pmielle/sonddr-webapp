@@ -1,10 +1,13 @@
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, inject } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { Goal } from 'src/app/interfaces/goal';
 import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
+import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ColorService } from 'src/app/services/color.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { FabService } from 'src/app/services/fab.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -12,7 +15,7 @@ import { TabService } from 'src/app/services/tab.service';
   templateUrl: './goal-view.component.html',
   styleUrls: ['./goal-view.component.scss']
 })
-export class GoalViewComponent {
+export class GoalViewComponent implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
@@ -21,6 +24,8 @@ export class GoalViewComponent {
   tab = inject(TabService);
   color = inject(ColorService);
   route = inject(ActivatedRoute);
+  fab = inject(FabService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -32,6 +37,7 @@ export class GoalViewComponent {
     this._ideaOrderBy = value;
     this._onideaOrderByChange();
   }
+  fabClickSub: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -42,10 +48,31 @@ export class GoalViewComponent {
       console.error(`_loadGoal failed, cannot continue the initial loading of the page: ${err}`);
       return;
     });
+    this.fabClickSub = this._subscribeToFabClick();
+  }
+
+  ngOnDestroy(): void {
+    this.fabClickSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  _onFabClick() {
+    let queryParams: Params = {};
+    if (this.goal) {
+      queryParams["preselectedGoal"] = this.goal.id;
+    } else {
+      console.error("goal is undefined, cannot preselect it");
+    }
+    this.router.navigate(["add"], {queryParams: queryParams});
+  }
+
+  _subscribeToFabClick(): Subscription {
+    return this.fab.click$.pipe(filter(t => t === ideaTab)).subscribe(
+      () => { this._onFabClick(); }
+    );
+  }
+
   async _loadGoal(): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       let goalId = this.route.snapshot.paramMap.get("id");
