@@ -1,1 +1,23 @@
-<p>add-view works!</p>
+<div id="container">
+    <form>
+
+        <div id="cover" [style.background]="'gray'">
+            <app-file-picker></app-file-picker>
+            <app-h-scroll left-padding="30px" [hide-shadows]="true">
+                <app-chip label="Goal(s) of interest" icon="add" color="var(--background-color)" foreground-color="gray"></app-chip>
+                <app-goal-chip *ngFor="let g of this.selectedGoals" [goal]="g"></app-goal-chip>
+            </app-h-scroll>
+        </div>
+
+        <mat-form-field>
+            <mat-label>Choose a title</mat-label>
+            <input matInput>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Explain your idea...</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+        
+    </form>
+</div>

@@ -31,6 +31,9 @@ import {MatSelectModule} from '@angular/material/select';
 import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { AddViewComponent } from './views/add-view/add-view.component';
+import {MatInputModule} from '@angular/material/input';
+import { FilePickerComponent } from './components/file-picker/file-picker.component';
+import { ChipComponent } from './components/chip/chip.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,9 @@ import { AddViewComponent } from './views/add-view/add-view.component';
     IdeaListComponent,
     IdeaCardComponent,
     IdeaViewComponent,
-    AddViewComponent
+    AddViewComponent,
+    FilePickerComponent,
+    ChipComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +72,7 @@ import { AddViewComponent } from './views/add-view/add-view.component';
     MatButtonModule,
     MatRippleModule,
     MatSelectModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

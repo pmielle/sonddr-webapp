@@ -1,0 +1,4 @@
+<div id="container" class="flex small-gap pointer" [style.backgroundColor]="this.color" mat-ripple>
+    <mat-icon [style.color]="this.foregroundColor">{{ this.icon }}</mat-icon>
+    <div *ngIf="this.noLabel === false" id="label" [style.color]="this.foregroundColor">{{ this.label }}</div>
+</div>

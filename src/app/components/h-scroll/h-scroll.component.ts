@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-h-scroll',
@@ -9,6 +9,8 @@ export class HScrollComponent implements OnInit, AfterViewInit {
 
   // attributes
   // --------------------------------------------
+  @Input('left-padding') leftPadding: string = "0px";
+  @Input('hide-shadows') hideShadows: boolean = false;
   @ViewChild('container') containerRef!: ElementRef;
   containerElem?: HTMLElement;
   leftShadow = false;

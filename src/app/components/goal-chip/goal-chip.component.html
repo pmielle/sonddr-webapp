@@ -1,4 +1,1 @@
-<div *ngIf="this.goal as g" id="container" class="flex small-gap pointer" [style.backgroundColor]="this.color.makeGoalColor(g.color)" mat-ripple>
-    <mat-icon>{{ g.icon }}</mat-icon>
-    <div *ngIf="this.noLabel === false" id="label">{{ g.name }}</div>
-</div>
+<app-chip [no-label]="this.noLabel" [color]="this.color.makeGoalColor(this.goal.color)" [label]="this.goal.name" [icon]="this.goal.icon"></app-chip>
