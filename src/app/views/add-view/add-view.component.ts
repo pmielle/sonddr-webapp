@@ -1,13 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { fadeSlideIn } from 'src/app/animations/in-out';
 import { Goal } from 'src/app/interfaces/goal';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-add-view',
   templateUrl: './add-view.component.html',
-  styleUrls: ['./add-view.component.scss']
+  styleUrls: ['./add-view.component.scss'],
+  animations: [fadeSlideIn],
 })
 export class AddViewComponent {
 
