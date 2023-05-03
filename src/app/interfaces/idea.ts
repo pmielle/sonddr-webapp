@@ -4,6 +4,7 @@ export interface Idea {
     date: string,
     upvotes: number,
     goalIds: string[],
+    content: string,
 }
 
 export enum IdeaOrderBy {

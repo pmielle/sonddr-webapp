@@ -35,6 +35,7 @@ import {MatInputModule} from '@angular/material/input';
 import { FilePickerComponent } from './components/file-picker/file-picker.component';
 import { ChipComponent } from './components/chip/chip.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import {MatMenuModule} from '@angular/material/menu';
     MatSelectModule,
     MatInputModule,
     MatMenuModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

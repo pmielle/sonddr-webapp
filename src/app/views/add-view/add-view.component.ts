@@ -1,10 +1,12 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import { fadeSlideIn } from 'src/app/animations/in-out';
 import { Goal } from 'src/app/interfaces/goal';
+import { ideaTab } from 'src/app/interfaces/tab';
 import { DatabaseService } from 'src/app/services/database.service';
+import { FabService } from 'src/app/services/fab.service';
 
 @Component({
   selector: 'app-add-view',
@@ -12,13 +14,15 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./add-view.component.scss'],
   animations: [fadeSlideIn],
 })
-export class AddViewComponent {
+export class AddViewComponent implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
   route = inject(ActivatedRoute);
   db = inject(DatabaseService);
   sanitize = inject(DomSanitizer);
+  router = inject(Router);
+  fab = inject(FabService);
 
   // attributes
   // --------------------------------------------
@@ -32,6 +36,9 @@ export class AddViewComponent {
     this.updateCoverUrl();
   }
   coverUrl?: SafeResourceUrl;
+  title: string = "";
+  content: string = "";
+  fabClickSub: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -39,10 +46,37 @@ export class AddViewComponent {
     this._loadGoals().then(() => {
       this.queryParamSub = this._subscribeToQueryParam();
     });
+    this.fabClickSub = this._subscribeToFabClick();
+  }
+
+  ngOnDestroy(): void {
+    this.fabClickSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  submit() {
+    // validate inputs
+    if (!this.title) {
+      console.error("Missing title");
+      return;
+    }
+    if (!this.content) {
+      console.error("Missing content");
+      return;
+    }
+    if (this.selectedGoals.length <= 0) {
+      console.error("Missing goal(s)");
+      return;
+    }
+    // post
+    // TODO: handle cover pictures eventually
+    let goalIds = this.selectedGoals.map(g => g.id);
+    let newIdea = this.db.postIdea(this.title, this.content, goalIds);
+    // redirect
+    this.router.navigate(["idea"]);
+  }
+
   updateCoverUrl() {
     if (!this.cover) {
       this.coverUrl = undefined;
@@ -63,6 +97,16 @@ export class AddViewComponent {
 
   chooseSelectableGoals(): Goal[] {
     return this.goals.filter((g) => !this.selectedGoals.includes(g));
+  }
+
+  _onFabClick() {
+    this.submit();
+  }
+
+  _subscribeToFabClick(): Subscription {
+    return this.fab.click$.pipe(filter(t => t === ideaTab)).subscribe(
+      () => { this._onFabClick(); }
+    );
   }
 
   async _loadGoals() {

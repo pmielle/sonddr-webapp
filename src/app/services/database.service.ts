@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy, serverTimestamp, addDoc, CollectionReference } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
 import { Observable, firstValueFrom } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
@@ -28,6 +28,17 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async postIdea(title: string, content: string, goalIds: string[]): Promise<Idea> {
+    let payload = {
+      content: content,
+      title: title,
+      goalIds: goalIds,
+      date: serverTimestamp(),
+      upvotes: 0,
+    };    
+    return this._postDocument<Idea>(this.ideaCollection, payload);
+  }
+
   async getGoal(id: string): Promise<Goal> {
     return this._getDocument(doc(this.firestore, `goals/${id}`));
   }
@@ -76,6 +87,11 @@ export class DatabaseService {
   async _setDocument<T>(idocument: DocumentReference, payload: any): Promise<T> {
     await setDoc(idocument, payload);
     return { ...payload, id: idocument.id } as T;
+  }
+
+  async _postDocument<T>(icollection: CollectionReference, payload: any): Promise<T> {
+    let doc = await addDoc(icollection, payload);
+    return { ...payload, id: doc.id } as T;
   }
 
   async _exists(doc: DocumentReference): Promise<boolean> {

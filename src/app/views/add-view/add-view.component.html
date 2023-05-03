@@ -33,12 +33,13 @@
 
         <mat-form-field>
             <mat-label>Choose a title</mat-label>
-            <input matInput>
+            <input matInput [(ngModel)]="this.title" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
 
         <mat-form-field>
             <mat-label>Explain your idea...</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput [(ngModel)]="this.content" [ngModelOptions]="{standalone: true}">
+                ></textarea>
         </mat-form-field>
         
     </form>
