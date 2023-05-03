@@ -1,10 +1,20 @@
 <div id="container">
     <form>
 
-        <div id="cover" [style.background]="'gray'">
+        <div id="cover">
 
-            <app-file-picker></app-file-picker>
+            <!-- preview -->
+            <img id="preview" *ngIf="this.coverUrl as url" [src]="url">
+        
+            <!-- file-picker -->
+            <div class="file-picker-container deletable">
+                <app-file-picker label="Upload a cover" color="gray" (file-change)="this.cover=$event"></app-file-picker>
+                <div *ngIf="this.cover" class="close flex pointer" (click)="this.cover=undefined" mat-ripple>
+                    <mat-icon>close</mat-icon>
+                </div>
+            </div>
 
+            <!-- goals selection -->
             <app-h-scroll left-padding="30px" top-padding="10px" [hide-shadows]="true">
                 <!-- add menu -->
                 <app-chip label="Goal(s) of interest" icon="add" color="var(--background-color)" foreground-color="gray" [matMenuTriggerFor]="menu"></app-chip>
@@ -12,7 +22,7 @@
                     <button *ngFor="let g of this.chooseSelectableGoals()" mat-menu-item (click)="this.selectGoal(g)">{{ g.name }}</button>
                 </mat-menu>
                 <!-- selected goals -->
-                <div class="goal-chip-container" *ngFor="let g of this.selectedGoals.slice().reverse()" @fadeSlideIn>
+                <div class="goal-chip-container deletable" *ngFor="let g of this.selectedGoals.slice().reverse()" @fadeSlideIn>
                     <app-goal-chip [goal]="g"></app-goal-chip>
                     <div class="close flex pointer" (click)="this.unselectGoal(g)" mat-ripple>
                         <mat-icon>close</mat-icon>

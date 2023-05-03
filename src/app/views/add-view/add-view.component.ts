@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { fadeSlideIn } from 'src/app/animations/in-out';
@@ -17,12 +18,20 @@ export class AddViewComponent {
   // --------------------------------------------
   route = inject(ActivatedRoute);
   db = inject(DatabaseService);
+  sanitize = inject(DomSanitizer);
 
   // attributes
   // --------------------------------------------
   queryParamSub?: Subscription;
   goals: Goal[] = [];
   selectedGoals: Goal[] = [];
+  _cover?: File = undefined;
+  get cover() { return this._cover; } 
+  set cover(value) {
+    this._cover = value;
+    this.updateCoverUrl();
+  }
+  coverUrl?: SafeResourceUrl;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -34,6 +43,16 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  updateCoverUrl() {
+    if (!this.cover) {
+      this.coverUrl = undefined;
+      return;
+    }
+    let url = URL.createObjectURL(this.cover);
+    let unsafeUrl = this.sanitize.bypassSecurityTrustResourceUrl(url);
+    this.coverUrl = unsafeUrl;
+  }
+
   unselectGoal(goal: Goal) {
     this.selectedGoals = this.selectedGoals.filter((g) => g != goal);
   }

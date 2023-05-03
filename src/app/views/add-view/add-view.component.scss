@@ -1,17 +1,44 @@
 #container {
 
-    .goal-chip-container {
+    #cover { 
         position: relative;
+        overflow: hidden;
+        background-color: gray; 
 
-        .close {
+        #preview {
             position: absolute;
-            top: -10px;
-            right: -3px;
-            background-color: var(--background-color);
-            border-radius: 99px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-            mat-icon {
-                transform: scale(0.8);
+        .file-picker-container {
+            display: inline-block;
+        }
+    
+        .goal-chip-container {
+    
+            app-goal-chip { 
+                pointer-events: none; 
+                cursor: default;
+            }
+        }
+    
+        .deletable {
+            position: relative;
+    
+            .close {
+                position: absolute;
+                top: -10px;
+                right: -3px;
+                background-color: var(--background-color);
+                border-radius: 99px;
+    
+                mat-icon {
+                    transform: scale(0.8);
+                }
             }
         }
     }

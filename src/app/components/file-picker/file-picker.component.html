@@ -1,1 +1,2 @@
-<p>file-picker works!</p>
+    <input type="file" accept="image/*" (change)="onChange($event)" #input>
+    <app-chip [label]="this.label" [color]="this.color" icon="cloud_upload" foreground-color="var(--background-color)" (click)="this.clickInput()"></app-chip>
