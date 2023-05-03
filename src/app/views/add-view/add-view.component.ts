@@ -55,7 +55,7 @@ export class AddViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  submit() {
+  async submit() {
     // validate inputs
     if (!this.title) {
       console.error("Missing title");
@@ -72,9 +72,9 @@ export class AddViewComponent implements OnDestroy {
     // post
     // TODO: handle cover pictures eventually
     let goalIds = this.selectedGoals.map(g => g.id);
-    let newIdea = this.db.postIdea(this.title, this.content, goalIds);
+    let newIdea = await this.db.postIdea(this.title, this.content, goalIds);
     // redirect
-    this.router.navigate(["idea"]);
+    this.router.navigate(["idea", newIdea.id]);
   }
 
   updateCoverUrl() {
