@@ -87,7 +87,6 @@ export class GoalViewComponent implements OnDestroy {
       }
       resolve();
     });
-    
   }
 
   async _onideaOrderByChange() {
