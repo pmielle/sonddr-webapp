@@ -34,6 +34,7 @@ import { AddViewComponent } from './views/add-view/add-view.component';
 import {MatInputModule} from '@angular/material/input';
 import { FilePickerComponent } from './components/file-picker/file-picker.component';
 import { ChipComponent } from './components/chip/chip.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import { ChipComponent } from './components/chip/chip.component';
     IdeaViewComponent,
     AddViewComponent,
     FilePickerComponent,
-    ChipComponent
+    ChipComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +74,7 @@ import { ChipComponent } from './components/chip/chip.component';
     MatRippleModule,
     MatSelectModule,
     MatInputModule,
+    MatMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

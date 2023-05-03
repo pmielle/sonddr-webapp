@@ -32,6 +32,18 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  unselectGoal(goal: Goal) {
+    this.selectedGoals = this.selectedGoals.filter((g) => g != goal);
+  }
+
+  selectGoal(goal: Goal) {
+    this.selectedGoals.push(goal);
+  }
+
+  chooseSelectableGoals(): Goal[] {
+    return this.goals.filter((g) => !this.selectedGoals.includes(g));
+  }
+
   async _loadGoals() {
     this.goals = await this.db.getGoals();
   }

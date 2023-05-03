@@ -2,10 +2,22 @@
     <form>
 
         <div id="cover" [style.background]="'gray'">
+
             <app-file-picker></app-file-picker>
-            <app-h-scroll left-padding="30px" [hide-shadows]="true">
-                <app-chip label="Goal(s) of interest" icon="add" color="var(--background-color)" foreground-color="gray"></app-chip>
-                <app-goal-chip *ngFor="let g of this.selectedGoals" [goal]="g"></app-goal-chip>
+
+            <app-h-scroll left-padding="30px" top-padding="10px" [hide-shadows]="true">
+                <!-- add menu -->
+                <app-chip label="Goal(s) of interest" icon="add" color="var(--background-color)" foreground-color="gray" [matMenuTriggerFor]="menu"></app-chip>
+                <mat-menu #menu="matMenu">
+                    <button *ngFor="let g of this.chooseSelectableGoals()" mat-menu-item (click)="this.selectGoal(g)">{{ g.name }}</button>
+                </mat-menu>
+                <!-- selected goals -->
+                <div class="goal-chip-container" *ngFor="let g of this.selectedGoals.slice().reverse()">
+                    <app-goal-chip [goal]="g"></app-goal-chip>
+                    <div class="close flex pointer" (click)="this.unselectGoal(g)" mat-ripple>
+                        <mat-icon>close</mat-icon>
+                    </div>
+                </div>
             </app-h-scroll>
         </div>
 

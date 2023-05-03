@@ -10,6 +10,7 @@ export class HScrollComponent implements OnInit, AfterViewInit {
   // attributes
   // --------------------------------------------
   @Input('left-padding') leftPadding: string = "0px";
+  @Input('top-padding') topPadding: string = "0px";
   @Input('hide-shadows') hideShadows: boolean = false;
   @ViewChild('container') containerRef!: ElementRef;
   containerElem?: HTMLElement;
