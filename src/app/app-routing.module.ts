@@ -9,7 +9,7 @@ import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 const routes: Routes = [
   {path: "", component: TabViewComponent, children: [
     {path: "", component: HomeViewComponent},
-    {path: "goal", component: GoalViewComponent},
+    {path: "goal/:id", component: GoalViewComponent},
     {path: "idea", component: IdeaViewComponent},
   ]},
   {path: "login", component: LoginViewComponent},

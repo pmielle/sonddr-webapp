@@ -1,4 +1,4 @@
-<div class="flex">
+<div class="flex" [style.backgroundColor]="this.headerColor">
     <div class="spacer"></div>
     <mat-form-field appearance="fill">
         <mat-label>Order by</mat-label>
@@ -11,5 +11,5 @@
 </div>
 
 <div id="content">
-    <app-idea-card *ngFor="let idea of this.ideas" [idea]="idea"></app-idea-card>
+    <app-idea-card *ngFor="let idea of this.ideas" [idea]="idea"></app-idea-card>    
 </div>

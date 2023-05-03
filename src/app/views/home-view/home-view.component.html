@@ -4,10 +4,12 @@
     <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user"></app-profile-picture>
 </app-top-bar>
 
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas reprehenderit veniam voluptate quibusdam excepturi eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores eligendi maiores!</p>
-
-<app-h-scroll>
-    <app-goal-chip *ngFor="let g of this.goals" [goal]="g" routerLink="/goal"></app-goal-chip>
-</app-h-scroll>
+<div id="header">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas reprehenderit veniam voluptate quibusdam excepturi eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores eligendi maiores!</p>
+    
+    <app-h-scroll>
+        <app-goal-chip *ngFor="let g of this.goals" [goal]="g" [routerLink]="['/goal', g.id]"></app-goal-chip>
+    </app-h-scroll>
+</div>
 
 <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy"></app-idea-list>

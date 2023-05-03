@@ -1,20 +1,15 @@
-<p>goal-view works!</p>
-
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum minus asperiores consequuntur a corrupti deserunt obcaecati possimus sapiente laudantium ut cumque atque magnam accusantium ipsum nesciunt iste, porro esse temporibus.</p>
+<ng-container *ngIf="this.goal as g">
+    <app-top-bar [scroll-container]="this.tab.defaultTab.html" [header-color]="this.color.makeGoalColor(g.color)">
+        <h1>{{ g.name }}</h1>
+        <div class="spacer"></div>
+        <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user"></app-profile-picture>
+    </app-top-bar>
+    
+    <div id="header" [style.backgroundColor]="this.color.makeGoalColor(g.color)">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas reprehenderit veniam voluptate quibusdam excepturi
+            eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores
+            eligendi maiores!</p>
+    </div>
+    
+    <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy" [header-color]="this.color.makeGoalColor(g.color)"></app-idea-list>
+</ng-container>

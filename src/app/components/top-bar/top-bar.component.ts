@@ -20,6 +20,7 @@ export class TopBarComponent implements OnInit, OnDestroy {
     this._scrollContainer = value;     
     this._onScrollContainerChange();
   }
+  @Input('header-color') headerColor: string = "var(--background-color)";
   containerScrollSub?: Subscription;
   scrolled = false;  // updated in scrollContainer scroll
 

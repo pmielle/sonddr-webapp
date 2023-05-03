@@ -65,17 +65,15 @@ export class FabService implements OnDestroy {
   }
 
   _chooseFabOfRoute(route: string): FabMode | undefined {
-    switch (route) {
-      case "/goal":
-        return goalMode;
-      case "/idea":
-        return ideaMode;
-      case "/":
-        return homeMode;
-        break;
-      default:
-        console.error(`Unexpected route ${route}: cannot set the correct fab mode`);
-        return undefined;
+    if (route === "/idea") {
+      return ideaMode;
+    } else if (route.match("/goal/.*")) {
+      return goalMode;
+    } else if (route === "/") {
+      return homeMode;
+    } else {
+      console.error(`Unexpected route ${route}: cannot set the correct fab mode`);
+      return undefined;
     }
   }
 

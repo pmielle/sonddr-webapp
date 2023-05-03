@@ -18,6 +18,7 @@ export class IdeaListComponent implements OnInit {
     this.orderByFieldChange.emit(this.orderByField);
   }
   @Output() orderByFieldChange = new EventEmitter<IdeaOrderBy>();
+  @Input('header-color') headerColor: string = "var(--background-color)";
   IdeaOrderBy = IdeaOrderBy;
 
   // lifecycle hooks

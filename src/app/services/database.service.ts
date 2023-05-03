@@ -1,11 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy, OrderByDirection } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
 import { Observable, firstValueFrom } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
 import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
-import { CollectionReference } from '@angular/fire/firestore';
 import { Discussion } from '../interfaces/discussion';
 import { Idea } from '../interfaces/idea';
 
@@ -29,6 +28,18 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async getGoal(id: string): Promise<Goal> {
+    return this._getDocument(doc(this.firestore, `goals/${id}`));
+  }
+
+  async getIdeasOfGoal(goalId: string, orderByField: string): Promise<Idea[]> {
+    return this._getCollection(query(
+      this.ideaCollection, 
+      where("goalIds", "array-contains", goalId), 
+      orderBy(orderByField, "desc"),
+    ));
+  }
+
   async getIdeas(orderByField: string): Promise<Idea[]> {    
     return this._getCollection(query(this.ideaCollection, orderBy(orderByField, "desc")));
   }
