@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: "", component: TabViewComponent, children: [
     {path: "", component: HomeViewComponent},
     {path: "goal/:id", component: GoalViewComponent},
-    {path: "idea", component: IdeaViewComponent},
+    {path: "idea/:id", component: IdeaViewComponent},
     {path: "add", component: AddViewComponent},
   ]},
   {path: "login", component: LoginViewComponent},

@@ -66,7 +66,7 @@ export class FabService implements OnDestroy {
   }
 
   _chooseFabOfRoute(route: string): FabMode | undefined {
-    if (route === "/idea") {
+    if (route.match(/\/idea\/.*/)) {
       return ideaMode;
     } else if (route.match(/\/goal\/.*/)) {
       return goalMode;

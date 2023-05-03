@@ -28,6 +28,11 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async getIdea(id: string): Promise<Idea> {
+    let ideaDoc = doc(this.firestore, `ideas/${id}`);
+    return this._getDocument<Idea>(ideaDoc);
+  }
+
   async postIdea(title: string, content: string, goalIds: string[]): Promise<Idea> {
     let payload = {
       content: content,
