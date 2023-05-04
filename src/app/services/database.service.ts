@@ -6,7 +6,7 @@ import { INotification } from '../interfaces/i-notification';
 import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
 import { Discussion } from '../interfaces/discussion';
-import { Idea } from '../interfaces/idea';
+import { DbIdea, Idea } from '../interfaces/idea';
 
 @Injectable({
   providedIn: 'root'
@@ -29,18 +29,27 @@ export class DatabaseService {
   // methods
   // --------------------------------------------
   async getIdea(id: string): Promise<Idea> {
-    let ideaDoc = doc(this.firestore, `ideas/${id}`);
-    return this._getDocument<Idea>(ideaDoc);
+    return new Promise(async (resolve, reject) => {
+      let ideaDoc = doc(this.firestore, `ideas/${id}`);
+      let dbIdea = await this._getDocument<DbIdea>(ideaDoc);
+      if (!dbIdea) {
+        reject(`Idea ${id} not found`);
+        return;
+      }
+      let idea = await this._convertDbIdea(dbIdea);
+      resolve(idea);
+    });
   }
 
-  async postIdea(title: string, content: string, goalIds: string[]): Promise<Idea> {
+  async postIdea(title: string, content: string, goalIds: string[], authorId: string): Promise<Idea> {
     let payload = {
       content: content,
       title: title,
       goalIds: goalIds,
       date: serverTimestamp(),
       upvotes: 0,
-    };    
+      authorId: authorId,
+    };
     return this._postDocument<Idea>(this.ideaCollection, payload);
   }
 
@@ -49,15 +58,27 @@ export class DatabaseService {
   }
 
   async getIdeasOfGoal(goalId: string, orderByField: string): Promise<Idea[]> {
-    return this._getCollection(query(
-      this.ideaCollection, 
-      where("goalIds", "array-contains", goalId), 
-      orderBy(orderByField, "desc"),
-    ));
+    return new Promise(async (resolve, reject) => {
+      let dbIdeas = await this._getCollection<DbIdea>(query(
+        this.ideaCollection, 
+        where("goalIds", "array-contains", goalId), 
+        orderBy(orderByField, "desc"),
+      ));
+      let ideas = await Promise.all(
+        dbIdeas.map(async (dbIdea) => await this._convertDbIdea(dbIdea) )
+      );
+      resolve(ideas);
+    });
   }
 
   async getIdeas(orderByField: string): Promise<Idea[]> {    
-    return this._getCollection(query(this.ideaCollection, orderBy(orderByField, "desc")));
+    return new Promise(async (resolve, reject) => {
+      let dbIdeas = await this._getCollection<DbIdea>(query(this.ideaCollection, orderBy(orderByField, "desc")));
+      let ideas = await Promise.all(
+        dbIdeas.map(async (dbIdea) => await this._convertDbIdea(dbIdea) )
+      );
+      resolve(ideas);
+    });
   }
 
   async getUser(id: string): Promise<IUser|undefined> {
@@ -85,6 +106,20 @@ export class DatabaseService {
 
   async getGoals(): Promise<Goal[]> {
     return this._getCollection<Goal>(query(this.goalCollection, orderBy("order", "asc")));
+  }
+
+  // db -> obj
+  // --------------------------------------------
+  async _convertDbIdea(dbIdea: DbIdea): Promise<Idea> {
+    return new Promise(async (resolve, reject) => {
+      let author = await this.getUser(dbIdea.authorId);
+      if (!author) {
+        reject(`User ${dbIdea.authorId} not found`);
+        return;
+      }      
+      let {authorId, ...validFields} = dbIdea;
+      resolve({...validFields, author: author});
+    });
   }
 
   // utilities

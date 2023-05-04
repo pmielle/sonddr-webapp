@@ -5,6 +5,7 @@ import { Subscription, filter } from 'rxjs';
 import { fadeSlideIn } from 'src/app/animations/in-out';
 import { Goal } from 'src/app/interfaces/goal';
 import { ideaTab } from 'src/app/interfaces/tab';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
 
@@ -23,6 +24,7 @@ export class AddViewComponent implements OnDestroy {
   sanitize = inject(DomSanitizer);
   router = inject(Router);
   fab = inject(FabService);
+  auth = inject(AuthenticationService);
 
   // attributes
   // --------------------------------------------
@@ -69,10 +71,16 @@ export class AddViewComponent implements OnDestroy {
       console.error("Missing goal(s)");
       return;
     }
-    // post
     // TODO: handle cover pictures eventually
+    // get the current user and set it as author
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("Logged in user is not defined");
+      return;
+    }
+    // post
     let goalIds = this.selectedGoals.map(g => g.id);
-    let newIdea = await this.db.postIdea(this.title, this.content, goalIds);
+    let newIdea = await this.db.postIdea(this.title, this.content, goalIds, user.id);
     // redirect
     this.router.navigate(["idea", newIdea.id]);
   }

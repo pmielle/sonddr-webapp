@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
 import { Auth, User, user, signInWithPopup, GoogleAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { Observable, from, switchMap } from 'rxjs';
+import { Observable, firstValueFrom, from, switchMap } from 'rxjs';
 import { IUser } from '../interfaces/i-user';
 import { DatabaseService } from './database.service';
 
@@ -29,6 +29,10 @@ export class AuthenticationService implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  async getUser(): Promise<IUser|undefined> {
+    return firstValueFrom(this.user$);
+  }
+
   login() {
     signInWithPopup(this.auth, new GoogleAuthProvider());
   }
