@@ -1,0 +1,35 @@
+$content-left-padding: 100px;
+$padding-top: 200px;
+
+#header {
+    position: relative;
+    padding-top: $padding-top;
+
+    #cover {
+        position: absolute;
+        top: calc(-1 * var(--top-bar-height));
+        left: 0;
+        width: 100%;
+        height: calc($padding-top + var(--top-bar-height));
+        background: gray;
+    }
+
+    #header-content {
+        padding-left: $content-left-padding;
+        
+        #author {
+            position: relative;
+    
+            app-profile-picture {
+                position: absolute;
+                left: calc(-1 * var(--spacing));
+                top: 50%;
+                transform: translate(-100%, -50%);
+            }
+        }
+    }
+}
+
+#content {
+    padding-left: $content-left-padding;
+}

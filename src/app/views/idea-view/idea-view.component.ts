@@ -3,8 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { Idea } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-idea-view',
@@ -18,6 +20,8 @@ export class IdeaViewComponent implements OnDestroy {
   db = inject(DatabaseService);
   fab = inject(FabService);
   route = inject(ActivatedRoute);
+  tab = inject(TabService);
+  auth = inject(AuthenticationService);
 
   // attributes
   // --------------------------------------------
