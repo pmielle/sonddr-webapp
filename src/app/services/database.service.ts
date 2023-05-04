@@ -29,16 +29,8 @@ export class DatabaseService {
   // methods
   // --------------------------------------------
   async getIdea(id: string): Promise<Idea> {
-    return new Promise(async (resolve, reject) => {
-      let ideaDoc = doc(this.firestore, `ideas/${id}`);
-      let dbIdea = await this._getDocument<DbIdea>(ideaDoc);
-      if (!dbIdea) {
-        reject(`Idea ${id} not found`);
-        return;
-      }
-      let idea = await this._convertDbIdea(dbIdea);
-      resolve(idea);
-    });
+    let ideaDoc = doc(this.firestore, `ideas/${id}`);
+    return this._getDocument<Idea>(ideaDoc, this._convertDbIdea);
   }
 
   async postIdea(title: string, content: string, goalIds: string[], authorId: string): Promise<Idea> {
@@ -58,27 +50,17 @@ export class DatabaseService {
   }
 
   async getIdeasOfGoal(goalId: string, orderByField: string): Promise<Idea[]> {
-    return new Promise(async (resolve, reject) => {
-      let dbIdeas = await this._getCollection<DbIdea>(query(
-        this.ideaCollection, 
-        where("goalIds", "array-contains", goalId), 
-        orderBy(orderByField, "desc"),
-      ));
-      let ideas = await Promise.all(
-        dbIdeas.map(async (dbIdea) => await this._convertDbIdea(dbIdea) )
-      );
-      resolve(ideas);
-    });
+    let iquery = query(
+      this.ideaCollection, 
+      where("goalIds", "array-contains", goalId), 
+      orderBy(orderByField, "desc"),
+    );
+    return this._getCollection<Idea>(iquery, this._convertDbIdea);
   }
 
-  async getIdeas(orderByField: string): Promise<Idea[]> {    
-    return new Promise(async (resolve, reject) => {
-      let dbIdeas = await this._getCollection<DbIdea>(query(this.ideaCollection, orderBy(orderByField, "desc")));
-      let ideas = await Promise.all(
-        dbIdeas.map(async (dbIdea) => await this._convertDbIdea(dbIdea) )
-      );
-      resolve(ideas);
-    });
+  async getIdeas(orderByField: string): Promise<Idea[]> {  
+    let iquery = query(this.ideaCollection, orderBy(orderByField, "desc"));
+    return this._getCollection<Idea>(iquery, this._convertDbIdea);
   }
 
   async getUser(id: string): Promise<IUser|undefined> {
@@ -139,14 +121,32 @@ export class DatabaseService {
     return docRef.exists();
   }
 
-  async _getCollection<T>(icollection: Query): Promise<T[]> {
+  async _getCollection<U>(icollection: Query, converter: ((dbData: any) => Promise<U>) | undefined = undefined): Promise<U[]> {
     let data$ = collectionData(icollection, {idField: "id"});
-    return await firstValueFrom(data$) as T[];
+    let dbData = await firstValueFrom(data$);
+    if (!converter) {
+      return dbData as U[];
+    }
+    let data = await Promise.all(dbData.map((d) => converter.call(this, d)));
+    return data;
   }
 
-  async _getDocument<T>(idocument: DocumentReference): Promise<T> {
-    let data$ = docData(idocument, {idField: "id"});
-    return await firstValueFrom(data$) as T;
+  async _getDocument<U>(idocument: DocumentReference, converter: ((dbData: any) => Promise<U>) | undefined = undefined): Promise<U> {
+    return new Promise(async (resolve, reject) => {
+      let data$ = docData(idocument, {idField: "id"});
+      let dbData = await firstValueFrom(data$);
+      if (!dbData) {
+        reject(`document ${idocument.path} not found`);
+        return;
+      }
+      if (!converter) {
+        resolve(dbData as U);
+        return;
+      }
+      let data = await converter.call(this, dbData);
+      resolve(data);
+      return; 
+    });
   }
 
   _streamCollection<T>(icollection: Query): Observable<T[]> {
