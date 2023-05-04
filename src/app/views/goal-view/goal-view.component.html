@@ -2,7 +2,7 @@
     <app-top-bar [scroll-container]="this.tab.defaultTab.html" [header-color]="this.color.makeGoalColor(g.color)">
         <h1>{{ g.name }}</h1>
         <div class="spacer"></div>
-        <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user"></app-profile-picture>
+        <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user" [routerLink]="['/user', user.id]"></app-profile-picture>
     </app-top-bar>
     
     <div id="header" [style.backgroundColor]="this.color.makeGoalColor(g.color)">

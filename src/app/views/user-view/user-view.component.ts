@@ -35,11 +35,13 @@ export class UserViewComponent {
     this._ideaOrderBy = value;
     this._onideaOrderByChange();
   }
+  isLoggedIn = false;
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
     this._loadUser().then(() => {
+      this._setIsLoggedIn();
       this._loadIdeas();
     });
     this.fabClickSub = this._subscribeToFabClick();
@@ -51,6 +53,16 @@ export class UserViewComponent {
 
   // methods
   // --------------------------------------------
+  async _setIsLoggedIn() {
+    if (!this.user) {
+      console.error("this.user is undefined, cannot determine if their are logged in");
+      return;
+    }
+    let loggedInUser = await this.auth.getUser();
+    let isLoggedIn = this.user.id === loggedInUser?.id;
+    this.isLoggedIn = isLoggedIn;
+  }
+
   async _onideaOrderByChange() {
     this._refreshIdeas();
   }
