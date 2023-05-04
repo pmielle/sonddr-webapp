@@ -4,6 +4,12 @@ export interface FabMode {
     color: string,
 }
 
+export let userMode: FabMode = {
+    icon: "add",
+    color: "blue",
+    label: "Get<br>in touch",
+};
+
 export let addMode: FabMode = {
     icon: "checkmark",
     color: "green",

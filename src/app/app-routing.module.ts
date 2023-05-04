@@ -6,12 +6,14 @@ import { GoalViewComponent } from './views/goal-view/goal-view.component';
 import { HomeViewComponent } from './views/home-view/home-view.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { AddViewComponent } from './views/add-view/add-view.component';
+import { UserViewComponent } from './views/user-view/user-view.component';
 
 const routes: Routes = [
   {path: "", component: TabViewComponent, children: [
     {path: "", component: HomeViewComponent},
     {path: "goal/:id", component: GoalViewComponent},
     {path: "idea/:id", component: IdeaViewComponent},
+    {path: "user/:id", component: UserViewComponent},
     {path: "add", component: AddViewComponent},
   ]},
   {path: "login", component: LoginViewComponent},

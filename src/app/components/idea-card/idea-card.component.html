@@ -2,7 +2,8 @@
     <div id="cover" class="pointer" [routerLink]="['/idea', this.idea.id]" [style.background]="'gray'" mat-ripple></div>
     <div id="grid">
         <h2 id="title" class="pointer" [routerLink]="['/idea', this.idea.id]">{{ this.idea.title }}</h2>
-        <app-profile-picture></app-profile-picture>
-        <p id="subtitle"><span class="pointer">Rita2</span>, 3 hours ago</p>
+        <app-profile-picture [routerLink]="['/user', 'tcW9EcOc7bSBDQNVbJNLob9bXI82']"></app-profile-picture>
+        <!-- TODO: use the idea author here eventually -->
+        <p id="subtitle"><span class="pointer" [routerLink]="['/user', 'tcW9EcOc7bSBDQNVbJNLob9bXI82']">Rita2</span>, 3 hours ago</p>
     </div>
 </div>
