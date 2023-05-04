@@ -4,8 +4,10 @@ import { Subscription, filter } from 'rxjs';
 import { IUser } from 'src/app/interfaces/i-user';
 import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-user-view',
@@ -19,6 +21,8 @@ export class UserViewComponent {
   db = inject(DatabaseService);
   fab = inject(FabService);
   route = inject(ActivatedRoute);
+  tab = inject(TabService);
+  auth = inject(AuthenticationService);
 
   // attributes
   // --------------------------------------------

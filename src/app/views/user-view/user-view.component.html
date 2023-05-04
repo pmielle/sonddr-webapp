@@ -1,5 +1,16 @@
 <ng-container *ngIf="this.user as u">
 
+    <app-top-bar [scroll-container]="this.tab.defaultTab.html">
+        <div class="spacer"></div>
+        <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user"></app-profile-picture>
+    </app-top-bar>
+    
+    <div id="header">
+        <h1>{{ u.name }}</h1>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas reprehenderit veniam voluptate quibusdam excepturi
+            eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores
+            eligendi maiores!</p>
+    </div>
     <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy"></app-idea-list>
     
 </ng-container>
