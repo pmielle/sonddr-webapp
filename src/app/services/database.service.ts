@@ -58,6 +58,15 @@ export class DatabaseService {
     return this._getCollection<Idea>(iquery, this._convertDbIdea);
   }
 
+  async getIdeasFromUser(userId: string, orderByField: string): Promise<Idea[]> {
+    let iquery = query(
+      this.ideaCollection, 
+      where("authorId", "==", userId), 
+      orderBy(orderByField, "desc"),
+    );
+    return this._getCollection<Idea>(iquery, this._convertDbIdea);
+  }
+
   async getIdeas(orderByField: string): Promise<Idea[]> {  
     let iquery = query(this.ideaCollection, orderBy(orderByField, "desc"));
     return this._getCollection<Idea>(iquery, this._convertDbIdea);

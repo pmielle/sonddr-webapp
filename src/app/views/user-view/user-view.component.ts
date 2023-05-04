@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { IUser } from 'src/app/interfaces/i-user';
+import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
@@ -22,12 +23,21 @@ export class UserViewComponent {
   // attributes
   // --------------------------------------------
   user?: IUser;
+  ideas: Idea[] = [];
   fabClickSub: Subscription;
+  _ideaOrderBy = IdeaOrderBy.Date;
+  get ideaOrderBy() { return this._ideaOrderBy; }
+  set ideaOrderBy(value) {    
+    this._ideaOrderBy = value;
+    this._onideaOrderByChange();
+  }
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
-    this._loadUser();
+    this._loadUser().then(() => {
+      this._loadIdeas();
+    });
     this.fabClickSub = this._subscribeToFabClick();
   }
 
@@ -37,6 +47,18 @@ export class UserViewComponent {
 
   // methods
   // --------------------------------------------
+  async _onideaOrderByChange() {
+    this._refreshIdeas();
+  }
+
+  async _refreshIdeas() {
+    if (!this.user) {
+      console.error("this.user is undefined, cannot refresh their ideas");
+      return;
+    }
+    this.ideas = await this.db.getIdeasFromUser(this.user.id, this.ideaOrderBy);
+  }
+
   _onFabClick() {
     console.log("click....");
   }
@@ -47,18 +69,27 @@ export class UserViewComponent {
     );
   }
 
-  _loadUser(): Promise<void> {
-    return new Promise<void>(async (resolve, reject) => {
+  async _loadIdeas() {
+    if (!this.user) {
+      console.error("this.user is undefined, cannot refresh their ideas");
+      return;
+    }
+    this.ideas = await this.db.getIdeasFromUser(this.user.id, this.ideaOrderBy);
+  }
+
+  async _loadUser() {
+    this.user = await new Promise<IUser>(async (resolve, reject) => {
       let userId = this.route.snapshot.paramMap.get("id");
       if (!userId) {
         reject("Failed to get \"id\" from paramMap: cannot get the id of the user to display");
         return;
       }
-      this.user = await this.db.getUser(userId);
-      if (!this.user) {
-        console.error(`Failed to get user ${userId}`);
+      let user = await this.db.getUser(userId);
+      if (!user) {
+        reject(`Failed to get user ${userId}`);
         return;
       }
+      resolve(user);
     });
   }
 }

@@ -56,7 +56,7 @@ export class IdeaViewComponent implements OnDestroy {
       }
       this.idea = await this.db.getIdea(ideaId);
       if (!this.idea) {
-        console.error(`Failed to get idea ${ideaId}`);
+        reject(`Failed to get idea ${ideaId}`);
         return;
       }
     });

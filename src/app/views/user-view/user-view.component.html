@@ -1,1 +1,5 @@
-<p>user-view works!</p>
+<ng-container *ngIf="this.user as u">
+
+    <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy"></app-idea-list>
+    
+</ng-container>

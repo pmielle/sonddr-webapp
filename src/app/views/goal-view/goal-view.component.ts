@@ -33,7 +33,7 @@ export class GoalViewComponent implements OnDestroy {
   ideas: Idea[] = [];
   _ideaOrderBy = IdeaOrderBy.Date;
   get ideaOrderBy() { return this._ideaOrderBy; }
-  set ideaOrderBy(value) {
+  set ideaOrderBy(value) {    
     this._ideaOrderBy = value;
     this._onideaOrderByChange();
   }
