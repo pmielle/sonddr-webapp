@@ -10,6 +10,12 @@ export let userMode: FabMode = {
     label: "Get<br>in touch",
 };
 
+export let profileMode: FabMode = {
+    icon: "logout",
+    color: "red",
+    label: "Log out",
+};
+
 export let addMode: FabMode = {
     icon: "checkmark",
     color: "green",

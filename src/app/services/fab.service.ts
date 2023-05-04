@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { FabMode, addMode, goalMode, homeMode, ideaMode, userMode } from '../interfaces/fab-mode';
+import { FabMode, addMode, goalMode, homeMode, ideaMode, profileMode, userMode } from '../interfaces/fab-mode';
 import { TabService } from './tab.service';
 import { Subject, Subscription, filter, map } from 'rxjs';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Tab } from '../interfaces/tab';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class FabService implements OnDestroy {
   // dependencies
   // --------------------------------------------
   tab = inject(TabService);
+  auth = inject(AuthenticationService);
   router = inject(Router);
 
   // attributes
@@ -21,6 +23,7 @@ export class FabService implements OnDestroy {
   click$ = new Subject<Tab>();
   defaultTab = this.tab.defaultTab;
   routerSub: Subscription;
+  static userRouteRegex = /\/user\/(.+)/;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -59,26 +62,45 @@ export class FabService implements OnDestroy {
     return this.router.events.pipe(
       filter(e => e instanceof NavigationEnd),
       map(e => e as NavigationEnd),  // otherwise, rxjs does not understand
-    ).subscribe((e) => {
-      let newMode = this._chooseFabOfRoute(e.urlAfterRedirects);
+    ).subscribe(async (e) => {
+      let newMode = await this._chooseFabOfRoute(e.urlAfterRedirects);
       this.setModeStack(newMode);
     });
   }
 
-  _chooseFabOfRoute(route: string): FabMode | undefined {
+  async _chooseFabOfRoute(route: string): Promise<FabMode|undefined> {
     if (route.match(/\/idea\/.*/)) {
       return ideaMode;
-    } else if (route.match(/\/goal\/.*/)) {
+    } else if (route.match(/\/goal\/.+/)) {
       return goalMode;
-    } else if (route.match(/\/user\/.*/)) {
-      return userMode;
-    } else if (route.match(/\/add(\?.*)?/)) {
+    } else if (route.match(FabService.userRouteRegex)) {
+      return await this._chooseUserViewMode(route);      
+    } else if (route.match(/\/add(\?.+)?/)) {
       return addMode;
     } else if (route === "/") {
       return homeMode;
     } else {
       console.error(`Unexpected route ${route}: cannot set the correct fab mode`);
       return undefined;
+    }
+  }
+
+  async _chooseUserViewMode(route: string): Promise<FabMode|undefined> {
+    let matches = route.match(FabService.userRouteRegex);
+    if (!matches || matches.length != 2) {
+      console.error(`Failed to parse user route: ${route}`);
+      return undefined;
+    }
+    let userId = matches[1];
+    let authUser = await this.auth.getUser();
+    if (!authUser) {
+      console.error("auth.user is undefined");
+      return undefined;
+    }
+    if (userId == authUser.id) {
+      return profileMode;
+    } else {
+      return userMode;
     }
   }
 
