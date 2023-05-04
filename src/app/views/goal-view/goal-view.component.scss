@@ -1,12 +1,10 @@
 #header {
     position: relative;
-    --padding-top: var(--top-bar-height);
-    padding-top: var(--padding-top);
     padding-bottom: var(--spacing);
 
     #top-bar-filler {
         position: absolute;
-        top: calc(-1 * var(--padding-top));
+        top: calc(-1 * var(--top-bar-height));
         left: 0;
         width: 100%;
         height: var(--top-bar-height);

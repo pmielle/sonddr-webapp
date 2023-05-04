@@ -1,4 +1,15 @@
 #header {
-    padding-top: var(--top-bar-height);
+    --padding-top: 200px;
+    position: relative;
+    padding-top: var(--padding-top);
     padding-bottom: var(--spacing);
+
+    #top-bar-filler {
+        position: absolute;
+        top: calc(-1 * var(--top-bar-height));
+        left: 0;
+        width: 100%;
+        height: calc(var(--padding-top) + var(--top-bar-height));
+        background: gray;
+    }
 }
