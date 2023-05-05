@@ -1,6 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
+import { CommentOrderBy, IComment } from 'src/app/interfaces/i-comment';
 import { Idea } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -28,6 +29,13 @@ export class IdeaViewComponent implements OnDestroy {
   // attributes
   // --------------------------------------------
   idea?: Idea;
+  comments: IComment[] = [];
+  _commentOrderBy = CommentOrderBy.Date;
+  get commentOrderBy() { return this._commentOrderBy; }
+  set commentOrderBy(value) {    
+    this._commentOrderBy = value;
+    this._onCommentOrderByChange();
+  }
   fabClickSub: Subscription;
   sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
 
@@ -45,8 +53,33 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  _initialLoad() {
-    this._loadIdea();
+  async _onCommentOrderByChange() {
+    this._refreshComments();
+  }
+
+  async _refreshComments() {
+    if (this.idea === undefined) {
+      console.error("idea is undefined, cannot get its comments");
+      return;
+    }
+    this.comments = await this.db.getComments(this.idea.id, this.commentOrderBy);
+  }
+
+  _initialLoad() {    
+    this._loadIdea().then(() => {
+      this._loadComments();
+    }).catch((err) => {
+      console.error(`_loadIdea failed, cannot continue the initial loading of the page: ${err}`);
+      return;
+    });
+  }
+
+  async _loadComments() {
+    if (this.idea === undefined) {
+      console.error("idea is undefined, cannot get its comments");
+      return;
+    }    
+    this.comments = await this.db.getComments(this.idea.id, this.commentOrderBy);
   }
 
   _reload() {
@@ -76,6 +109,7 @@ export class IdeaViewComponent implements OnDestroy {
         reject(`Failed to get idea ${ideaId}`);
         return;
       }
+      resolve();
     });
   }
 }

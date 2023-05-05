@@ -14,7 +14,7 @@ export interface DbComment {
     upvotes: number,
 }
 
-export enum ICommentOrderBy {
+export enum CommentOrderBy {
     Date = "date",
     Upvotes = "upvotes",
 };

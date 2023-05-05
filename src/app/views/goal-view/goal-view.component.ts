@@ -37,7 +37,7 @@ export class GoalViewComponent implements OnDestroy {
   get ideaOrderBy() { return this._ideaOrderBy; }
   set ideaOrderBy(value) {    
     this._ideaOrderBy = value;
-    this._onideaOrderByChange();
+    this._onIdeaOrderByChange();
   }
   fabClickSub: Subscription;
   sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
@@ -105,7 +105,7 @@ export class GoalViewComponent implements OnDestroy {
     });
   }
 
-  async _onideaOrderByChange() {
+  async _onIdeaOrderByChange() {
     this._refreshIdeas();
   }
 

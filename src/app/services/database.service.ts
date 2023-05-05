@@ -7,7 +7,7 @@ import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
 import { Discussion } from '../interfaces/discussion';
 import { DbIdea, Idea } from '../interfaces/idea';
-import { DbComment, IComment, ICommentOrderBy } from '../interfaces/i-comment';
+import { DbComment, IComment, CommentOrderBy } from '../interfaces/i-comment';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
-  async getComments(ideaId: string, orderByField: ICommentOrderBy): Promise<IComment[]> {
+  async getComments(ideaId: string, orderByField: CommentOrderBy): Promise<IComment[]> {    
     let iquery = query(
       this.commentCollection, 
       where("ideaId", "==", ideaId), 
