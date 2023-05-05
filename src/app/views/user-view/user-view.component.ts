@@ -57,8 +57,8 @@ export class UserViewComponent {
   _initialLoad() {
     this._loadUser().then(() => {
       this._setIsLoggedIn();
-      this._loadIdeas();
     });
+    this._loadIdeas();
   }
 
   _reload() {
@@ -101,16 +101,8 @@ export class UserViewComponent {
     );
   }
 
-  async _loadIdeas() {
-    if (!this.user) {
-      console.error("this.user is undefined, cannot refresh their ideas");
-      return;
-    }
-    this.ideas = await this.db.getIdeasFromUser(this.user.id, this.ideaOrderBy);
-  }
-
   async _loadUser() {
-    this.user = await new Promise<IUser>(async (resolve, reject) => {
+    return new Promise<void>(async (resolve, reject) => {
       let userId = this.route.snapshot.paramMap.get("id");
       if (!userId) {
         reject("Failed to get \"id\" from paramMap: cannot get the id of the user to display");
@@ -121,7 +113,21 @@ export class UserViewComponent {
         reject(`Failed to get user ${userId}`);
         return;
       }
-      resolve(user);
+      this.user = user;
+      resolve();
     });
   }
+
+  async _loadIdeas() {
+    return new Promise<void>(async (resolve, reject) => {
+      let userId = this.route.snapshot.paramMap.get("id");
+      if (!userId) {
+        reject("Failed to get \"id\" from paramMap: cannot get the id of the user to display");
+        return;
+      }
+      this.ideas = await this.db.getIdeasFromUser(userId, this.ideaOrderBy);
+      resolve();
+    });
+  }
+  
 }

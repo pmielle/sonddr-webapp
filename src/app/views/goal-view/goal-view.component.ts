@@ -35,7 +35,7 @@ export class GoalViewComponent implements OnDestroy {
   ideas: Idea[] = [];
   _ideaOrderBy = IdeaOrderBy.Date;
   get ideaOrderBy() { return this._ideaOrderBy; }
-  set ideaOrderBy(value) {    
+  set ideaOrderBy(value) {
     this._ideaOrderBy = value;
     this._onIdeaOrderByChange();
   }
@@ -58,12 +58,8 @@ export class GoalViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   _initialLoad() {
-    this._loadGoal().then(() => {
-      this._loadIdeas();
-    }).catch((err) => {
-      console.error(`_loadGoal failed, cannot continue the initial loading of the page: ${err}`);
-      return;
-    });
+    this._loadGoal();
+    this._loadIdeas();
   }
 
   _reload() {
@@ -80,7 +76,7 @@ export class GoalViewComponent implements OnDestroy {
     } else {
       console.error("goal is undefined, cannot preselect it");
     }
-    this.router.navigate(["add"], {queryParams: queryParams});
+    this.router.navigate(["add"], { queryParams: queryParams });
   }
 
   _subscribeToFabClick(): Subscription {
@@ -96,11 +92,24 @@ export class GoalViewComponent implements OnDestroy {
         reject("Failed to get \"id\" from paramMap: cannot get the id of the goal to display");
         return;
       }
-      this.goal = await this.db.getGoal(goalId);
-      if (!this.goal) {
+      let goal = await this.db.getGoal(goalId);
+      if (!goal) {
         reject(`Failed to get goal with id ${goalId}`);
         return;
       }
+      this.goal = goal;
+      resolve();
+    });
+  }
+
+  async _loadIdeas() {
+    return new Promise<void>(async (resolve, reject) => {
+      let goalId = this.route.snapshot.paramMap.get("id");
+      if (!goalId) {
+        reject("Failed to get \"id\" from paramMap: cannot get the id of the goal to display");
+        return;
+      }
+      this.ideas = await this.db.getIdeasOfGoal(goalId, this.ideaOrderBy);
       resolve();
     });
   }
@@ -110,14 +119,6 @@ export class GoalViewComponent implements OnDestroy {
   }
 
   async _refreshIdeas() {
-    if (this.goal === undefined) {
-      console.error("goal is undefined, cannot get its ideas");
-      return;
-    }
-    this.ideas = await this.db.getIdeasOfGoal(this.goal.id, this.ideaOrderBy);
-  }
-
-  async _loadIdeas() {
     if (this.goal === undefined) {
       console.error("goal is undefined, cannot get its ideas");
       return;
