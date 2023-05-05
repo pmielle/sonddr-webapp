@@ -12,5 +12,5 @@
             eligendi maiores!</p>
     </div>
     
-    <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy" [header-color]="this.color.makeGoalColor(g.color)"></app-idea-list>
+    <app-idea-list [ideas]="this.ideas" (order-by-change)="this.ideaOrderBy = $event" [header-color]="this.color.makeGoalColor(g.color)"></app-idea-list>
 </ng-container>

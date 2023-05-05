@@ -1,28 +1,31 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommentOrderBy, IComment } from 'src/app/interfaces/i-comment';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CommentOrderBy, IComment, defaultCommentOrderBy } from 'src/app/interfaces/i-comment';
 
 @Component({
   selector: 'app-comment-section',
   templateUrl: './comment-section.component.html',
   styleUrls: ['./comment-section.component.scss']
 })
-export class CommentSectionComponent {
+export class CommentSectionComponent implements OnInit {
 
   // attributes
   // --------------------------------------------
   @Input('comments') comments!: IComment[];
-  _oderByField?: CommentOrderBy;
-  get orderByField() { return this._oderByField; }
-  @Input() set orderByField(value) {
-    this._oderByField = value;
-    this.orderByFieldChange.emit(this.orderByField);
+  @Output('order-by-change') orderByChange$ = new EventEmitter<CommentOrderBy>();
+  _orderByField?: CommentOrderBy = defaultCommentOrderBy;
+  get orderByField() { return this._orderByField; }
+  set orderByField(value) {    
+    if (value) {      
+      this.orderByChange$.next(value);
+    }
+    this._orderByField = value;
   }
-  @Output() orderByFieldChange = new EventEmitter<CommentOrderBy>();
   CommentOrderBy = CommentOrderBy;
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() { }
+  ngOnInit(): void { }
 
   // methods
   // --------------------------------------------

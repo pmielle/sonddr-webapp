@@ -24,3 +24,5 @@ export enum IdeaOrderBy {
     Date = "date",
     Upvotes = "upvotes",
 };
+
+export let defaultIdeaOrderBy = IdeaOrderBy.Date;

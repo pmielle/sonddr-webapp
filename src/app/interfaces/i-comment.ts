@@ -18,3 +18,5 @@ export enum CommentOrderBy {
     Date = "date",
     Upvotes = "upvotes",
 };
+
+export let defaultCommentOrderBy = CommentOrderBy.Date;

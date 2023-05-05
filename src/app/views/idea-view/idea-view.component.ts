@@ -1,7 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
-import { CommentOrderBy, IComment } from 'src/app/interfaces/i-comment';
+import { IComment, defaultCommentOrderBy } from 'src/app/interfaces/i-comment';
 import { Idea } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -30,11 +30,11 @@ export class IdeaViewComponent implements OnDestroy {
   // --------------------------------------------
   idea?: Idea;
   comments: IComment[] = [];
-  _commentOrderBy = CommentOrderBy.Date;
+  _commentOrderBy = defaultCommentOrderBy;
   get commentOrderBy() { return this._commentOrderBy; }
-  set commentOrderBy(value) {    
-    this._commentOrderBy = value;    
-    this._onCommentOrderByChange();
+  set commentOrderBy(value) {
+    this._commentOrderBy = value;
+    this._refreshComments();
   }
   fabClickSub: Subscription;
   sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());

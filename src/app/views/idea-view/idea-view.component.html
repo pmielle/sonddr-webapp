@@ -20,6 +20,6 @@
         <p>{{ i.content }}</p>
     </div>
 
-    <app-comment-section [comments]="this.comments" [(orderByField)]="this.commentOrderBy"></app-comment-section>
+    <app-comment-section [comments]="this.comments" (order-by-change)="this.commentOrderBy = $event"></app-comment-section>
     
 </ng-container>

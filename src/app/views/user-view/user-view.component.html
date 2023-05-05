@@ -14,6 +14,6 @@
             eveniet quaerat amet, recusandae quos laborum enim blanditiis sapiente accusamus dolore hic dicta asperiores
             eligendi maiores!</p>
     </div>
-    <app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy"></app-idea-list>
+    <app-idea-list [ideas]="this.ideas" (order-by-change)="this.ideaOrderBy = $event"></app-idea-list>
     
 </ng-container>

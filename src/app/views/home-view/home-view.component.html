@@ -12,4 +12,4 @@
     </app-h-scroll>
 </div>
 
-<app-idea-list [ideas]="this.ideas" [(orderByField)]="this.ideaOrderBy"></app-idea-list>
+<app-idea-list [ideas]="this.ideas" (order-by-change)="this.ideaOrderBy = $event"></app-idea-list>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Idea, IdeaOrderBy } from 'src/app/interfaces/idea';
+import { Idea, IdeaOrderBy, defaultIdeaOrderBy } from 'src/app/interfaces/idea';
 
 @Component({
   selector: 'app-idea-list',
@@ -10,15 +10,17 @@ export class IdeaListComponent implements OnInit {
 
   // attributes
   // --------------------------------------------
-  @Input('ideas') ideas!: Idea[];
-  _oderByField?: IdeaOrderBy;
-  get orderByField() { return this._oderByField; }
-  @Input() set orderByField(value) {
-    this._oderByField = value;
-    this.orderByFieldChange.emit(this.orderByField);
-  }
-  @Output() orderByFieldChange = new EventEmitter<IdeaOrderBy>();
   @Input('header-color') headerColor: string = "var(--background-color)";
+  @Input('ideas') ideas!: Idea[];
+  @Output('order-by-change') orderByChange$ = new EventEmitter<IdeaOrderBy>();
+  _orderByField?: IdeaOrderBy = defaultIdeaOrderBy;
+  get orderByField() { return this._orderByField; }
+  set orderByField(value) {    
+    if (value) {      
+      this.orderByChange$.next(value);
+    }
+    this._orderByField = value;
+  }  
   IdeaOrderBy = IdeaOrderBy;
 
   // lifecycle hooks
