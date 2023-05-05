@@ -1,0 +1,15 @@
+#input {
+    position: relative;
+
+    mat-form-field {
+        flex: 1;
+    }
+
+    #send {
+        background-color: green;
+    }
+}
+
+#comments {
+    background-color: var(--darker-background-color);
+}
