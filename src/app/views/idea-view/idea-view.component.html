@@ -19,5 +19,7 @@
     <div id="content">
         <p>{{ i.content }}</p>
     </div>
+
+    <app-comment-section [comments]="this.comments" [(orderByField)]="this.commentOrderBy"></app-comment-section>
     
 </ng-container>

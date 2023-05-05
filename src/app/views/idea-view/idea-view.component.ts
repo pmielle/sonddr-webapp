@@ -33,7 +33,7 @@ export class IdeaViewComponent implements OnDestroy {
   _commentOrderBy = CommentOrderBy.Date;
   get commentOrderBy() { return this._commentOrderBy; }
   set commentOrderBy(value) {    
-    this._commentOrderBy = value;
+    this._commentOrderBy = value;    
     this._onCommentOrderByChange();
   }
   fabClickSub: Subscription;
@@ -61,7 +61,7 @@ export class IdeaViewComponent implements OnDestroy {
     if (this.idea === undefined) {
       console.error("idea is undefined, cannot get its comments");
       return;
-    }
+    }    
     this.comments = await this.db.getComments(this.idea.id, this.commentOrderBy);
   }
 

@@ -29,7 +29,7 @@ export let ideaTab: Tab = {
   
   export let messagesTab: Tab = {
     name: "messages", 
-    icon: "forum", 
+    icon: "sms", 
     component: MessagesViewComponent,
   };
   

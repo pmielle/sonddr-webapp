@@ -2,6 +2,7 @@
     width: 90px;
 
     &:not(.selected) .label { font-weight: lighter; }
+    &.selected .label { font-weight: bold; }
 
     .icon-container {
         position: relative;

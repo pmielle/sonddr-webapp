@@ -1,0 +1,15 @@
+<div class="flex">
+    <div class="spacer"></div>
+    <mat-form-field appearance="fill">
+        <mat-label>Order by</mat-label>
+        <mat-select [(value)]="this.orderByField">
+            <mat-option *ngFor="let field of this.CommentOrderBy | keyvalue" [value]="field.value">
+                {{ field.key }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div id="content">
+    <p *ngFor="let comment of this.comments">{{comment.content}}</p>
+</div>

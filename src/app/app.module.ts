@@ -37,6 +37,7 @@ import { ChipComponent } from './components/chip/chip.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { UserViewComponent } from './views/user-view/user-view.component';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { UserViewComponent } from './views/user-view/user-view.component';
     FilePickerComponent,
     ChipComponent,
     UserViewComponent,
+    CommentSectionComponent,
   ],
   imports: [
     BrowserModule,
