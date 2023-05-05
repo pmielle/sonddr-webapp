@@ -3,7 +3,7 @@
         <mat-label>What do you think?</mat-label>
         <textarea matInput [(ngModel)]="this.content" [ngModelOptions]="{standalone: true}"></textarea>
     </mat-form-field>
-    <button id="send" mat-raised-button (click)="this.postComment()"><mat-icon>send</mat-icon>Comment</button>
+    <app-chip color="green" icon="send" label="Comment" (click)="this.postComment()"></app-chip>
 </div>
 
 <div id="comments">
@@ -19,6 +19,8 @@
         </mat-form-field>
     </div>
     <div id="content">
-        <p *ngFor="let comment of this.comments">{{comment.content}}</p>
+        <p *ngFor="let comment of this.displayedComments">{{comment.content}}</p>
+        <app-chip *ngIf="this.makeSeeMoreLabel() as label" color="white" foreground-color="var(--darker-background-color)" icon="expand_more" [label]="label" (click)="this.seeMore()"></app-chip>
+
     </div>
 </div>

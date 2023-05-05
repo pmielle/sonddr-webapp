@@ -19,7 +19,14 @@ export class CommentSectionComponent implements OnInit {
   // attributes
   // --------------------------------------------
   @Input('idea') idea!: Idea;
-  @Input('comments') comments!: IComment[];
+
+  _comments: IComment[] = [];
+  get comments() { return this._comments; }
+  @Input('comments') set comments(value) {
+    this._comments = value;
+    this._onCommentsChange();
+  }
+
   @Output('order-by-change') orderByChange$ = new EventEmitter<CommentOrderBy>();
   _orderByField?: CommentOrderBy = defaultCommentOrderBy;
   get orderByField() { return this._orderByField; }
@@ -31,6 +38,7 @@ export class CommentSectionComponent implements OnInit {
   }
   CommentOrderBy = CommentOrderBy;
   content: string = "";
+  displayedComments: IComment[] = [];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -39,6 +47,23 @@ export class CommentSectionComponent implements OnInit {
 
   // methods
   // --------------------------------------------
+  seeMore() {
+    this.displayedComments = [...this.comments];
+  }
+
+  makeSeeMoreLabel(): string|undefined {
+    let nComments = this.comments.length;
+    let nDisplayedComments = this.displayedComments.length;
+    if (nComments <= 1) {
+      return undefined;
+    }
+    if (nComments <= nDisplayedComments) {
+      return undefined;
+    }
+    let n = nComments - nDisplayedComments
+    return `See ${n} more comment${n > 1 ? 's' : ''}`;
+  }
+
   async postComment() {
     // validate inputs
     if (!this.content) {
@@ -54,8 +79,20 @@ export class CommentSectionComponent implements OnInit {
     // post
     let newComment = await this.db.postComment(this.content, this.idea.id, user.id);
     // epilogue
-    this.comments.unshift(newComment);
+    this._afterCommentPost(newComment);
+  }
+
+  _afterCommentPost(newComment: IComment) {
     this.content = "";
+    this.comments.unshift(newComment);  // does not trigger the setter
+    this.displayedComments.unshift(newComment);
+  }
+
+  _onCommentsChange() {
+    if (this.comments.length <= 0) {
+      this.displayedComments = [];
+    }
+    this.displayedComments = this.comments.slice(0,1);
   }
 
 }
