@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ColorService } from 'src/app/services/color.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
+import { IRouterService } from 'src/app/services/i-router.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -26,6 +27,7 @@ export class GoalViewComponent implements OnDestroy {
   route = inject(ActivatedRoute);
   fab = inject(FabService);
   router = inject(Router);
+  irouter = inject(IRouterService);
 
   // attributes
   // --------------------------------------------
@@ -38,25 +40,39 @@ export class GoalViewComponent implements OnDestroy {
     this._onideaOrderByChange();
   }
   fabClickSub: Subscription;
+  sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
+
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
+    this._initialLoad();
+    this.fabClickSub = this._subscribeToFabClick();
+  }
+
+  ngOnDestroy(): void {
+    this.fabClickSub.unsubscribe();
+    this.sameUrlNavigationSub.unsubscribe();
+  }
+
+  // methods
+  // --------------------------------------------
+  _initialLoad() {
     this._loadGoal().then(() => {
       this._loadIdeas();
     }).catch((err) => {
       console.error(`_loadGoal failed, cannot continue the initial loading of the page: ${err}`);
       return;
     });
-    this.fabClickSub = this._subscribeToFabClick();
   }
 
-  ngOnDestroy(): void {
-    this.fabClickSub.unsubscribe();
+  _reload() {
+    this.ideas = [];
+    this.goal = undefined;
+    this._ideaOrderBy = IdeaOrderBy.Date;
+    this._initialLoad();
   }
 
-  // methods
-  // --------------------------------------------
   _onFabClick() {
     let queryParams: Params = {};
     if (this.goal) {

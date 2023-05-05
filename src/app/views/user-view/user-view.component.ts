@@ -7,6 +7,7 @@ import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
+import { IRouterService } from 'src/app/services/i-router.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class UserViewComponent {
   route = inject(ActivatedRoute);
   tab = inject(TabService);
   auth = inject(AuthenticationService);
+  irouter = inject(IRouterService);
 
   // attributes
   // --------------------------------------------
@@ -36,23 +38,37 @@ export class UserViewComponent {
     this._onideaOrderByChange();
   }
   isLoggedIn = false;
+  sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
-    this._loadUser().then(() => {
-      this._setIsLoggedIn();
-      this._loadIdeas();
-    });
+    this._initialLoad();
     this.fabClickSub = this._subscribeToFabClick();
   }
 
   ngOnDestroy(): void {
     this.fabClickSub.unsubscribe();
+    this.sameUrlNavigationSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  _initialLoad() {
+    this._loadUser().then(() => {
+      this._setIsLoggedIn();
+      this._loadIdeas();
+    });
+  }
+
+  _reload() {
+    this.ideas = [];
+    this.user = undefined;
+    this._ideaOrderBy = IdeaOrderBy.Date;
+    this.isLoggedIn = false;
+    this._initialLoad();
+  }
+
   async _setIsLoggedIn() {
     if (!this.user) {
       console.error("this.user is undefined, cannot determine if their are logged in");

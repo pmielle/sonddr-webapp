@@ -6,6 +6,7 @@ import { ideaTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { FabService } from 'src/app/services/fab.service';
+import { IRouterService } from 'src/app/services/i-router.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -22,25 +23,37 @@ export class IdeaViewComponent implements OnDestroy {
   route = inject(ActivatedRoute);
   tab = inject(TabService);
   auth = inject(AuthenticationService);
+  irouter = inject(IRouterService);
 
   // attributes
   // --------------------------------------------
   idea?: Idea;
   fabClickSub: Subscription;
+  sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
-    this._loadIdea();
+    this._initialLoad();
     this.fabClickSub = this._subscribeToFabClick();
   }
 
   ngOnDestroy(): void {
     this.fabClickSub.unsubscribe();
+    this.sameUrlNavigationSub.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  _initialLoad() {
+    this._loadIdea();
+  }
+
+  _reload() {
+    this.idea = undefined;
+    this._initialLoad();
+  }
+
   _onFabClick() {
     console.log("click....");
   }
