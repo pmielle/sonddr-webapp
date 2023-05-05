@@ -7,6 +7,7 @@ import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
 import { Discussion } from '../interfaces/discussion';
 import { DbIdea, Idea } from '../interfaces/idea';
+import { DbComment, IComment, ICommentOrderBy } from '../interfaces/i-comment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class DatabaseService {
   // --------------------------------------------
   goalCollection = collection(this.firestore, "goals");
   ideaCollection = collection(this.firestore, "ideas");
+  commentCollection = collection(this.firestore, "comments");
 
   // lifecycle hooks
   // --------------------------------------------
@@ -28,6 +30,27 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async getComments(ideaId: string, orderByField: ICommentOrderBy): Promise<IComment[]> {
+    let iquery = query(
+      this.commentCollection, 
+      where("ideaId", "==", ideaId), 
+      orderBy(orderByField, "desc"),
+    );
+    return this._getCollection(iquery, this._convertDbComment);
+  }
+
+  async postComment(content: string, ideaId: string, authorId: string): Promise<IComment> {
+    let payload = {
+      content: content,
+      ideaId: ideaId,
+      date: serverTimestamp(),
+      upvotes: 0,
+      authorId: authorId,
+    };
+    let dbComment = await this._postDocument<DbComment>(this.commentCollection, payload);
+    return this._convertDbComment(dbComment);
+  }
+
   async getIdea(id: string): Promise<Idea> {
     let ideaDoc = doc(this.firestore, `ideas/${id}`);
     return this._getDocument<Idea>(ideaDoc, this._convertDbIdea);
@@ -42,7 +65,8 @@ export class DatabaseService {
       upvotes: 0,
       authorId: authorId,
     };
-    return this._postDocument<Idea>(this.ideaCollection, payload);
+    let dbIdea = await this._postDocument<DbIdea>(this.ideaCollection, payload);
+    return this._convertDbIdea(dbIdea);
   }
 
   async getGoal(id: string): Promise<Goal> {
@@ -109,6 +133,18 @@ export class DatabaseService {
         return;
       }      
       let {authorId, ...validFields} = dbIdea;
+      resolve({...validFields, author: author});
+    });
+  }
+
+  async _convertDbComment(dbComment: DbComment): Promise<IComment> {
+    return new Promise(async (resolve, reject) => {
+      let author = await this.getUser(dbComment.authorId);
+      if (!author) {
+        reject(`User ${dbComment.authorId} not found`);
+        return;
+      }      
+      let {authorId, ...validFields} = dbComment;
       resolve({...validFields, author: author});
     });
   }
