@@ -15,6 +15,8 @@ export class CommentComponent {
   // attributes
   // --------------------------------------------
   @Input('comment') comment!: IComment;
+  hasUpvoted?: boolean;
+  hasDownvoted?: boolean;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -22,6 +24,20 @@ export class CommentComponent {
 
   // methods
   // --------------------------------------------
-  // ...
+  onDownvoteClick() {
+    if (this.hasDownvoted === undefined) {
+      console.error("hasDownvoted is undefined, cannot continue");
+      return;
+    }
+    // ...
+  }
+
+  onUpvoteClick() {
+    if (this.hasDownvoted === undefined) {
+      console.error("hasUpvoted is undefined, cannot continue");
+      return;
+    }
+    // ...
+  }
 
 }

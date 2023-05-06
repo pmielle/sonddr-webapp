@@ -3,6 +3,6 @@
         <p>{{ this.comment.author.name }}</p>
         <app-profile-picture [user]="this.comment.author"></app-profile-picture>
     </div>
-    <app-comment-upvotes [is-upvoted]="false" [is-downvoted]="false" [comment]="this.comment"></app-comment-upvotes>
+    <app-comment-upvotes [is-upvoted]="this.hasUpvoted || false" [is-downvoted]="this.hasDownvoted || false" [comment]="this.comment" (upvote-click)="this.onUpvoteClick()" (downvote-click)="this.onDownvoteClick()"></app-comment-upvotes>
     <p id="content">{{ this.comment.content }}</p>
 </div>
