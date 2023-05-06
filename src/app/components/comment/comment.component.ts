@@ -45,7 +45,7 @@ export class CommentComponent {
       console.error("auth.user is undefined, cannot upvote");
       return;
     }
-    console.warn("downvotes are not implemented yet...");
+    this.hasDownvoted = await this.db.hasDownvotedComment(this.comment.id, user.id);
   }
   
   async onUpvoteClick() {
@@ -60,11 +60,26 @@ export class CommentComponent {
     }
   }
 
+  onDownvoteClick() {
+    if (this.hasDownvoted === undefined) {
+      console.error("hasDownvoted is undefined, cannot continue");
+      return;
+    }
+    if (this.hasDownvoted) {
+      this._removeDownvote();
+    } else {
+      this._downvote();
+    }
+  }
+
   async _upvote() {
     let user = await this.auth.getUser();
     if (!user) {
       console.error("auth.user is undefined, cannot upvote");
       return;
+    }
+    if (this.hasDownvoted) {
+      this._removeDownvote();
     }
     this.db.upvoteComment(this.comment.id, user.id);
     this.hasUpvoted = true;
@@ -82,12 +97,29 @@ export class CommentComponent {
     this.comment.upvotes -= 1;
   }
 
-  onDownvoteClick() {
-    if (this.hasDownvoted === undefined) {
-      console.error("hasDownvoted is undefined, cannot continue");
+  async _downvote() {
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("auth.user is undefined, cannot downvote");
       return;
     }
-    console.log("downvoting...");
+    if (this.hasUpvoted) {
+      this._removeUpvote();
+    }
+    this.db.downvoteComment(this.comment.id, user.id);
+    this.hasDownvoted = true;
+    this.comment.upvotes -= 1;
+  }
+
+  async _removeDownvote() {
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("auth.user is undefined, cannot remove downvote");
+      return;
+    }
+    this.db.deleteCommentDownvote(this.comment.id, user.id);
+    this.hasDownvoted = false;
+    this.comment.upvotes += 1;
   }
 
 }

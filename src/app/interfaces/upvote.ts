@@ -1,11 +1,11 @@
-export interface Upvote {
+export interface Vote {
     id: string,
     ideaId: string,
     userId: string,
 }
 
-export interface DbUpvote {
+export interface DbVote {
     id: string,
     ideaId: string,
     userId: string,
-}
+} 
