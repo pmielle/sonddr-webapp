@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { CommentOrderBy, IComment, defaultCommentOrderBy } from 'src/app/interfaces/i-comment';
 import { Idea } from 'src/app/interfaces/idea';
+import { ScreenSize } from 'src/app/interfaces/screen-size';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { DeviceService } from 'src/app/services/device.service';
 
 @Component({
   selector: 'app-comment-section',
@@ -15,18 +17,17 @@ export class CommentSectionComponent implements OnInit {
   // --------------------------------------------
   auth = inject(AuthenticationService);
   db = inject(DatabaseService);
+  device = inject(DeviceService);
 
   // attributes
   // --------------------------------------------
   @Input('idea') idea!: Idea;
-
   _comments: IComment[] = [];
   get comments() { return this._comments; }
   @Input('comments') set comments(value) {
     this._comments = value;
     this._onCommentsChange();
   }
-
   @Output('order-by-change') orderByChange$ = new EventEmitter<CommentOrderBy>();
   _orderByField?: CommentOrderBy = defaultCommentOrderBy;
   get orderByField() { return this._orderByField; }
@@ -39,6 +40,7 @@ export class CommentSectionComponent implements OnInit {
   CommentOrderBy = CommentOrderBy;
   content: string = "";
   collapsed = true;
+  ScreenSize = ScreenSize;
 
   // lifecycle hooks
   // --------------------------------------------

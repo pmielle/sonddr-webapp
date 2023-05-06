@@ -3,7 +3,7 @@
         <mat-label>What do you think?</mat-label>
         <textarea matInput [(ngModel)]="this.content" [ngModelOptions]="{standalone: true}"></textarea>
     </mat-form-field>
-    <app-chip color="green" icon="send" label="Comment" (click)="this.postComment()"></app-chip>
+    <app-chip color="green" icon="send" label="Comment" [no-label]="(this.device.screenSize$ | async) == ScreenSize.Small" (click)="this.postComment()"></app-chip>
 </div>
 
 <div id="comments">

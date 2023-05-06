@@ -1,7 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeSlideInOut } from 'src/app/animations/in-out';
+import { ScreenSize } from 'src/app/interfaces/screen-size';
 import { Tab } from 'src/app/interfaces/tab';
+import { DeviceService } from 'src/app/services/device.service';
 import { TabService } from 'src/app/services/tab.service';
 
 @Component({
@@ -16,6 +18,7 @@ export class TabIconsComponent {
   // --------------------------------------------
   tab = inject(TabService);
   router = inject(Router);
+  device = inject(DeviceService);
 
   // attributes
   // --------------------------------------------
@@ -34,7 +37,7 @@ export class TabIconsComponent {
       return;
     }
     // otherwise, on mobile
-    if (window.screen.width <= 700) {
+    if (this.device.screenSize$.getValue() == ScreenSize.Small) {
       // handle default tab (ideas) tap
       if (tab === this.tab.defaultTab) {
         // go back to home if not already
