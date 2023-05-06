@@ -68,37 +68,41 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   _initialLoad() {    
-    this._loadIdea().then(() => {
-      this._checkHasUpvoted();
-      this._loadComments();
-    }).catch((err) => {
-      console.error(`_loadIdea failed, cannot continue the initial loading of the page: ${err}`);
-      return;
+    this._loadIdea();
+    this._checkHasUpvoted();
+    this._loadComments();
+  }
+
+  async _checkHasUpvoted(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let ideaId = this.route.snapshot.paramMap.get("id");
+      if (!ideaId) {
+        reject("Failed to get \"id\" from paramMap: cannot get the id of the idea to display");
+        return;
+      } 
+      let user = await this.auth.getUser();
+      if (!user) {
+        reject("auth.user is undefined, cannot upvote");
+        return;
+      }
+      this.hasUpvoted = await this.db.hasUpvotedIdea(ideaId, user.id);
+      if (this.hasUpvoted) {
+        this.fab.pushToModeStack(upvotedMode);
+      }
+      resolve();
     });
   }
 
-  async _checkHasUpvoted() {
-    if (!this.idea) {
-      console.error("idea is undefined, cannot upvote it");
-      return;
-    }  
-    let user = await this.auth.getUser();
-    if (!user) {
-      console.error("auth.user is undefined, cannot upvote");
-      return;
-    }
-    this.hasUpvoted = await this.db.hasUpvotedIdea(this.idea.id, user.id);
-    if (this.hasUpvoted) {
-      this.fab.pushToModeStack(upvotedMode);
-    }
-  }
-
-  async _loadComments() {
-    if (!this.idea) {
-      console.error("idea is undefined, cannot get its comments");
-      return;
-    }    
-    this.comments = await this.db.getComments(this.idea.id, this.commentOrderBy);
+  async _loadComments(): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let ideaId = this.route.snapshot.paramMap.get("id");
+      if (!ideaId) {
+        reject("Failed to get \"id\" from paramMap: cannot get the id of the idea to display");
+        return;
+      }   
+      this.comments = await this.db.getComments(ideaId, this.commentOrderBy);
+      resolve();
+    });
   }
 
   _reload() {
