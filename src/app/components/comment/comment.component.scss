@@ -1,0 +1,19 @@
+#container {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+
+    #author-container {
+        grid-column: 2;
+        position: relative;
+        font-weight: bold;
+
+        p { margin: 0; }
+
+        app-profile-picture {
+            position: absolute;
+            left: calc(-1 * var(--spacing));
+            top: 50%;
+            transform: translate(-100%, -50%);
+        }
+    }
+}

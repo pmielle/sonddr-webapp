@@ -1,0 +1,8 @@
+<div id="container">
+    <div id="author-container">
+        <p>{{ this.comment.author.name }}</p>
+        <app-profile-picture [user]="this.comment.author"></app-profile-picture>
+    </div>
+    <app-comment-upvotes [is-upvoted]="false" [is-downvoted]="false" [comment]="this.comment"></app-comment-upvotes>
+    <p id="content">{{ this.comment.content }}</p>
+</div>

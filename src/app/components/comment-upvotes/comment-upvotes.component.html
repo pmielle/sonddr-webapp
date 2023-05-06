@@ -1,0 +1,5 @@
+<div id="container" class="flex column">
+    <button mat-icon-button (click)="this.upvoteClick.next()"><mat-icon [style.color]="this.chooseUpArrowColor()">keyboard_arrow_up</mat-icon></button>
+    <span [style.color]="this.chooseTextColor()">{{ this.comment.upvotes }}</span>
+    <button mat-icon-button (click)="this.downvoteClick.next()"><mat-icon [style.color]="this.chooseDownArrowColor()">keyboard_arrow_down</mat-icon></button>
+</div>

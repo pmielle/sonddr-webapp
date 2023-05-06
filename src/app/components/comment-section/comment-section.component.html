@@ -22,12 +22,12 @@
         <ng-container *ngIf="this.comments.length > 0">
             <!-- collapsed mode -->
             <ng-container *ngIf="this.collapsed; else allComments">
-                <p >{{ this.comments[0].content }}</p>
+                <app-comment [comment]="this.comments[0]"></app-comment>
                 <app-chip *ngIf="this.makeSeeMoreLabel() as label" color="white" foreground-color="var(--darker-background-color)" icon="expand_more" [label]="label" (click)="this.seeMore()"></app-chip>
             </ng-container>
             <!-- expanded mode -->
             <ng-template #allComments>
-                <p *ngFor="let comment of this.comments">{{comment.content}}</p>
+                <app-comment *ngFor="let comment of this.comments" [comment]="comment"></app-comment>
             </ng-template>
         </ng-container>
     </div>

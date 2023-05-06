@@ -38,6 +38,8 @@ import {MatMenuModule} from '@angular/material/menu';
 import { FormsModule } from '@angular/forms';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentComponent } from './components/comment/comment.component';
+import { CommentUpvotesComponent } from './components/comment-upvotes/comment-upvotes.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
     ChipComponent,
     UserViewComponent,
     CommentSectionComponent,
+    CommentComponent,
+    CommentUpvotesComponent,
   ],
   imports: [
     BrowserModule,
