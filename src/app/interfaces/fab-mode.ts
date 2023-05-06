@@ -34,8 +34,14 @@ export let goalMode: FabMode = {
     label: "Share<br>an idea",
 };
 
-export let ideaMode: FabMode = {
+export let upvoteMode: FabMode = {
     icon: "favorite_outline",
     color: "gray",
     label: "Upvote",
+};
+
+export let upvotedMode: FabMode = {
+    icon: "favorite",
+    color: "red",
+    label: "Upvoted",
 };

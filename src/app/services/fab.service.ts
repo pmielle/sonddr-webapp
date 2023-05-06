@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject } from '@angular/core';
-import { FabMode, addMode, goalMode, homeMode, ideaMode, profileMode, userMode } from '../interfaces/fab-mode';
+import { FabMode, addMode, goalMode, homeMode, upvoteMode, profileMode, userMode } from '../interfaces/fab-mode';
 import { TabService } from './tab.service';
 import { Subject, Subscription, filter, map } from 'rxjs';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -70,7 +70,7 @@ export class FabService implements OnDestroy {
 
   async _chooseFabOfRoute(route: string): Promise<FabMode|undefined> {
     if (route.match(/\/idea\/.*/)) {
-      return ideaMode;
+      return upvoteMode;
     } else if (route.match(/\/goal\/.+/)) {
       return goalMode;
     } else if (route.match(FabService.userRouteRegex)) {

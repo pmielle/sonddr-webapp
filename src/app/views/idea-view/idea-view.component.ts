@@ -1,6 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
+import { upvotedMode } from 'src/app/interfaces/fab-mode';
 import { IComment, defaultCommentOrderBy } from 'src/app/interfaces/i-comment';
 import { Idea } from 'src/app/interfaces/idea';
 import { ideaTab } from 'src/app/interfaces/tab';
@@ -38,6 +39,7 @@ export class IdeaViewComponent implements OnDestroy {
   }
   fabClickSub: Subscription;
   sameUrlNavigationSub = this.irouter.onSameUrlNavigation$.subscribe(() => this._reload());
+  hasUpvoted?: boolean;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -67,6 +69,7 @@ export class IdeaViewComponent implements OnDestroy {
 
   _initialLoad() {    
     this._loadIdea().then(() => {
+      this._checkHasUpvoted();
       this._loadComments();
     }).catch((err) => {
       console.error(`_loadIdea failed, cannot continue the initial loading of the page: ${err}`);
@@ -74,8 +77,24 @@ export class IdeaViewComponent implements OnDestroy {
     });
   }
 
+  async _checkHasUpvoted() {
+    if (!this.idea) {
+      console.error("idea is undefined, cannot upvote it");
+      return;
+    }  
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("auth.user is undefined, cannot upvote");
+      return;
+    }
+    this.hasUpvoted = await this.db.hasUpvotedIdea(this.idea.id, user.id);
+    if (this.hasUpvoted) {
+      this.fab.pushToModeStack(upvotedMode);
+    }
+  }
+
   async _loadComments() {
-    if (this.idea === undefined) {
+    if (!this.idea) {
       console.error("idea is undefined, cannot get its comments");
       return;
     }    
@@ -87,8 +106,46 @@ export class IdeaViewComponent implements OnDestroy {
     this._initialLoad();
   }
 
-  _onFabClick() {
-    console.log("click....");
+  async _onFabClick() {
+    if (this.hasUpvoted === undefined) {
+      console.error("this.hasUpvotes is undefined: cannot choose wether to upvote or remove existing upvote");
+      return;
+    }
+    if (this.hasUpvoted) {
+      this._removeUpvote();
+    } else {
+      this._upvote();
+    }
+  }
+
+  async _removeUpvote() {
+    if (!this.idea) {
+      console.error("idea is undefined, cannot upvote it");
+      return;
+    }  
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("auth.user is undefined, cannot upvote");
+      return;
+    }
+    this.hasUpvoted = false;
+    this.fab.popModeStack();
+    this.db.deleteIdeaUpvote(this.idea.id, user.id);
+  }
+  
+  async _upvote() {
+    if (!this.idea) {
+      console.error("idea is undefined, cannot upvote it");
+      return;
+    }  
+    let user = await this.auth.getUser();
+    if (!user) {
+      console.error("auth.user is undefined, cannot upvote");
+      return;
+    }
+    this.hasUpvoted = true;
+    this.fab.pushToModeStack(upvotedMode);
+    this.db.upvoteIdea(this.idea.id, user.id);
   }
   
   _subscribeToFabClick(): Subscription {
