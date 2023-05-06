@@ -1,6 +1,7 @@
 import { IUser } from "./i-user";
 
 export interface IComment {
+    id: string,
     author: IUser,
     content: string,
     date: string,
@@ -8,6 +9,7 @@ export interface IComment {
 }
 
 export interface DbComment {
+    id: string,
     authorId: string,
     content: string,
     date: string,
