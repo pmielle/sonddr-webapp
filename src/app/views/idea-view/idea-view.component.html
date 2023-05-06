@@ -1,4 +1,4 @@
-<ng-container *ngIf="this.idea as i">
+<div id="container" class="flex column align-stretch" *ngIf="this.idea as i">
 
     <app-top-bar [scroll-container]="this.tab.defaultTab.html">
         <div class="spacer"></div>
@@ -20,6 +20,8 @@
         <p>{{ i.content }}</p>
     </div>
 
+    <div class="spacer"></div>
+
     <app-comment-section [comments]="this.comments" [idea]="this.idea" (order-by-change)="this.commentOrderBy = $event"></app-comment-section>
     
-</ng-container>
+</div>

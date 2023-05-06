@@ -22,6 +22,7 @@
     
     &.align-start { align-items: start; }
     &.align-end { align-items: end; }
+    &.align-stretch { align-items: stretch; }
 
     &.small-gap { gap: var(--small-spacing); }
     &.gap { gap: var(--spacing); }

@@ -1,6 +1,10 @@
 $content-left-padding: 100px;
 $padding-top: 200px;
 
+#container {
+    min-height: 100%;
+}
+
 #header {
     position: relative;
     padding-top: $padding-top;
@@ -31,5 +35,6 @@ $padding-top: 200px;
 }
 
 #content {
+    min-height: 200px;
     padding-left: $content-left-padding;
 }
