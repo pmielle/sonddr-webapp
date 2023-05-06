@@ -24,7 +24,8 @@ export class DatabaseService {
   goalCollection = collection(this.firestore, "goals");
   ideaCollection = collection(this.firestore, "ideas");
   commentCollection = collection(this.firestore, "comments");
-  upvoteCollection = collection(this.firestore, "upvotes");
+  ideaUpvoteCollection = collection(this.firestore, "idea-upvotes");
+  commentUpvoteCollection = collection(this.firestore, "comment-upvotes");
 
   // lifecycle hooks
   // --------------------------------------------
@@ -32,16 +33,62 @@ export class DatabaseService {
 
   // methods
   // --------------------------------------------
+  async hasUpvotedComment(commentId: string, userId: string): Promise<boolean> {
+    let upvoteId = this._makeUpvoteId(commentId, userId);
+    let upvoteDoc = doc(this.firestore, `comment-upvotes/${upvoteId}`);
+    return await this._exists(upvoteDoc);
+  }
+
+  async deleteCommentUpvote(commentId: string, userId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let upvoteId = this._makeUpvoteId(commentId, userId);
+      let upvoteDoc = doc(this.firestore, `comment-upvotes/${upvoteId}`);
+      // make sure that the upvote exists
+      if (!await this._exists(upvoteDoc)) {
+        reject(`Upvote ${upvoteId} does not`);
+        return;
+      }
+      // update the comment
+      let commentDoc = doc(this.firestore, `comments/${commentId}`);
+      await this._updateDocument(commentDoc, { upvotes: increment(-1) });
+      // delete the upvote
+      this._deleteDocument(upvoteDoc);
+      resolve();
+    });
+  }
+
+  async upvoteComment(commentId: string, userId: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let upvoteId = this._makeUpvoteId(commentId, userId);
+      let upvoteDoc = doc(this.firestore, `comment-upvotes/${upvoteId}`);
+      // check that the upvote does not already exist
+      if (await this._exists(upvoteDoc)) {
+        reject(`Upvote ${upvoteId} already exist`);
+        return;
+      }
+      // update the comment
+      let commentDoc = doc(this.firestore, `comments/${commentId}`);
+      await this._updateDocument(commentDoc, { upvotes: increment(1) });
+      // upload the upvote
+      let payload = {
+        commentId: commentId,
+        userId: userId,
+      };
+      this._setDocument<DbUpvote>(upvoteDoc, payload);
+      resolve();
+    });
+  }
+
   async hasUpvotedIdea(ideaId: string, userId: string): Promise<boolean> {
     let upvoteId = this._makeUpvoteId(ideaId, userId);
-    let upvoteDoc = doc(this.firestore, `upvotes/${upvoteId}`);
+    let upvoteDoc = doc(this.firestore, `idea-upvotes/${upvoteId}`);
     return await this._exists(upvoteDoc);
   }
 
   async deleteIdeaUpvote(ideaId: string, userId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       let upvoteId = this._makeUpvoteId(ideaId, userId);
-      let upvoteDoc = doc(this.firestore, `upvotes/${upvoteId}`);
+      let upvoteDoc = doc(this.firestore, `idea-upvotes/${upvoteId}`);
       // make sure that the upvote exists
       if (!await this._exists(upvoteDoc)) {
         reject(`Upvote ${upvoteId} does not`);
@@ -59,7 +106,7 @@ export class DatabaseService {
   async upvoteIdea(ideaId: string, userId: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       let upvoteId = this._makeUpvoteId(ideaId, userId);
-      let upvoteDoc = doc(this.firestore, `upvotes/${upvoteId}`);
+      let upvoteDoc = doc(this.firestore, `idea-upvotes/${upvoteId}`);
       // check that the upvote does not already exist
       if (await this._exists(upvoteDoc)) {
         reject(`Upvote ${upvoteId} already exist`);
