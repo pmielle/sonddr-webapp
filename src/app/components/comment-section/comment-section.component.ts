@@ -38,7 +38,7 @@ export class CommentSectionComponent implements OnInit {
   }
   CommentOrderBy = CommentOrderBy;
   content: string = "";
-  displayedComments: IComment[] = [];
+  collapsed = true;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -48,20 +48,15 @@ export class CommentSectionComponent implements OnInit {
   // methods
   // --------------------------------------------
   seeMore() {
-    this.displayedComments = [...this.comments];
+    this.collapsed = false;
   }
 
   makeSeeMoreLabel(): string|undefined {
-    let nComments = this.comments.length;
-    let nDisplayedComments = this.displayedComments.length;
-    if (nComments <= 1) {
+    let nAdditionalComments = this.comments.length - 1;
+    if (nAdditionalComments <= 0) {
       return undefined;
     }
-    if (nComments <= nDisplayedComments) {
-      return undefined;
-    }
-    let n = nComments - nDisplayedComments
-    return `See ${n} more comment${n > 1 ? 's' : ''}`;
+    return `See ${nAdditionalComments} more comment${nAdditionalComments > 1 ? 's' : ''}`;
   }
 
   async postComment() {
@@ -85,14 +80,10 @@ export class CommentSectionComponent implements OnInit {
   _afterCommentPost(newComment: IComment) {
     this.content = "";
     this.comments.unshift(newComment);  // does not trigger the setter
-    this.displayedComments.unshift(newComment);
   }
 
   _onCommentsChange() {
-    if (this.comments.length <= 0) {
-      this.displayedComments = [];
-    }
-    this.displayedComments = this.comments.slice(0,1);
+    this.collapsed = true;
   }
 
 }

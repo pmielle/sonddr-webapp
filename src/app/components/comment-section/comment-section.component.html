@@ -19,8 +19,16 @@
         </mat-form-field>
     </div>
     <div id="content">
-        <p *ngFor="let comment of this.displayedComments">{{comment.content}}</p>
-        <app-chip *ngIf="this.makeSeeMoreLabel() as label" color="white" foreground-color="var(--darker-background-color)" icon="expand_more" [label]="label" (click)="this.seeMore()"></app-chip>
-
+        <ng-container *ngIf="this.comments.length > 0">
+            <!-- collapsed mode -->
+            <ng-container *ngIf="this.collapsed; else allComments">
+                <p >{{ this.comments[0].content }}</p>
+                <app-chip *ngIf="this.makeSeeMoreLabel() as label" color="white" foreground-color="var(--darker-background-color)" icon="expand_more" [label]="label" (click)="this.seeMore()"></app-chip>
+            </ng-container>
+            <!-- expanded mode -->
+            <ng-template #allComments>
+                <p *ngFor="let comment of this.comments">{{comment.content}}</p>
+            </ng-template>
+        </ng-container>
     </div>
 </div>
