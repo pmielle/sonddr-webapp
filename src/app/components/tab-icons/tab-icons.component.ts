@@ -36,7 +36,7 @@ export class TabIconsComponent {
       this.tab.goToTab(tab);
       return;
     }
-    // otherwise, on mobile
+    // otherwise, on mobile    
     if (this.device.screenSize$.getValue() == ScreenSize.Small) {
       // handle default tab (ideas) tap
       if (tab === this.tab.defaultTab) {

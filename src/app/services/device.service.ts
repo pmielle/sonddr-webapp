@@ -9,7 +9,7 @@ export class DeviceService implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
-  screenSize$ = new BehaviorSubject<ScreenSize|undefined>(undefined);
+  screenSize$ = new BehaviorSubject<ScreenSize>(this._chooseScreenSize(window.innerWidth));
   screenSizeSub: Subscription;
 
   // attributes
