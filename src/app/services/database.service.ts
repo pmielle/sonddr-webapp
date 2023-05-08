@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData, doc, docData, getDoc, DocumentReference, Query, query, where, orderBy, serverTimestamp, addDoc, CollectionReference, updateDoc, increment, deleteDoc } from '@angular/fire/firestore';
 import { Goal } from '../interfaces/goal';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom, from, of, switchMap } from 'rxjs';
 import { INotification } from '../interfaces/i-notification';
 import { IUser } from '../interfaces/i-user';
 import { setDoc } from '@angular/fire/firestore';
-import { Discussion } from '../interfaces/discussion';
+import { DbDiscussion, Discussion } from '../interfaces/discussion';
 import { DbIdea, Idea } from '../interfaces/idea';
 import { DbComment, IComment, CommentOrderBy } from '../interfaces/i-comment';
 import { DbVote } from '../interfaces/upvote';
@@ -253,7 +253,8 @@ export class DatabaseService {
   }
 
   getDiscussions(userId: string): Observable<Discussion[]> {
-    return this._streamCollection<Discussion>(query(collection(this.firestore, `discussions`), where("userIds", "array-contains", userId)));
+    return this._streamCollection<Discussion>(
+      query(collection(this.firestore, `discussions`), where("userIds", "array-contains", userId)), this._convertDbDiscussion);
   }
 
   getNotifications(userId: string): Observable<INotification[]> {
@@ -266,6 +267,18 @@ export class DatabaseService {
 
   // db -> obj
   // --------------------------------------------
+  async _convertDbDiscussion(dbDiscussion: DbDiscussion): Promise<Discussion> {
+    return new Promise(async (resolve, reject) => {
+      let users = await Promise.all(dbDiscussion.userIds.map(userId => this.getUser(userId)));
+      if (users.includes(undefined)) {
+        reject(`One of the user of ${dbDiscussion.id} was not found`);
+        return;
+      }
+      let {userIds, ...validFields} = dbDiscussion;
+      resolve({...validFields, users: users as IUser[]});
+    });
+  }
+
   async _convertDbIdea(dbIdea: DbIdea): Promise<Idea> {
     return new Promise(async (resolve, reject) => {
       let author = await this.getUser(dbIdea.authorId);
@@ -319,17 +332,17 @@ export class DatabaseService {
     return docRef.exists();
   }
 
-  async _getCollection<U>(icollection: Query, converter: ((dbData: any) => Promise<U>) | undefined = undefined): Promise<U[]> {
+  async _getCollection<T>(icollection: Query, converter: ((dbData: any) => Promise<T>) | undefined = undefined): Promise<T[]> {
     let data$ = collectionData(icollection, {idField: "id"});
     let dbData = await firstValueFrom(data$);
     if (!converter) {
-      return dbData as U[];
+      return dbData as T[];
     }
     let data = await Promise.all(dbData.map((d) => converter.call(this, d)));
     return data;
   }
 
-  async _getDocument<U>(idocument: DocumentReference, converter: ((dbData: any) => Promise<U>) | undefined = undefined): Promise<U> {
+  async _getDocument<T>(idocument: DocumentReference, converter: ((dbData: any) => Promise<T>) | undefined = undefined): Promise<T> {
     return new Promise(async (resolve, reject) => {
       let data$ = docData(idocument, {idField: "id"});
       let dbData = await firstValueFrom(data$);
@@ -338,7 +351,7 @@ export class DatabaseService {
         return;
       }
       if (!converter) {
-        resolve(dbData as U);
+        resolve(dbData as T);
         return;
       }
       let data = await converter.call(this, dbData);
@@ -347,8 +360,15 @@ export class DatabaseService {
     });
   }
 
-  _streamCollection<T>(icollection: Query): Observable<T[]> {
-    return collectionData(icollection, {idField: "id"}) as Observable<T[]>;
+  _streamCollection<T>(icollection: Query, converter: ((dbData: any) => Promise<T>) | undefined = undefined): Observable<T[]> {
+    return collectionData(icollection, {idField: "id"}).pipe(
+      switchMap((dbData) => {
+        if (!converter) {
+          return of(dbData as T[]);
+        }
+        return from(Promise.all(dbData.map((d) => converter.call(this, d))));
+      })
+    );
   }
 
   _streamDocument<T>(idocument: DocumentReference): Observable<T> {
