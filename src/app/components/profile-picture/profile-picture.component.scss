@@ -1,5 +1,10 @@
 #container {
+    display: inline-flex;
     width: 32px;
     aspect-ratio: 1/1;
     border-radius: 99px;
+
+    &.large {
+        width: 56px;
+    }
 }
