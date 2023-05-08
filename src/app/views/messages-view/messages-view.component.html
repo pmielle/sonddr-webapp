@@ -1,11 +1,18 @@
-<app-top-bar [scroll-container]="this.scrollContainer">
-    <h1>Messages</h1>
-    <div class="spacer"></div>
-    <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user" [routerLink]="['/user', user.id]"></app-profile-picture>
-</app-top-bar>
+<ng-container *ngIf="this.auth.user$ | async as user">
 
-<div id="discussions">
-    <app-h-scroll>
-        <app-profile-picture *ngIf="(this.auth.user$ | async) as user" [user]="user" [routerLink]="['/user', user.id]" [large]="true"></app-profile-picture>
-    </app-h-scroll>
-</div>
+    <app-top-bar [scroll-container]="this.scrollContainer">
+        <h1>Messages</h1>
+        <div class="spacer"></div>
+        <app-profile-picture [user]="user" [routerLink]="['/user', user.id]"></app-profile-picture>
+    </app-top-bar>
+    
+    <div id="discussions">
+        <app-h-scroll>
+            <div class="discussion-icon flex column" *ngFor="let discussion of this.discussions">
+                <app-profile-picture [user]="this.findDiscussionProfilePicture(user, discussion)" [large]="true"></app-profile-picture>
+                <span class="elipsis">{{ this.makeDiscussionName(user, discussion) }}</span>
+            </div>
+        </app-h-scroll>
+    </div>
+    
+</ng-container>

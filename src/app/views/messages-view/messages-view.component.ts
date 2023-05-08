@@ -1,6 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Discussion } from 'src/app/interfaces/discussion';
+import { IUser } from 'src/app/interfaces/i-user';
 import { messagesTab } from 'src/app/interfaces/tab';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -35,6 +36,14 @@ export class MessagesViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  makeDiscussionName(user: IUser, discussion: Discussion): string {
+    return (discussion.users.find(u => u !== user) as IUser).name;
+  }
+
+  findDiscussionProfilePicture(user: IUser, discussion: Discussion): IUser {
+    return discussion.users.find(u => u !== user) as IUser;
+  }
+
   async _subscribeToDiscussions() {
     let user = await this.auth.getUser();
     if (!user) {
@@ -46,5 +55,5 @@ export class MessagesViewComponent implements OnDestroy {
       (discussions) => this.discussions = discussions
     );
   }
-  
+
 }
