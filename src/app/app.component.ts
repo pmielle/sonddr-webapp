@@ -9,7 +9,5 @@ import { ApiService } from './services/api.service';
 export class AppComponent {
   private api = inject(ApiService);
 
-  constructor() {
-    this.api.test();
-  }
+  constructor() { }
 }

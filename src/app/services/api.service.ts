@@ -7,17 +7,41 @@ import { lastValueFrom } from 'rxjs';
 })
 export class ApiService {
 
+  // dependencies
+  // --------------------------------------------
   private db = inject(HttpClient);
 
+  // attributes
+  // --------------------------------------------
+  private apiUrl = "http://localhost:3000";
+
+  // lifecycle hooks
+  // --------------------------------------------
   constructor() { }
 
-  async test() {
-    this.get("http://localhost:3000/").then(console.log);
+  // public methods
+  // --------------------------------------------
+  // ...
+
+  // private methods
+  // --------------------------------------------
+  private async _get(path: string): Promise<any> {
+    return lastValueFrom(this.db.get(`${this.apiUrl}/${path}`));
   }
 
-  // private
-  // --------------------------------------------
-  private async get(url: string): Promise<any> {
-    return lastValueFrom(this.db.get(url));
+  private async _post(path: string, payload: object): Promise<any> {
+    return lastValueFrom(this.db.post(`${this.apiUrl}/${path}`, payload));
+  }
+
+  private async _patch(path: string, payload: object): Promise<any> {
+    return lastValueFrom(this.db.patch(`${this.apiUrl}/${path}`, payload));
+  }
+
+  private async _delete(path: string): Promise<any> {
+    return lastValueFrom(this.db.delete(`${this.apiUrl}/${path}`));
+  }
+
+  private async _put(path: string, payload: object): Promise<any> {
+    return lastValueFrom(this.db.put(`${this.apiUrl}/${path}`, payload));
   }
 }
