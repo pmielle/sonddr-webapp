@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { Goal } from 'sonddr-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -21,27 +22,29 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
-  // ...
+  async getGoals(): Promise<Goal[]> {
+    return this._get<Goal[]>("goals");
+  }
 
   // private methods
   // --------------------------------------------
-  private async _get(path: string): Promise<any> {
-    return lastValueFrom(this.db.get(`${this.apiUrl}/${path}`));
+  private async _get<T>(path: string): Promise<T> {
+    return lastValueFrom(this.db.get<T>(`${this.apiUrl}/${path}`));
   }
 
-  private async _post(path: string, payload: object): Promise<any> {
-    return lastValueFrom(this.db.post(`${this.apiUrl}/${path}`, payload));
+  private async _post(path: string, payload: object): Promise<string> {
+    return lastValueFrom(this.db.post<string>(`${this.apiUrl}/${path}`, payload));
   }
 
-  private async _patch(path: string, payload: object): Promise<any> {
-    return lastValueFrom(this.db.patch(`${this.apiUrl}/${path}`, payload));
+  private async _patch(path: string, payload: object): Promise<void> {
+    return lastValueFrom(this.db.patch<void>(`${this.apiUrl}/${path}`, payload));
   }
 
-  private async _delete(path: string): Promise<any> {
-    return lastValueFrom(this.db.delete(`${this.apiUrl}/${path}`));
+  private async _delete(path: string): Promise<void> {
+    return lastValueFrom(this.db.delete<void>(`${this.apiUrl}/${path}`));
   }
 
-  private async _put(path: string, payload: object): Promise<any> {
-    return lastValueFrom(this.db.put(`${this.apiUrl}/${path}`, payload));
+  private async _put(path: string, payload: object): Promise<string> {
+    return lastValueFrom(this.db.put<string>(`${this.apiUrl}/${path}`, payload));
   }
 }

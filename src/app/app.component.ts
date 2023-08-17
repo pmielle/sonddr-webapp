@@ -9,5 +9,11 @@ import { ApiService } from './services/api.service';
 export class AppComponent {
   private api = inject(ApiService);
 
-  constructor() { }
+  constructor() {
+    this.test();
+  }
+
+  async test() {
+    console.log(await this.api.getGoals());
+  }
 }
