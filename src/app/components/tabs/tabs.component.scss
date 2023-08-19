@@ -1,0 +1,14 @@
+app-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#tabs {
+    min-height: 100vh;
+
+    > :not(.selected) {
+        opacity: 0;
+        pointer-events: none;
+    }
+}

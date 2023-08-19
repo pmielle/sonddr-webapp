@@ -1,0 +1,9 @@
+<div id="container">
+    <app-nav-bar></app-nav-bar>
+    <div id="tabs">
+        <app-ideas-view [class.selected]="tabs.selected == 'ideas'"></app-ideas-view>
+        <app-search-view [class.selected]="tabs.selected == 'search'"></app-search-view>
+        <app-messages-view [class.selected]="tabs.selected == 'messages'"></app-messages-view>
+        <app-notifications-view [class.selected]="tabs.selected == 'notifications'"></app-notifications-view>
+    </div>
+</div>
