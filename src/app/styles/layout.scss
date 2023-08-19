@@ -1,0 +1,36 @@
+:root {
+    --small-spacing: 5px;
+    --spacing: 16px;
+    --large-spacing: 32px;
+    --gutter: 12px;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+
+    &.column { flex-flow: column; }
+    
+    &.wrap { flex-wrap: wrap; }
+    
+    &.justify-start { justify-content: start; }
+    &.justify-end { justify-content: end; }
+    
+    &.align-start { align-items: start; }
+    &.align-end { align-items: end; }
+    &.align-stretch { align-items: stretch; }
+
+    &.small-gap { gap: var(--small-spacing); }
+    &.gap { gap: var(--spacing); }
+    &.large-gap { gap: var(--large-spacing); }
+
+    .spacer { flex: 1; }
+}
+
+.gutter {
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+}

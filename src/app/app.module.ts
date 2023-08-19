@@ -4,16 +4,26 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
+import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavBarComponent,
+    NavBarItemComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     KeycloakAngularModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatRippleModule,
   ],
   providers: [
     {
