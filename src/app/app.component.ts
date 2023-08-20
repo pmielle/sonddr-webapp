@@ -7,13 +7,8 @@ import { ApiService } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  private api = inject(ApiService);
 
   constructor() {
-    this.test();
   }
 
-  async test() {
-    console.log(await this.api.getGoals());
-  }
 }

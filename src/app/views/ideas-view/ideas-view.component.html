@@ -1,1 +1,8 @@
-<p>ideas-view works!</p>
+<ng-container *ngIf="goals !== undefined" else loading>
+    <p *ngFor="let g of goals">{{ g.name }}</p>
+</ng-container>
+
+
+<ng-template #loading>
+    loading...
+</ng-template>
