@@ -14,7 +14,8 @@ import { IdeasViewComponent } from './views/ideas-view/ideas-view.component';
 import { SearchViewComponent } from './views/search-view/search-view.component';
 import { MessagesViewComponent } from './views/messages-view/messages-view.component';
 import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
-import { RouterModule, Routes } from '@angular/router'
+import { RouterModule } from '@angular/router'
+import { GoalViewComponent } from './views/goal-view/goal-view.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { RouterModule, Routes } from '@angular/router'
     MatRippleModule,
     RouterModule.forRoot([
       {path: "", component: IdeasViewComponent},
+      {path: "goal/:id", component: GoalViewComponent},
       {path: "", component: SearchViewComponent, outlet: "search"},
       {path: "", component: MessagesViewComponent, outlet: "messages"},
       {path: "", component: NotificationsViewComponent, outlet: "notifications"},
