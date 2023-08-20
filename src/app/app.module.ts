@@ -14,6 +14,7 @@ import { IdeasViewComponent } from './views/ideas-view/ideas-view.component';
 import { SearchViewComponent } from './views/search-view/search-view.component';
 import { MessagesViewComponent } from './views/messages-view/messages-view.component';
 import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
+import { RouterModule, Routes } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -34,6 +35,12 @@ import { NotificationsViewComponent } from './views/notifications-view/notificat
     BrowserAnimationsModule,
     MatIconModule,
     MatRippleModule,
+    RouterModule.forRoot([
+      {path: "", component: IdeasViewComponent},
+      {path: "", component: SearchViewComponent, outlet: "search"},
+      {path: "", component: MessagesViewComponent, outlet: "messages"},
+      {path: "", component: NotificationsViewComponent, outlet: "notifications"},
+    ]),
   ],
   providers: [
     {
