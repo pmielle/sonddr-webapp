@@ -16,6 +16,7 @@ import { MessagesViewComponent } from './views/messages-view/messages-view.compo
 import { NotificationsViewComponent } from './views/notifications-view/notifications-view.component';
 import { RouterModule } from '@angular/router'
 import { GoalViewComponent } from './views/goal-view/goal-view.component';
+import { DiscussionViewComponent } from './views/discussion-view/discussion-view.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { GoalViewComponent } from './views/goal-view/goal-view.component';
       {path: "goal/:id", component: GoalViewComponent},
       {path: "", component: SearchViewComponent, outlet: "search"},
       {path: "", component: MessagesViewComponent, outlet: "messages"},
+      {path: "discussion/:id", component: DiscussionViewComponent, outlet: "messages"},
       {path: "", component: NotificationsViewComponent, outlet: "notifications"},
     ]),
   ],
