@@ -1,16 +1,16 @@
 <div id="container">
     <app-nav-bar></app-nav-bar>
     <div id="tabs">
-        <div [class.selected]="tabs.selected == 'ideas'">
+        <div class="tab" [class.selected]="tabs.selected == 'ideas'">
             <router-outlet></router-outlet>
         </div>
-        <div [class.selected]="tabs.selected == 'search'">
+        <div class="tab" [class.selected]="tabs.selected == 'search'">
             <router-outlet name="search"></router-outlet>
         </div>
-        <div [class.selected]="tabs.selected == 'messages'">
+        <div class="tab" [class.selected]="tabs.selected == 'messages'">
             <router-outlet name="messages"></router-outlet>
         </div>
-        <div [class.selected]="tabs.selected == 'notifications'">
+        <div class="tab" [class.selected]="tabs.selected == 'notifications'">
             <router-outlet name="notifications"></router-outlet>
         </div>
     </div>

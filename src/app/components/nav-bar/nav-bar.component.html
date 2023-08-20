@@ -1,5 +1,5 @@
 <div id="container" class="flex column large-gap">
-    <div id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+    <div id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" (click)="tabs.switchToTab('ideas')">
         <img src="assets/light-logo-without-text.png" alt="logo">
     </div>
     <app-nav-bar-item label="Ideas" icon="lightbulb" (click)="tabs.switchToTab('ideas')"></app-nav-bar-item>
