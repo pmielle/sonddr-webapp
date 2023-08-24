@@ -1,3 +1,7 @@
 {
-    "workbench.colorTheme": "Red"
+    "workbench.colorTheme": "Red",
+    "workbench.colorCustomizations": {
+      "editorCursor.foreground": "#FF75D8",
+      "terminalCursor.foreground": "#FF75D8"
+    }
 }

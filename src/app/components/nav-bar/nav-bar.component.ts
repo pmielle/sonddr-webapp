@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { TabsService } from 'src/app/services/tabs.service';
+import { Component, inject } from '@angular/core';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,7 +6,5 @@ import { TabsService } from 'src/app/services/tabs.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent {
-
-  tabs = inject(TabsService);
 
 }

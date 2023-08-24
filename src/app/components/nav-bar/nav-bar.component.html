@@ -1,9 +1,9 @@
 <div id="container" class="flex column large-gap">
-    <div id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" (click)="tabs.switchToTab('ideas')">
+    <div id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" routerLink="/">
         <img src="assets/light-logo-without-text.png" alt="logo">
     </div>
-    <app-nav-bar-item label="Ideas" icon="lightbulb" (click)="tabs.switchToTab('ideas')"></app-nav-bar-item>
-    <app-nav-bar-item label="Search" icon="search" (click)="tabs.switchToTab('search')"></app-nav-bar-item>
-    <app-nav-bar-item label="Messages" icon="forum" (click)="tabs.switchToTab('messages')"></app-nav-bar-item>
-    <app-nav-bar-item label="Notifications" icon="notifications" (click)="tabs.switchToTab('notifications')"></app-nav-bar-item>
+    <app-nav-bar-item label="Ideas" icon="lightbulb" routerLink="/"></app-nav-bar-item>
+    <app-nav-bar-item label="Search" icon="search" routerLink="/search"></app-nav-bar-item>
+    <app-nav-bar-item label="Messages" icon="forum" routerLink="/messages"></app-nav-bar-item>
+    <app-nav-bar-item label="Notifications" icon="notifications" routerLink="/notifications"></app-nav-bar-item>
 </div>

@@ -9,15 +9,4 @@ app-nav-bar {
     position: relative;
     z-index: 1;
     min-height: 100vh;
-
-    .tab {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        &:not(.selected) {
-            opacity: 0;
-            pointer-events: none;
-        }
-    }
 }

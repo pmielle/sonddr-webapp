@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { TabsService } from 'src/app/services/tabs.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,7 +6,5 @@ import { TabsService } from 'src/app/services/tabs.service';
   styleUrls: ['./tabs.component.scss']
 })
 export class TabsComponent {
-
-  tabs = inject(TabsService);
-
+  
 }

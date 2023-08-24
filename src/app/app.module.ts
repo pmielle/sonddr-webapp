@@ -39,11 +39,11 @@ import { DiscussionViewComponent } from './views/discussion-view/discussion-view
     MatRippleModule,
     RouterModule.forRoot([
       {path: "", component: IdeasViewComponent},
+      {path: "search", component: SearchViewComponent},
+      {path: "messages", component: MessagesViewComponent},
+      {path: "notifications", component: NotificationsViewComponent},
+      {path: "discussion/:id", component: DiscussionViewComponent},
       {path: "goal/:id", component: GoalViewComponent},
-      {path: "", component: SearchViewComponent, outlet: "search"},
-      {path: "", component: MessagesViewComponent, outlet: "messages"},
-      {path: "discussion/:id", component: DiscussionViewComponent, outlet: "messages"},
-      {path: "", component: NotificationsViewComponent, outlet: "notifications"},
     ]),
   ],
   providers: [
