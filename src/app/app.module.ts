@@ -17,6 +17,8 @@ import { NotificationsViewComponent } from './views/notifications-view/notificat
 import { RouterModule } from '@angular/router'
 import { GoalViewComponent } from './views/goal-view/goal-view.component';
 import { DiscussionViewComponent } from './views/discussion-view/discussion-view.component';
+import { IdeasTabComponent } from './components/ideas-tab/ideas-tab.component';
+import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { DiscussionViewComponent } from './views/discussion-view/discussion-view
     SearchViewComponent,
     MessagesViewComponent,
     NotificationsViewComponent,
+    IdeasTabComponent,
+    MessagesTabComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,11 +43,13 @@ import { DiscussionViewComponent } from './views/discussion-view/discussion-view
     MatRippleModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
-      {path: "ideas", component: IdeasViewComponent, children: [
+      {path: "ideas", component: IdeasTabComponent, children: [
+        {path: "", component: IdeasViewComponent},
         {path: "goal/:id", component: GoalViewComponent},
       ]},
       {path: "search", component: SearchViewComponent},
-      {path: "messages", component: MessagesViewComponent, children: [
+      {path: "messages", component: MessagesTabComponent, children: [
+        {path: "", component: MessagesViewComponent},
         {path: "discussion/:id", component: DiscussionViewComponent},
       ]},
       {path: "notifications", component: NotificationsViewComponent},
