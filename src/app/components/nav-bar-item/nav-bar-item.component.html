@@ -1,4 +1,4 @@
 <div class="pointer flex column" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
-    <mat-icon>{{ this.icon }}</mat-icon>
+    <mat-icon [fontSet]="outlined ? 'material-icons-outlined' : 'material-icons'">{{ this.icon }}</mat-icon>
     <span>{{ this.label }}</span>
 </div>

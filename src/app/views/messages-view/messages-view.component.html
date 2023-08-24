@@ -1,6 +1,6 @@
 <div id="container">
     <ng-container *ngIf="discussions !== undefined" else loading>
-        <p *ngFor="let d of discussions" [routerLink]="['/discussion', d.id]">{{ d.name }}</p>
+        <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.name }}</p>
     </ng-container>
     
     

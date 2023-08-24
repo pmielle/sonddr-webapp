@@ -8,4 +8,5 @@ import { Component, Input } from '@angular/core';
 export class NavBarItemComponent {
   @Input("label") label!: string;
   @Input("icon") icon!: string;
+  @Input("outlined") outlined = false;
 }

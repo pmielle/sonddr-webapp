@@ -38,12 +38,15 @@ import { DiscussionViewComponent } from './views/discussion-view/discussion-view
     MatIconModule,
     MatRippleModule,
     RouterModule.forRoot([
-      {path: "", component: IdeasViewComponent},
+      {path: "", redirectTo: "ideas", pathMatch: "full"},
+      {path: "ideas", component: IdeasViewComponent, children: [
+        {path: "goal/:id", component: GoalViewComponent},
+      ]},
       {path: "search", component: SearchViewComponent},
-      {path: "messages", component: MessagesViewComponent},
+      {path: "messages", component: MessagesViewComponent, children: [
+        {path: "discussion/:id", component: DiscussionViewComponent},
+      ]},
       {path: "notifications", component: NotificationsViewComponent},
-      {path: "discussion/:id", component: DiscussionViewComponent},
-      {path: "goal/:id", component: GoalViewComponent},
     ]),
   ],
   providers: [
