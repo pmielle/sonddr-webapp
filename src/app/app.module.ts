@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
 import { NavBarItemComponent } from './components/nav-bar-item/nav-bar-item.component';
-import { TabsComponent } from './components/tabs/tabs.component';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { IdeasViewComponent } from './views/ideas-view/ideas-view.component';
 import { SearchViewComponent } from './views/search-view/search-view.component';
 import { MessagesViewComponent } from './views/messages-view/messages-view.component';
@@ -25,7 +25,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
     AppComponent,
     NavBarComponent,
     NavBarItemComponent,
-    TabsComponent,
+    MainNavComponent,
     IdeasViewComponent,
     SearchViewComponent,
     MessagesViewComponent,
