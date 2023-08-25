@@ -19,6 +19,9 @@ import { GoalViewComponent } from './views/goal-view/goal-view.component';
 import { DiscussionViewComponent } from './views/discussion-view/discussion-view.component';
 import { IdeasTabComponent } from './components/ideas-tab/ideas-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
+import { FabComponent } from './components/fab/fab.component';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -32,6 +35,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
     NotificationsViewComponent,
     IdeasTabComponent,
     MessagesTabComponent,
+    FabComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +45,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
     BrowserAnimationsModule,
     MatIconModule,
     MatRippleModule,
+    MatButtonModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
       {path: "ideas", component: IdeasTabComponent, children: [

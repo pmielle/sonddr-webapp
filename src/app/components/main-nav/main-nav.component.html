@@ -2,3 +2,6 @@
     <router-outlet></router-outlet>
 </div>
 <app-nav-bar></app-nav-bar>
+<ng-container *ngIf="screen.isMobile">
+    <app-fab></app-fab>
+</ng-container>
