@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class MainNavService {
 
-  hideNavbar = false;  // mobile
+  hideNavbar = false;
+  hideFab = false;
+
 
   constructor() { }
 }
