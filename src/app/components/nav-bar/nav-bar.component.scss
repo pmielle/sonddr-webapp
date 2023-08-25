@@ -5,15 +5,18 @@
     padding-top: var(--large-spacing);
     padding-bottom: var(--large-spacing);
     justify-content: space-evenly;
+    border-radius: var(--spacing);
 
     &.mobile {
         top: initial;
         bottom: 0;
         width: 100vw;
         flex-direction: row;
-        padding-top: var(--small-spacing);
+        padding-top: 8px;
         padding-left: var(--gutter);
         padding-right: var(--gutter);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     #logo {

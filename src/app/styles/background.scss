@@ -5,3 +5,8 @@
     &.contain { background-size: contain; }
     &.cover { background-size: cover; }
 }
+
+.frosted {
+    background-color: var(--transparent-background-color);
+    backdrop-filter: blur(5px);
+}
