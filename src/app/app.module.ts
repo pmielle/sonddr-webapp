@@ -21,6 +21,7 @@ import { IdeasTabComponent } from './components/ideas-tab/ideas-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
 import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
+import { AddViewComponent } from './views/add-view/add-view.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
     IdeasTabComponent,
     MessagesTabComponent,
     FabComponent,
+    AddViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +53,7 @@ import { MatButtonModule } from '@angular/material/button';
       {path: "ideas", component: IdeasTabComponent, children: [
         {path: "", component: IdeasViewComponent},
         {path: "goal/:id", component: GoalViewComponent},
+        {path: "add", component: AddViewComponent},
       ]},
       {path: "search", component: SearchViewComponent},
       {path: "messages", component: MessagesTabComponent, children: [

@@ -1,12 +1,10 @@
-<div id="container" class="flex column large-gap" [class.hidden]="mainNav.hideNavbar" [class.mobile]="screen.isMobile">
-    <div id="logo" class="pointer" [class.hidden]="screen.isMobile" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" routerLink="/ideas">
+<div id="container" class="flex column large-gap" [class.hidden]="mainNav.hideNavbar" [class.mobile]="screen.isMobile$ | async">
+    <div id="logo" class="pointer" [class.hidden]="screen.isMobile$ | async" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32" routerLink="/ideas">
         <img src="assets/light-logo-without-text.png" alt="logo">
     </div>
     <app-nav-bar-item label="Ideas" icon="lightbulb" routerLink="/ideas" routerLinkActive #ideasLink="routerLinkActive" [outlined]="!ideasLink.isActive"></app-nav-bar-item>
     <app-nav-bar-item label="Search" icon="search" routerLink="/search" routerLinkActive #searchLink="routerLinkActive" [outlined]="!searchLink.isActive"></app-nav-bar-item>
     <app-nav-bar-item label="Messages" icon="forum" routerLink="/messages" routerLinkActive #messagesLink="routerLinkActive" [outlined]="!messagesLink.isActive"></app-nav-bar-item>
     <app-nav-bar-item label="Notifications" icon="notifications" routerLink="/notifications" routerLinkActive #notificationsLink="routerLinkActive" [outlined]="!notificationsLink.isActive"></app-nav-bar-item>
-    <ng-container *ngIf="!screen.isMobile">
-        <app-fab></app-fab>
-    </ng-container>
+    <app-fab [class.hidden]="screen.isMobile$ | async"></app-fab>
 </div>

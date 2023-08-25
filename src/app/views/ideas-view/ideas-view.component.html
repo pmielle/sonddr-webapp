@@ -1,4 +1,4 @@
-<div id="container" [class.mobile]="screen.isMobile">
+<div id="container" [class.mobile]="screen.isMobile$ | async">
     <ng-container *ngIf="goals !== undefined" else loading>
         <p *ngFor="let g of goals" [routerLink]="['goal', g.id]">{{ g.name }}</p>
     </ng-container>
