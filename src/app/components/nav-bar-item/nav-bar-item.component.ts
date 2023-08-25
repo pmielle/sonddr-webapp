@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-nav-bar-item',
@@ -6,6 +7,14 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./nav-bar-item.component.scss']
 })
 export class NavBarItemComponent {
+  
+  // dependencies
+  // --------------------------------------------
+  screen = inject(ScreenSizeService);
+
+
+  // I/O
+  // --------------------------------------------
   @Input("label") label!: string;
   @Input("icon") icon!: string;
   @Input("outlined") outlined = false;

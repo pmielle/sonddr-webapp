@@ -1,4 +1,4 @@
-<div id="container">
+<div id="container" [class.mobile]="screen.isMobile">
     <ng-container *ngIf="discussions !== undefined" else loading>
         <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.name }}</p>
     </ng-container>

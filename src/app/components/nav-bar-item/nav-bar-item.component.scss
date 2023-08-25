@@ -1,0 +1,9 @@
+#container {
+    width: var(--nav-bar-width);
+
+    &.mobile {
+        width: 50px;
+
+        span { display: none; }
+    }
+}

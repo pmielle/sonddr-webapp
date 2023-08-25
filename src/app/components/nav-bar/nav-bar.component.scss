@@ -1,7 +1,20 @@
 #container {
-    width: var(--nav-bar-width);
+    position: fixed;
+    top: 0;
+    left: 0;
     padding-top: var(--large-spacing);
     padding-bottom: var(--large-spacing);
+    justify-content: space-evenly;
+
+    &.mobile {
+        top: initial;
+        bottom: 0;
+        width: 100vw;
+        flex-direction: row;
+        padding-top: var(--small-spacing);
+        padding-left: var(--gutter);
+        padding-right: var(--gutter);
+    }
 
     #logo {
         position: relative;

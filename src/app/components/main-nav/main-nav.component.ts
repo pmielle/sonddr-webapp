@@ -8,6 +8,4 @@ import { MainNavService } from 'src/app/services/main-nav.service';
 })
 export class MainNavComponent {
   
-  mainNav = inject(MainNavService);
-
 }
