@@ -14,10 +14,17 @@ export class TopBarComponent {
   // --------------------------------------------
   screen = inject(ScreenSizeService);
   
-
   // i/o
   // --------------------------------------------
   @Input("title") title?: string;
   @Input("left-item") leftItem?: LeftItem;
+
+  // attributes
+  // --------------------------------------------
+  stuck = false;
+  
+  // methods
+  // --------------------------------------------
+  // ...
 
 }

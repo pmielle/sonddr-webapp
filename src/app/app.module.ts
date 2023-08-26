@@ -23,6 +23,7 @@ import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AddViewComponent } from './views/add-view/add-view.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
+import { IntersectionDirective } from './directives/intersection.directive';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { TopBarComponent } from './components/top-bar/top-bar.component';
     FabComponent,
     AddViewComponent,
     TopBarComponent,
+    IntersectionDirective,
   ],
   imports: [
     BrowserModule,

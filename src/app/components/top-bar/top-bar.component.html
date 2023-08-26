@@ -1,4 +1,5 @@
-<div id="container" class="flex gutter frosted" [class.mobile]="screen.isMobile$ | async">
+<div appIntersection (isIntersecting)="this.stuck=!$event"></div>
+<div id="container" class="flex gutter frosted" [class.frosted]="stuck" [class.mobile]="screen.isMobile$ | async">
 
     <div *ngIf="leftItem === 'logo'" id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
         <img src="assets/light-logo-without-text.png" alt="logo">
