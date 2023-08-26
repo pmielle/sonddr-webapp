@@ -24,6 +24,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { AddViewComponent } from './views/add-view/add-view.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { IntersectionDirective } from './directives/intersection.directive';
+import { HScrollComponent } from './components/h-scroll/h-scroll.component';
+import { ChipComponent } from './components/chip/chip.component';
+import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
 
 
 @NgModule({
@@ -42,6 +45,9 @@ import { IntersectionDirective } from './directives/intersection.directive';
     AddViewComponent,
     TopBarComponent,
     IntersectionDirective,
+    HScrollComponent,
+    ChipComponent,
+    GoalChipComponent,
   ],
   imports: [
     BrowserModule,

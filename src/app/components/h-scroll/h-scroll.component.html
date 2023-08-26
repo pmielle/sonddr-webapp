@@ -1,0 +1,9 @@
+<div id="container">
+    <div id="scroll-container" class="flex gap h-scroll no-scrollbar" #container (scroll)="onScroll()" [style.padding-left]="this.leftPadding" [style.padding-top]="this.topPadding">
+        <ng-content></ng-content>
+    </div>
+    <ng-container *ngIf="this.hideShadows === false">
+        <div id="left-shadow" class="shadow" [class.show]="leftShadow"></div>
+        <div id="right-shadow" class="shadow" [class.show]="rightShadow"></div>
+    </ng-container>
+</div>

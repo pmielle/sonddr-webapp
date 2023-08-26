@@ -1,0 +1,30 @@
+#container {
+    position: relative;
+
+    #scroll-container {
+        justify-content: unset;
+        padding-right: var(--gutter);
+    }
+
+    .shadow {
+        position: absolute;
+        top: 0;
+        width: var(--large-spacing);
+        height: 100%;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity var(--duration);
+
+        &.show { opacity: 1; }
+
+        &#left-shadow {
+            left: 0;
+            background: linear-gradient(to right, var(--background-color), transparent);
+        }
+
+        &#right-shadow {
+            right: 0;
+            background: linear-gradient(to left, var(--background-color), transparent);
+        }
+    }
+}
