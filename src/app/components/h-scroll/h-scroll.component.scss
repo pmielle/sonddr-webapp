@@ -2,8 +2,23 @@
     position: relative;
 
     #scroll-container {
-        justify-content: unset;
-        padding-right: var(--gutter);
+        padding: 0 var(--gutter);
+        
+        #intersection-container {
+            position: relative;  // for #*-intersect position
+            display: inline-flex;
+            gap: var(--spacing);
+            justify-content: unset;
+
+            #left-intersect {
+                position: absolute;
+                left: 0;
+            }
+            #right-intersect {
+                position: absolute;
+                right: 0;
+            }
+        }
     }
 
     .shadow {
