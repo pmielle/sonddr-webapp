@@ -1,6 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
 import { Goal } from 'sonddr-shared';
-import { ColorService } from 'src/app/services/color.service';
 
 @Component({
   selector: 'app-goal-chip',
@@ -11,7 +10,7 @@ export class GoalChipComponent {
 
   // dependencies
   // --------------------------------------------
-  color = inject(ColorService);
+  // ...
 
   // attributes
   // --------------------------------------------
