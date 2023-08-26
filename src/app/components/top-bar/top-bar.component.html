@@ -1,0 +1,11 @@
+<div id="container" class="flex gutter frosted" [class.mobile]="screen.isMobile$ | async">
+
+    <div *ngIf="leftItem === 'logo'" id="logo" class="pointer" matRipple [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+        <img src="assets/light-logo-without-text.png" alt="logo">
+    </div>
+
+    <h1 *ngIf="title as t" class="no-margin-bottom">{{ t }}</h1>
+
+    <div class="spacer"></div>
+    
+</div>

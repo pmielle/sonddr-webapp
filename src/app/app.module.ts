@@ -22,6 +22,7 @@ import { MessagesTabComponent } from './components/messages-tab/messages-tab.com
 import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
 import { AddViewComponent } from './views/add-view/add-view.component';
+import { TopBarComponent } from './components/top-bar/top-bar.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { AddViewComponent } from './views/add-view/add-view.component';
     MessagesTabComponent,
     FabComponent,
     AddViewComponent,
+    TopBarComponent,
   ],
   imports: [
     BrowserModule,
