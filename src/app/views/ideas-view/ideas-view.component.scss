@@ -1,3 +1,11 @@
-#container:not(.mobile) {
-    padding-left: var(--nav-bar-width);
+#container {
+
+    &.mobile {
+        padding-bottom: var(--nav-bar-height);
+    }
+
+    &:not(.mobile) {
+        padding-left: var(--nav-bar-width);
+    }
+
 }

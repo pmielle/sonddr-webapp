@@ -71,6 +71,8 @@ export class FabComponent {
       this.mode = undefined;
     } else if (e.url == "/search") {
       this.mode = undefined;
+    } else if (e.url == "/") {
+      this.mode = undefined;
     } else {
       throw new Error("unimplemented");
     }
