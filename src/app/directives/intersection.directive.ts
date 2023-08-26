@@ -1,6 +1,8 @@
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { Subscription, Observable, debounceTime } from 'rxjs';
 
+
+// https://github1s.com/matejjaksic/intersection-observer/blob/HEAD/src/app/directives/observe-element.directive.ts
 @Directive({
   selector: '[appIntersection]',
   exportAs: 'intersection',
