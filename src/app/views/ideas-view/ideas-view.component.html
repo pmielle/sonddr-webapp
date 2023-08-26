@@ -1,4 +1,4 @@
-<div id="container" [class.mobile]="screen.isMobile$ | async">
+<div id="container">
     <ng-container *ngIf="goals !== undefined" else loading>
         <p *ngFor="let g of goals" [routerLink]="['goal', g.id]">{{ g.name }}</p>
 
@@ -19,5 +19,3 @@
         loading...
     </ng-template>
 </div>
-
-<router-outlet></router-outlet>

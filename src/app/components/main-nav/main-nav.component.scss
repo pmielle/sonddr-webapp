@@ -1,3 +1,11 @@
 #tabs {
     min-height: 100vh;
+
+    &:not(.mobile) {
+        padding-left: calc(var(--nav-bar-width) + 2 * var(--spacing));
+    }
+
+    &.mobile {
+        padding-bottom: var(--nav-bar-height);
+    }
 }

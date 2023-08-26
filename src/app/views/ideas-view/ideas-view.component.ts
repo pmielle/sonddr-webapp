@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Goal } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
-import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-ideas-view',
@@ -13,11 +12,12 @@ export class IdeasViewComponent implements OnInit {
   // dependencies
   // --------------------------------------------
   api = inject(ApiService);
-  screen = inject(ScreenSizeService);
+
   
   // attributes
   // --------------------------------------------
   goals?: Goal[] = undefined;
+
 
   // lifecycle hooks
   // --------------------------------------------
