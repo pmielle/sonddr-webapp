@@ -12,6 +12,6 @@
         <app-goal-chip *ngFor="let g of goals" [goal]="g"></app-goal-chip>
     </app-h-scroll>
 
-    <p *ngFor="let i of ideas">{{ i.title }}</p>
+    <app-idea-list [ideas]="ideas"></app-idea-list>
 
 </div>

@@ -27,6 +27,8 @@ import { IntersectionDirective } from './directives/intersection.directive';
 import { HScrollComponent } from './components/h-scroll/h-scroll.component';
 import { ChipComponent } from './components/chip/chip.component';
 import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
+import { IdeaListComponent } from './components/idea-list/idea-list.component';
+import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 
 
 @NgModule({
@@ -48,6 +50,8 @@ import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
     HScrollComponent,
     ChipComponent,
     GoalChipComponent,
+    IdeaListComponent,
+    IdeaCardComponent,
   ],
   imports: [
     BrowserModule,
