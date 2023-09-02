@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Discussion, Goal } from 'sonddr-shared';
+import { Discussion, Goal, Idea } from 'sonddr-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,10 @@ export class ApiService {
   // --------------------------------------------
   async getGoals(): Promise<Goal[]> {
     return this._get<Goal[]>("goals");
+  }
+
+  async getIdeas(): Promise<Idea[]> {
+    return this._get<Idea[]>("ideas");
   }
 
   async getDiscussions(): Promise<Discussion[]> {

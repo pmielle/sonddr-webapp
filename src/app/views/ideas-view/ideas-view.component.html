@@ -1,23 +1,17 @@
 <div id="container">
-    <ng-container *ngIf="goals !== undefined" else loading>
+    <app-top-bar 
+        [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
+        [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'"
+    ></app-top-bar>
 
-        <app-top-bar 
-            [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
-            [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'"
-        ></app-top-bar>
+    <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">All Ideas</h1>
 
-        <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">All Ideas</h1>
+    <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
 
-        <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
+    <app-h-scroll>
+        <app-goal-chip *ngFor="let g of goals" [goal]="g"></app-goal-chip>
+    </app-h-scroll>
 
-        <app-h-scroll>
-            <app-goal-chip *ngFor="let g of goals" [goal]="g"></app-goal-chip>
-        </app-h-scroll>
+    <p *ngFor="let i of ideas">{{ i.title }}</p>
 
-    </ng-container>
-    
-    
-    <ng-template #loading>
-        loading...
-    </ng-template>
 </div>
