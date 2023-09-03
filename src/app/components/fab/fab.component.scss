@@ -2,4 +2,5 @@
     position: fixed;
     right: var(--spacing);
     bottom: calc(var(--spacing) + var(--nav-bar-height));
+    z-index: 1;
 }

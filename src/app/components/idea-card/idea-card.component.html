@@ -1,1 +1,14 @@
-<p *ngIf="idea">{{ idea.title }}</p>
+<div *ngIf="idea" id="container" class="flex column">
+    <div id="cover" class="bg cover" [style.backgroundImage]="'url(assets/default-cover-picture.png)'">
+        <div id="goals">
+            <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true"></app-goal-chip>
+        </div>
+    </div>
+    <div id="bottom" class="flex column align-start gutter">
+        <h2 id="title" class="no-margin-bottom">{{ idea.title }}</h2>
+        <div id="author">
+            <app-profile-picture [user]="idea.author"></app-profile-picture>
+            <p class="no-margin-bottom">{{ idea.author.name }}</p>
+        </div>
+    </div>
+</div>

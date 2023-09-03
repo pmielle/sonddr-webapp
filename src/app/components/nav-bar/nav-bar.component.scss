@@ -6,6 +6,7 @@
     padding-bottom: var(--large-spacing);
     justify-content: space-evenly;
     border-radius: var(--spacing);
+    z-index: 1;
 
     &.mobile {
         top: initial;

@@ -1,4 +1,10 @@
-<div id="container" class="flex small-gap pointer" [style.backgroundColor]="color" mat-ripple>
+<div 
+    id="container" 
+    class="flex small-gap pointer" 
+    [class.no-label]="noLabel" 
+    [style.backgroundColor]="color" 
+    mat-ripple
+>
     <mat-icon [style.color]="foregroundColor">{{ icon }}</mat-icon>
     <div *ngIf="noLabel === false" id="label" [style.color]="foregroundColor">{{ label }}</div>
 </div>

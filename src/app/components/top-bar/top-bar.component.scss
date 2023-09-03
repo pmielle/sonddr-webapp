@@ -2,6 +2,7 @@
     position: sticky;
     top: 0;
     padding-bottom: 8px;
+    z-index: 1;
 
     &.mobile {
         padding-top: var(--top-safe-area);
