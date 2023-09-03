@@ -37,7 +37,9 @@ export class ApiService {
   // private methods
   // --------------------------------------------
   private async _get<T>(path: string): Promise<T> {
-    return lastValueFrom(this.db.get<T>(`${this.apiUrl}/${path}`));
+    let data = await lastValueFrom(this.db.get<T>(`${this.apiUrl}/${path}`));
+    this._convertApiDataToData(data);
+    return data;
   }
 
   private async _post(path: string, payload: object): Promise<string> {
@@ -55,4 +57,21 @@ export class ApiService {
   private async _put(path: string, payload: object): Promise<string> {
     return lastValueFrom(this.db.put<string>(`${this.apiUrl}/${path}`, payload));
   }
+
+  private _convertApiDataToData(apiData: any): any {
+    if (Array.isArray(apiData)) {
+      apiData.forEach(apiDoc => this._convertApiDocToDoc(apiDoc));
+    } else {
+      this._convertApiDocToDoc(apiData);
+    }
+  }
+  
+  private _convertApiDocToDoc(apiDoc: any): any {
+    for (let [key, value] of Object.entries(apiDoc)) {
+      if (key == "date" || key.endsWith("Date")) {
+        apiDoc[key] = new Date(value as any);
+      }
+    }
+  }
+
 }

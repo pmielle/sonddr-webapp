@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-idea-card',
@@ -8,6 +9,23 @@ import { Idea } from 'sonddr-shared';
 })
 export class IdeaCardComponent {
 
+  // dependencies
+  // --------------------------------------------
+  time = inject(TimeService);
+
+  // i/o
+  // --------------------------------------------
   @Input("idea") idea?: Idea;
+
+  
+  // attributes
+  // --------------------------------------------
+  // ...
+
+
+  // methods
+  // --------------------------------------------
+  // ...
+
 
 }

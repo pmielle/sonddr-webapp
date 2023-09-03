@@ -8,7 +8,7 @@
         <h2 id="title" class="no-margin-bottom">{{ idea.title }}</h2>
         <div id="author">
             <app-profile-picture [user]="idea.author"></app-profile-picture>
-            <p class="no-margin-bottom">{{ idea.author.name }}</p>
+            <p class="no-margin-bottom">{{ idea.author.name }} - {{ time.makeAgo(idea.date) }}</p>
         </div>
     </div>
 </div>
