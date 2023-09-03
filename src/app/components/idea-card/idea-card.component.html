@@ -1,14 +1,18 @@
-<div *ngIf="idea" id="container" class="flex column">
-    <div id="cover" class="bg cover" [style.backgroundImage]="'url(assets/default-cover-picture.png)'">
+<div *ngIf="idea" class="flex column" [class.mobile]="screen.isMobile$ | async">
+    <div 
+        id="cover" 
+        class="bg cover pointer" 
+        [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
+    >
         <div id="goals">
             <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true"></app-goal-chip>
         </div>
     </div>
     <div id="bottom" class="flex column align-start gutter">
-        <h2 id="title" class="no-margin-bottom">{{ idea.title }}</h2>
+        <h2 id="title" class="no-margin-bottom pointer">{{ idea.title }}</h2>
         <div id="author">
-            <app-profile-picture [user]="idea.author"></app-profile-picture>
-            <p class="no-margin-bottom">{{ idea.author.name }} - {{ time.makeAgo(idea.date) }}</p>
+            <app-profile-picture [user]="idea.author" class="pointer"></app-profile-picture>
+            <p class="no-margin-bottom"><span class="pointer">{{ idea.author.name }}</span> - {{ time.makeAgo(idea.date) }}</p>
         </div>
     </div>
 </div>

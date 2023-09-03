@@ -1,4 +1,9 @@
-<div class="flex column gap">
+<div id="container" [class.mobile]="screen.isMobile$ | async">
+    <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
+    <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
+    <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
+    <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
+    <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
     <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
     <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
 </div>

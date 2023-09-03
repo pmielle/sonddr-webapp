@@ -16,4 +16,9 @@ export class GoalChipComponent {
   // --------------------------------------------
   @Input('goal') goal?: Goal;
   @Input('no-label') noLabel: boolean = false;
+
+  // methods
+  // --------------------------------------------
+  // ...
+  
 }

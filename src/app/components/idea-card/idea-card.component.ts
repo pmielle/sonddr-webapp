@@ -1,5 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class IdeaCardComponent {
   // dependencies
   // --------------------------------------------
   time = inject(TimeService);
+  screen = inject(ScreenSizeService);
 
   // i/o
   // --------------------------------------------
