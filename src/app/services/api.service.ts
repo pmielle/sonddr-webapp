@@ -22,12 +22,18 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getGoal(id: string): Promise<Goal> {
+    return this._get<Goal>(`goals/${id}`);
+  }
+  
   async getGoals(): Promise<Goal[]> {
     return this._get<Goal[]>("goals");
   }
 
-  async getIdeas(): Promise<Idea[]> {
-    return this._get<Idea[]>("ideas");
+  async getIdeas(goalId?: string): Promise<Idea[]> {  
+    let uri = "ideas";
+    if (goalId) { uri += `?goalId=${goalId}`}
+    return this._get<Idea[]>(uri);
   }
 
   async getDiscussions(): Promise<Discussion[]> {

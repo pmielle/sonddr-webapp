@@ -18,8 +18,8 @@ export class IdeasViewComponent implements OnInit {
   
   // attributes
   // --------------------------------------------
-  goals?: Goal[] = undefined;
-  ideas?: Idea[] = undefined;
+  goals?: Goal[];
+  ideas?: Idea[];
 
 
   // lifecycle hooks
