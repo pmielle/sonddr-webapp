@@ -3,7 +3,8 @@
         id="cover" 
         class="bg cover pointer" 
         [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
-    >
+        mat-ripple
+    > <!-- TODO: do not trigger ripple when child is clicked -->
         <div id="goals">
             <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true"></app-goal-chip>
         </div>
