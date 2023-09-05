@@ -11,6 +11,10 @@
     &:not(.mobile) {
         padding-top: calc(var(--spacing) + var(--large-spacing));
     }
+
+    &.stuck {
+        background-color: red;
+    }
     
     #logo {
         position: relative;

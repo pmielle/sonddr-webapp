@@ -6,4 +6,8 @@
     &.mobile {
         grid-template-columns: 1fr;
     }
+    
+    &:not(.mobile) {
+        padding-right: var(--spacing);
+    }
 }
