@@ -8,6 +8,12 @@
         bottom: 10px;
         left: calc(32px + 2 * var(--gutter));
     }
+
+    #cheers {
+        position: absolute;
+        bottom: 10px;
+        right: var(--gutter);
+    }
 }
 
 #bottom {

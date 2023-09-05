@@ -14,5 +14,6 @@ export class ChipComponent {
   @Input('icon') icon!: string;
   @Input('color') color!: string;
   @Input('foreground-color') foregroundColor: string = "inherit";
+  @Input('clickable') clickable: boolean = true;
 
 }

@@ -1,9 +1,13 @@
 <div 
     id="container" 
-    class="flex small-gap pointer" 
-    [class.no-label]="noLabel" 
+    class="flex small-gap" 
+    [ngClass]="{
+        'no-label': noLabel,
+        'pointer': clickable
+    }"
     [style.backgroundColor]="color" 
     mat-ripple
+    [matRippleDisabled]="!clickable"
 >
     <mat-icon [style.color]="foregroundColor">{{ icon }}</mat-icon>
     <div *ngIf="noLabel === false" id="label" [style.color]="foregroundColor">{{ label }}</div>

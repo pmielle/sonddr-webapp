@@ -6,7 +6,10 @@
         mat-ripple
     > <!-- TODO: do not trigger ripple when child is clicked -->
         <div id="goals">
-            <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true"></app-goal-chip>
+            <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true" [clickable]="false"></app-goal-chip>
+        </div>
+        <div id="cheers">
+            <app-chip icon="favorite" label="12" color="var(--background-color)" foreground-color="var(--foreground-color)" [clickable]="false"></app-chip>
         </div>
     </div>
     <div id="bottom" class="flex column align-start gutter">
