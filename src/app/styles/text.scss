@@ -1,8 +1,17 @@
-.elipsis {
+.ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    &.multi {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        white-space: pre-wrap;
+    }
 }
+
+
 
 h1 { font-weight: bold !important; }
 
