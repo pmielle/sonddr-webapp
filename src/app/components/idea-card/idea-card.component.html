@@ -4,12 +4,18 @@
         class="bg cover pointer" 
         [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
         mat-ripple
-    > <!-- TODO: do not trigger ripple when child is clicked -->
+    >
         <div id="goals">
             <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true" [clickable]="false"></app-goal-chip>
         </div>
-        <div id="cheers">
-            <app-chip icon="favorite" label="12" color="var(--background-color)" foreground-color="var(--foreground-color)" [clickable]="false"></app-chip>
+        <div id="cheers" [style.opacity]="idea.supports > 0 ? 1 : .5">
+            <app-chip 
+                icon="favorite" 
+                [label]="number.compact(idea.supports)" 
+                color="var(--background-color)" 
+                foreground-color="var(--foreground-color)" 
+                [clickable]="false"
+            ></app-chip>
         </div>
     </div>
     <div id="bottom" class="flex column align-start gutter">
