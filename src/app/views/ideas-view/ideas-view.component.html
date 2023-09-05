@@ -9,7 +9,7 @@
     <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
 
     <app-h-scroll id="goals">
-        <app-goal-chip *ngFor="let g of goals" [goal]="g"></app-goal-chip>
+        <app-goal-chip *ngFor="let g of goals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
     </app-h-scroll>
 
     <app-idea-list [ideas]="ideas"></app-idea-list>
