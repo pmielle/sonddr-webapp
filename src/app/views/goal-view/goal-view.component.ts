@@ -21,6 +21,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   routeSub?: Subscription;
   ideas?: Idea[];
   goal?: Goal;
+  otherGoals?: Goal[];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -28,6 +29,16 @@ export class GoalViewComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.paramMap.subscribe((map) => {
       const id = map.get("id")!;
       this.api.getGoal(id).then(g => this.goal = g);
+      this.api.getGoals().then(goals => {
+        let otherGoals: Goal[] = [];
+        let goal: Goal|undefined = undefined;
+        goals.forEach(g => {
+          if (g.id == id) { goal = g }
+          else { otherGoals.push(g) }
+        });
+        this.otherGoals = otherGoals;
+        this.goal = goal;
+      });
       this.api.getIdeas(id).then(i => this.ideas = i);
     })
   }
