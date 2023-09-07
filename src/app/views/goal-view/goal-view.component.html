@@ -1,1 +1,24 @@
-<p>goal-view works!</p>
+<div id="container">
+    
+    <app-top-bar 
+        left-item="back"
+        [title]="(screen.isMobile$ | async) ? undefined : goal?.name"
+    >
+        <div class="flex gap">
+            <mat-icon>{{ goal?.icon }}</mat-icon>
+            <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">{{ goal?.name }}</h1>
+        </div>
+        <div class="spacer"></div>
+    </app-top-bar>
+
+    <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">{{ goal?.name }}</h1>
+
+    <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
+
+    <app-h-scroll id="goals">
+        <app-goal-chip *ngFor="let g of otherGoals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
+    </app-h-scroll>
+
+    <app-idea-list [ideas]="ideas"></app-idea-list>
+
+</div>

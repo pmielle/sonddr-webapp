@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-goal-view',
@@ -15,6 +16,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   route = inject(ActivatedRoute);
   api = inject(ApiService);
+  screen = inject(ScreenSizeService);
   
   // attributes
   // --------------------------------------------

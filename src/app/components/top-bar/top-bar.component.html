@@ -3,12 +3,13 @@
     id="container" 
     class="flex gutter frosted" 
     [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
+    [ngSwitch]="leftItem"
 >
 
-    <div 
-        *ngIf="leftItem === 'logo'" 
+    <div *ngSwitchCase="'logo'"
         id="logo" 
-        class="pointer" 
+        class="left-item pointer"
+        [class.mobile]="screen.isMobile$|async"
         matRipple 
         [matRippleCentered]="true" 
         [matRippleUnbounded]="true" 
@@ -17,8 +18,13 @@
         <img src="assets/light-logo-without-text.png" alt="logo">
     </div>
 
-    <h1 *ngIf="title as t" class="no-margin-bottom">{{ t }}</h1>
+    <div *ngSwitchCase="'back'"
+        class="left-item"
+        [class.mobile]="screen.isMobile$|async"
+    >
+        <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
+    </div>
 
-    <div class="spacer"></div>
+    <ng-content></ng-content>
     
 </div>

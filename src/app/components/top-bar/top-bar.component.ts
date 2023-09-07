@@ -16,7 +16,6 @@ export class TopBarComponent {
   
   // i/o
   // --------------------------------------------
-  @Input("title") title?: string;
   @Input("left-item") leftItem?: LeftItem;
 
   // attributes

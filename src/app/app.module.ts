@@ -54,6 +54,7 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
     IdeaListComponent,
     IdeaCardComponent,
     ProfilePictureComponent,
+    GoalViewComponent,
   ],
   imports: [
     BrowserModule,
