@@ -24,7 +24,17 @@
         <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
     
         <app-h-scroll [shadow-color]="makeBackgroundColor()">
-            <app-goal-chip *ngFor="let g of otherGoals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
+            <app-chip 
+                label="Learn more" 
+                color="var(--foreground-color)"
+                foreground-color="var(--background-color)"
+                icon="info_outline"
+            ></app-chip>
+            <app-goal-chip 
+                *ngFor="let g of otherGoals" 
+                [goal]="g" 
+                [routerLink]="['/', 'ideas', 'goal', g.id]"
+            ></app-goal-chip>
         </app-h-scroll>
     </div>
 
