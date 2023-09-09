@@ -18,6 +18,10 @@
 
     #content {
         height: 48px;
+
+        .left-item {
+            margin-right: 1px;  // mobile alignment with idea card
+        }
         
         #logo {
             position: relative;

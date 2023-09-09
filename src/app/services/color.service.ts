@@ -11,8 +11,26 @@ export class ColorService {
 
   // methods
   // --------------------------------------------
+  // https://stackoverflow.com/a/73985027
+  transparentColor(color: string, opacity: number): string {
+    //if it has an alpha, remove it
+    if (color.length > 7)
+        color = color.substring(0, color.length - 2);
+
+    // coerce values so ti is between 0 and 1.
+    const _opacity = Math.round(Math.min(Math.max(opacity, 0), 1) * 255);
+    let opacityHex = _opacity.toString(16).toUpperCase()
+
+    // opacities near 0 need a trailing 0
+    if (opacityHex.length == 1)
+        opacityHex = "0" + opacityHex;
+
+    return color + opacityHex;
+
+  }
+  
   // https://stackoverflow.com/a/13532993
-  shadeColor(color: string, percent: number) {
+  shadeColor(color: string, percent: number): string {
 
     var R = parseInt(color.substring(1,3),16);
     var G = parseInt(color.substring(3,5),16);

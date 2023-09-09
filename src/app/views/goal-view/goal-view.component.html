@@ -2,6 +2,7 @@
     
     <app-top-bar 
         left-item="back"
+        [background-color]="makeBackgroundColor()"
         [title]="(screen.isMobile$ | async) ? undefined : goal?.name"
     >
         <div class="flex gap">

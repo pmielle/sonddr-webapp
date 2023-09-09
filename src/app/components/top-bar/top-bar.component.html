@@ -2,6 +2,7 @@
 <div 
     id="container" 
     class="gutter frosted" 
+    [style.backgroundColor]="color.transparentColor(this.backgroundColor, .66)"
     [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
     [ngSwitch]="leftItem"
 >
@@ -9,7 +10,7 @@
 
         <div *ngSwitchCase="'logo'"
             id="logo" 
-            class="pointer"
+            class="pointer left-item"
             [class.mobile]="screen.isMobile$|async"
             matRipple 
             [matRippleCentered]="true" 
@@ -21,6 +22,7 @@
     
         <div 
             *ngSwitchCase="'back'" 
+            class="left-item"
             [class.mobile]="screen.isMobile$|async"
             (click)="location.back()"
         >

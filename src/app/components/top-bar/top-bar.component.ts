@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { ColorService } from 'src/app/services/color.service';
 
 type LeftItem = "back" | "close" | "logo";
 
@@ -15,10 +16,12 @@ export class TopBarComponent {
   // --------------------------------------------
   screen = inject(ScreenSizeService);
   location = inject(Location);
+  color = inject(ColorService);
   
   // i/o
   // --------------------------------------------
   @Input("left-item") leftItem?: LeftItem;
+  @Input("background-color") backgroundColor: string = "#303030";
 
   // attributes
   // --------------------------------------------
