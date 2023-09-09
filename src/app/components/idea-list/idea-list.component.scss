@@ -1,4 +1,5 @@
 #container {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: var(--spacing);
@@ -9,5 +10,24 @@
     
     &:not(.mobile) {
         padding-right: var(--spacing);
+    }
+
+    #first-section-header-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 48px;
+    }
+
+    .section-header {
+        position: sticky;
+        top: var(--top-bar-desktop-height);
+        height: 48px;
+        z-index: 1;
+
+        &.mobile {
+            top: var(--top-bar-mobile-height);
+        }
     }
 }

@@ -38,6 +38,9 @@
         </app-h-scroll>
     </div>
 
-    <app-idea-list [ideas]="ideas"></app-idea-list>
+    <app-idea-list 
+        [ideas]="ideas"
+        [stuck-background-color]="makeBackgroundColor()"
+    ></app-idea-list>
 
 </div>

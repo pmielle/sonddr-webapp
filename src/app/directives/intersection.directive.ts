@@ -11,7 +11,7 @@ export class IntersectionDirective {
 
   @Input() root: HTMLElement | null = null
   @Input() rootMargin = '0px 0px 0px 0px'
-  @Input() threshold = 0
+  @Input() threshold = 1.0
   @Input() debounceTime = 0
   @Input() isContinuous = true
 

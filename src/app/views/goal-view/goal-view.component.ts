@@ -56,7 +56,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   makeBackgroundColor(): string {
     return this.goal 
       ? this.color.shadeColor(this.goal.color, -33) 
-      : 'var(--background-color)'
+      : '#303030'
   }
 
 }
