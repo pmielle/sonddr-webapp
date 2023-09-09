@@ -12,6 +12,7 @@
     </app-top-bar>
 
     <div id="header">
+        <div id="background" [class.mobile]="screen.isMobile$|async" [style.backgroundColor]="goal?.color"></div>
         <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">{{ goal?.name }}</h1>
     
         <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>

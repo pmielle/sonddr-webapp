@@ -1,7 +1,22 @@
 #container {
 
     #header {
+        position: relative;
         padding-top: var(--spacing);
         padding-bottom: var(--large-spacing);
+
+        #background {
+            --extra-background-height: var(--top-bar-desktop-height);
+            position: absolute;
+            z-index: -1;
+            top: calc(-1 * var(--extra-background-height));
+            height: calc(var(--extra-background-height) + 100%);
+            width: 100%;
+            left: 0;
+
+            &.mobile {
+                --extra-background-height: var(--top-bar-desktop-height);
+            }
+        }
     }
 }
