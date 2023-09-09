@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
+import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
   api = inject(ApiService);
   screen = inject(ScreenSizeService);
+  color = inject(ColorService);
   
   // attributes
   // --------------------------------------------
@@ -47,6 +49,14 @@ export class GoalViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
+  }
+
+  // methods
+  // --------------------------------------------
+  makeBackgroundColor(): string {
+    return this.goal 
+      ? this.color.shadeColor(this.goal.color, -33) 
+      : 'var(--background-color)'
   }
 
 }
