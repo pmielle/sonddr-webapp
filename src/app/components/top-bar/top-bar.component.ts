@@ -21,7 +21,7 @@ export class TopBarComponent {
   // i/o
   // --------------------------------------------
   @Input("left-item") leftItem?: LeftItem;
-  @Input("background-color") backgroundColor: string = "#303030";
+  @Input("background-color") backgroundColor: string = "#303030";  // has to be hardcoded hex because colorservice
 
   // attributes
   // --------------------------------------------

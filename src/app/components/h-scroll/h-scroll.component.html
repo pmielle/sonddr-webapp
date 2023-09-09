@@ -7,7 +7,17 @@
         </div>
     </div>
     <ng-container *ngIf="this.hideShadows === false">
-        <div id="left-shadow" class="shadow" [class.show]="leftShadow"></div>
-        <div id="right-shadow" class="shadow" [class.show]="rightShadow"></div>
+        <div 
+            id="left-shadow" 
+            class="shadow" 
+            [class.show]="leftShadow"
+            [style.background]="'linear-gradient(to right, '+shadowColor+', transparent)'"
+        ></div>
+        <div 
+            id="right-shadow" 
+            class="shadow" 
+            [class.show]="rightShadow"
+            [style.background]="'linear-gradient(to left, '+shadowColor+', transparent)'"
+        ></div>
     </ng-container>
 </div>
