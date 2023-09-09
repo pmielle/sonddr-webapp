@@ -1,4 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
+import { Location } from '@angular/common';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 type LeftItem = "back" | "close" | "logo";
@@ -13,6 +14,7 @@ export class TopBarComponent {
   // dependencies
   // --------------------------------------------
   screen = inject(ScreenSizeService);
+  location = inject(Location);
   
   // i/o
   // --------------------------------------------

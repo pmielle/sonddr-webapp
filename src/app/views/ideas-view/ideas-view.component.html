@@ -3,15 +3,20 @@
     <app-top-bar 
         [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
         [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'"
-    ></app-top-bar>
+    >
+        <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">All ideas</h1>
+        <div class="spacer"></div>
+    </app-top-bar>
 
-    <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">All Ideas</h1>
-
-    <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
-
-    <app-h-scroll id="goals">
-        <app-goal-chip *ngFor="let g of goals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
-    </app-h-scroll>
+    <div id="header">
+        <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">All Ideas</h1>
+    
+        <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
+    
+        <app-h-scroll id="goals">
+            <app-goal-chip *ngFor="let g of goals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
+        </app-h-scroll>
+    </div>
 
     <app-idea-list [ideas]="ideas"></app-idea-list>
 

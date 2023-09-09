@@ -1,7 +1,6 @@
 #container {
     position: sticky;
     top: 0;
-    padding-bottom: 8px;
     z-index: 1;
 
     &.mobile {
@@ -9,22 +8,22 @@
     }
     
     &:not(.mobile) {
-        padding-top: calc(var(--spacing) + var(--large-spacing));
+        // 8px is the diff between #content.height and h1.height (/2 because top only)
+        padding-top: calc(var(--spacing) + var(--large-spacing) - 8px);
     }
 
     &.stuck {
         background-color: red;
     }
 
-    .left-item {
-        &:not(.mobile) {
-            margin-right: var(--spacing);
+    #content {
+        height: 48px;
+        
+        #logo {
+            position: relative;
+            height: 32px;
+            img { height: 100%; }
         }
     }
-    
-    #logo {
-        position: relative;
-        height: 32px;
-        img { height: 100%; }
-    }
+
 }
