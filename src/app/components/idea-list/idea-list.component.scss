@@ -1,4 +1,5 @@
 #container {
+    --header-height: 48px;
     position: relative;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -12,18 +13,26 @@
         padding-right: var(--spacing);
     }
 
+    #sort-by {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;  // above section header
+        height: var(--header-height);
+    }
+
     #first-section-header-background {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 48px;
+        height: var(--header-height);
     }
 
     .section-header {
         position: sticky;
         top: var(--top-bar-desktop-height);
-        height: 48px;
+        height: var(--header-height);
         z-index: 1;
 
         &.mobile {

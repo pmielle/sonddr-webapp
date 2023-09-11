@@ -18,6 +18,9 @@
         </app-h-scroll>
     </div>
 
-    <app-idea-list [ideas]="ideas"></app-idea-list>
+    <app-idea-list 
+        [ideas]="ideas"
+        (sort-by-change)="onSortByChange($event)"
+    ></app-idea-list>
 
 </div>

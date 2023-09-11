@@ -21,6 +21,7 @@ import { IdeasTabComponent } from './components/ideas-tab/ideas-tab.component';
 import { MessagesTabComponent } from './components/messages-tab/messages-tab.component';
 import { FabComponent } from './components/fab/fab.component';
 import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import { AddViewComponent } from './views/add-view/add-view.component';
 import { TopBarComponent } from './components/top-bar/top-bar.component';
 import { IntersectionDirective } from './directives/intersection.directive';
@@ -65,6 +66,7 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
     MatIconModule,
     MatRippleModule,
     MatButtonModule,
+    MatMenuModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
       {path: "ideas", component: IdeasTabComponent, children: [
