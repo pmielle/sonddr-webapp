@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { Discussion, Goal, Idea } from 'sonddr-shared';
+import { SortBy } from '../components/idea-list/idea-list.component';
 
 @Injectable({
   providedIn: 'root'
@@ -30,9 +31,14 @@ export class ApiService {
     return this._get<Goal[]>("goals");
   }
 
-  async getIdeas(goalId?: string): Promise<Idea[]> {  
+  async getIdeas(sortBy: SortBy, goalId?: string): Promise<Idea[]> {  
     let uri = "ideas";
-    if (goalId) { uri += `?goalId=${goalId}`}
+    switch (sortBy) {
+      case "recent": uri += "?order=date"; break;
+      case "popular": uri += "?order=supports"; break;
+      default: throw new Error(`unexpected sortBy: ${sortBy}`);
+    }
+    if (goalId) { uri += `&goalId=${goalId}`; }
     return this._get<Idea[]>(uri);
   }
 

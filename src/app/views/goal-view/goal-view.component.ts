@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
+import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
 import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -43,7 +44,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
         this.otherGoals = otherGoals;
         this.goal = goal;
       });
-      this.api.getIdeas(id).then(i => this.ideas = i);
+      this.api.getIdeas("recent", id).then(i => this.ideas = i);
     })
   }
 
@@ -53,6 +54,13 @@ export class GoalViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  onSortByChange(sortBy: SortBy) {
+    if (this.goal == undefined) {
+      throw new Error("this.goal should be defined at this point");
+    }
+    this.api.getIdeas(sortBy, this.goal.id).then(i => this.ideas = i);
+  }
+  
   makeBackgroundColor(): string {
     return this.goal 
       ? this.color.shadeColor(this.goal.color, -33) 

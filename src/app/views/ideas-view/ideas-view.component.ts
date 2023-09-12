@@ -27,13 +27,13 @@ export class IdeasViewComponent implements OnInit {
   // --------------------------------------------
   ngOnInit() {
     this.api.getGoals().then(g => this.goals = g);
-    this.api.getIdeas().then(i => this.ideas = i);
+    this.api.getIdeas("recent").then(i => this.ideas = i);
   }
 
   // methods
   // --------------------------------------------
   onSortByChange(sortBy: SortBy) {
-    console.log(sortBy);  // TODO: update ideas here
+    this.api.getIdeas(sortBy).then(i => this.ideas = i);
   }
 
 }

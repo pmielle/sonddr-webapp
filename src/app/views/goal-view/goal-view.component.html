@@ -41,6 +41,7 @@
     <app-idea-list 
         [ideas]="ideas"
         [stuck-background-color]="makeBackgroundColor()"
+        (sort-by-change)="onSortByChange($event)"
     ></app-idea-list>
 
 </div>
