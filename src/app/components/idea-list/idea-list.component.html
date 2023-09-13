@@ -1,6 +1,6 @@
 <div id="container" [class.mobile]="screen.isMobile$ | async">
 
-    <div *ngIf="!stuck[0]" id="sort-by" class="flex">
+    <div *ngIf="shouldDisplaySortBy()" id="sort-by" class="flex">
         <button [mat-menu-trigger-for]="menu" mat-button>
             <span>sort by</span>
             <mat-icon>sort</mat-icon>
@@ -13,20 +13,19 @@
 
     <div id="first-section-header-background" [style.backgroundColor]="stuckBackgroundColor"></div>
 
-    <div class="section">
-        <div 
-            class="section-header flex row justify-start gutter frosted"
-            [style.backgroundColor]="stuck[0] ? color.transparentColor(stuckBackgroundColor, .66) : 'transparent'"
+    <div class="section" *ngFor="let s of sections">
+        <div
+            class="section-header flex row justify-start gutter"
+            [style.backgroundColor]="s.stuck ? color.transparentColor(stuckBackgroundColor, .66) : 'transparent'"
+            [class.invisible]="!s.header"
             [class.mobile]="screen.isMobile$|async"
             appIntersection 
             [rootMargin]="(screen.isMobile$|async) ? '-93px 0px 0px 0px' : '89px 0px 0px 0px'" 
-            (isIntersecting)="this.stuck[0]=!$event"
-            [ngSwitch]="sortBy"
+            (isIntersecting)="s.stuck = !$event"
         >
-            <span *ngSwitchCase="'recent'">Today</span>
-            <span *ngSwitchCase="'popular'">Top 10</span>
+            <span>{{ s.header }}</span>
         </div>
-        <app-idea-card *ngFor="let i of ideas" [idea]="i"></app-idea-card>
+        <app-idea-card *ngFor="let i of s.ideas" [idea]="i"></app-idea-card>
     </div>
 
 </div>

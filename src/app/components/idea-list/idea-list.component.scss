@@ -38,5 +38,10 @@
         &.mobile {
             top: var(--top-bar-mobile-height);
         }
+
+        &.invisible {
+            opacity: 0;
+            pointer-events: none;
+        }
     }
 }

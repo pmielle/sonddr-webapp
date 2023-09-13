@@ -18,6 +18,12 @@ export class TimeService {
 
   // public methods
   // --------------------------------------------
+  getNDaysBefore(date: Date, n: number): Date {
+    let newDate = new Date(date);  // clone
+    newDate.setDate(date.getDate() - n);
+    return newDate;
+  }
+
   // https://muffinman.io/blog/javascript-time-ago-function/
   makeAgo(date: Date): string {
     const today = new Date();
