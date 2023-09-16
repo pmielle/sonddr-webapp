@@ -34,7 +34,7 @@
                     <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
                 </p>
             </div>
-            <div id="external-links">
+            <div id="external-links" *ngIf="idea?.externalLinks?.length">
                 <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
                     <mat-icon id="open-in-new">open_in_new</mat-icon>
                     <app-external-link 
