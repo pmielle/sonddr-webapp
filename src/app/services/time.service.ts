@@ -25,7 +25,8 @@ export class TimeService {
   }
 
   // https://muffinman.io/blog/javascript-time-ago-function/
-  makeAgo(date: Date): string {
+  makeAgo(date?: Date): string {
+    if (!date) { return ""; }
     const today = new Date();
     const yesterday = new Date(today.getTime() - DAY_IN_MS);
     const seconds = Math.round((today.getTime() - date.getTime()) / 1000);

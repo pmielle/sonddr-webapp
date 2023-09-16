@@ -1,0 +1,52 @@
+#container {
+
+    #cover {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+
+        #goals {
+            position: absolute;
+            bottom: 10px;
+            left: calc(32px + 2 * var(--gutter));
+            gap: 10px;
+        }
+    }
+
+    #page-content {
+        padding-top: var(--large-spacing);
+
+        #header {
+            width: 100%;
+            gap: var(--spacing);
+    
+            #title {
+                margin-left: calc(32px + var(--gutter));
+            }
+    
+            #author {
+                position: relative;
+                margin-left: calc(32px + var(--gutter));
+    
+                #author-name { font-weight: bold; }
+                #date { opacity: 0.5; }
+    
+                app-profile-picture {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transform: translate(calc(-100% - 10px), -7px);
+                }
+            }
+        }
+
+        // external links
+        // ...
+
+        #content {
+            padding-left: calc(32px + 2 * var(--gutter));
+            padding-right: var(--gutter);
+        }
+    }
+
+}

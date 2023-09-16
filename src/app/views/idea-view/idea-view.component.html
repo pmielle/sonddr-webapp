@@ -1,1 +1,40 @@
-<p>idea-view works!</p>
+<div id="container">
+
+    <div 
+        id="cover" 
+        class="bg cover"
+        [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
+    >
+        <div id="goals" class="flex">
+            <app-goal-chip 
+                *ngFor="let g of idea?.goals" 
+                [goal]="g"
+                [routerLink]="['/', 'ideas', 'goal', g.id]"
+            ></app-goal-chip>
+        </div>
+    </div>
+
+    <div id="page-content" class="flex column large-gap">
+
+        <div id="header" class="flex column align-start gutter">
+            <h1 id="title" class="no-margin-bottom">{{ idea?.title }}</h1>
+            <div id="author">
+                <app-profile-picture [user]="idea?.author" class="pointer"></app-profile-picture>
+                <p class="no-margin-bottom">
+                    <span id="author-name" class="pointer">{{ idea?.author?.name }}</span>
+                    <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- external links
+            ... -->
+        
+        <div id="content">
+            {{ idea?.content }}
+        </div>
+
+    </div>
+
+
+</div>

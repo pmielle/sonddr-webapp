@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
+import { TimeService } from 'src/app/services/time.service';
 
 @Component({
   selector: 'app-idea-view',
@@ -15,6 +16,7 @@ export class IdeaViewComponent implements OnDestroy {
   // --------------------------------------------
   route = inject(ActivatedRoute);
   api = inject(ApiService);
+  time = inject(TimeService);
   
   // attributes
   // --------------------------------------------
