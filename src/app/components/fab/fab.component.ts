@@ -7,6 +7,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
 type FabMode = {
   icon: string,
   color: string,
+  label?: string,
   action: () => void,
 };
 
@@ -44,6 +45,7 @@ export class FabComponent {
       this.mode = {
         icon: "add",
         color: "var(--primary-color)",
+        label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl("/ideas/add")}
       };
     } else if (e.url.startsWith("/ideas/goal/")) {
@@ -51,24 +53,28 @@ export class FabComponent {
       this.mode = {
         icon: "add",
         color: "var(--primary-color)",
+        label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
       };
     } else if (e.url.startsWith("/ideas/idea/")) {
       this.mode = {
         icon: "favorite_outline",
         color: "var(--primary-color)",
+        label: "Support",
         action: () => {this.mainNav.fabClick.next();}
       };
     } else if (e.url == "/messages") {
       this.mode = {
         icon: "add",
         color: "var(--blue)",
+        label: "Start a<br>discussion",
         action: () => {console.log("click in messages")}
       };
     } else if (e.url.startsWith("/ideas/add")) {
       this.mode = {
         icon: "done",
         color: "var(--green)",
+        label: "Share",
         action: () => {console.log("click in add")}
       };
     } else if (e.url.startsWith("/messages/discussion/")) {

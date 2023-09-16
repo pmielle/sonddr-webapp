@@ -1,6 +1,23 @@
-#container.mobile {
-    position: fixed;
-    right: var(--spacing);
-    bottom: calc(var(--spacing) + var(--nav-bar-height));
-    z-index: 1;
+#container {
+    position: relative;
+    
+    &.mobile {
+        position: fixed;
+        right: var(--spacing);
+        bottom: calc(var(--spacing) + var(--nav-bar-height));
+        z-index: 1;
+    }
+
+    #label {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        text-align: center;
+        width: var(--nav-bar-width);
+        transform: translate(-50%, calc(100% + var(--small-spacing)));
+        
+        &.mobile {
+            display: none;
+        }
+    }
 }

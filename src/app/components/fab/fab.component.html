@@ -1,3 +1,15 @@
 <div id="container" *ngIf="this.mode as m" [class.mobile]="screen.isMobile$ | async" [class.hidden]="mainNav.hideNavbar">
-    <button mat-fab [style.backgroundColor]="m.color" (click)="m.action()"><mat-icon>{{ m.icon }}</mat-icon></button>
+    <button 
+        mat-fab 
+        [style.backgroundColor]="m.color" 
+        (click)="m.action()"
+    >
+        <mat-icon>{{ m.icon }}</mat-icon>
+    </button>
+    <span 
+        id="label" 
+        [class.mobile]="screen.isMobile$|async"
+        [style.color]="m.color" 
+        [innerHTML]="m.label"
+    ></span>
 </div>
