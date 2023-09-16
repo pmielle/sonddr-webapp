@@ -1,10 +1,13 @@
 <div id="container">
 
-    <div 
-        id="cover" 
-        class="bg cover"
-        [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
-    >
+    <app-top-bar left-item="back"></app-top-bar>
+
+    <div id="cover">
+        <div 
+            id="cover-background" 
+            class="bg cover"
+            [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
+        ></div>
         <div id="goals" class="flex">
             <app-goal-chip 
                 *ngFor="let g of idea?.goals" 

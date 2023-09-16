@@ -5,6 +5,14 @@
         width: 100%;
         aspect-ratio: 16/9;
 
+        #cover-background {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            height: calc(100% + 100px);
+            width: 100%;
+        }
+
         #goals {
             position: absolute;
             bottom: 10px;

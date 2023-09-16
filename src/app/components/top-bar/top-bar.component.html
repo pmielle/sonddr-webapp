@@ -2,11 +2,11 @@
 <div 
     id="container" 
     class="gutter frosted" 
-    [style.backgroundColor]="color.transparentColor(this.backgroundColor, .66)"
+    [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
     [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
     [ngSwitch]="leftItem"
 >
-    <div id="content" class="flex">
+    <div id="content" class="flex justify-start">
 
         <div *ngSwitchCase="'logo'"
             id="logo" 

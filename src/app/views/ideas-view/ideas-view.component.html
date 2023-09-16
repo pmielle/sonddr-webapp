@@ -5,7 +5,6 @@
         [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'"
     >
         <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">All ideas</h1>
-        <div class="spacer"></div>
     </app-top-bar>
 
     <div id="header">
