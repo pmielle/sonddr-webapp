@@ -23,6 +23,10 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getIdea(id: string): Promise<Idea> {
+    return this._get<Idea>(`ideas/${id}`);
+  }
+
   async getGoal(id: string): Promise<Goal> {
     return this._get<Goal>(`goals/${id}`);
   }
