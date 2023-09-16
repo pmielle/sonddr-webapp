@@ -36,10 +36,13 @@
             </div>
             <div id="external-links">
                 <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
-
                     <mat-icon id="open-in-new">open_in_new</mat-icon>
+                    <app-external-link 
+                        *ngFor="let el of idea?.externalLinks" 
+                        [external-link]="el"
+                    ></app-external-link>
                 </app-h-scroll>
-                <span id="externa-link-label">External links</span>
+                <div id="external-link-label">External links</div>
             </div>
         </div>
         

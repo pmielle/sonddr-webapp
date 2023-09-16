@@ -53,7 +53,8 @@
                     opacity: 0.5;
                 }
 
-                span {
+                #external-link-label {
+                    margin-top: -4px;
                     opacity: 0.5;
                     margin-left: calc(32px + 2 * var(--gutter));
                 }

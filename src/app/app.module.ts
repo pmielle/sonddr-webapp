@@ -32,6 +32,7 @@ import { IdeaListComponent } from './components/idea-list/idea-list.component';
 import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
+import { ExternalLinkComponent } from './components/external-link/external-link.component';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import { IdeaViewComponent } from './views/idea-view/idea-view.component';
     ProfilePictureComponent,
     GoalViewComponent,
     IdeaViewComponent,
+    ExternalLinkComponent,
   ],
   imports: [
     BrowserModule,
