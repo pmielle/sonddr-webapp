@@ -31,6 +31,7 @@ import { GoalChipComponent } from './components/goal-chip/goal-chip.component';
 import { IdeaListComponent } from './components/idea-list/idea-list.component';
 import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
+import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
     IdeaCardComponent,
     ProfilePictureComponent,
     GoalViewComponent,
+    IdeaViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +73,7 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
       {path: "", redirectTo: "ideas", pathMatch: "full"},
       {path: "ideas", component: IdeasTabComponent, children: [
         {path: "", component: IdeasViewComponent},
+        {path: "idea/:id", component: IdeaViewComponent},
         {path: "goal/:id", component: GoalViewComponent},
         {path: "add", component: AddViewComponent},
       ]},

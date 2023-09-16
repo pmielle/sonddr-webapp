@@ -53,6 +53,12 @@ export class FabComponent {
         color: "var(--primary-color)",
         action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
       };
+    } else if (e.url.startsWith("/ideas/idea/")) {
+      this.mode = {
+        icon: "favorite_outline",
+        color: "var(--primary-color)",
+        action: () => {console.log("click!!!")}
+      };
     } else if (e.url == "/messages") {
       this.mode = {
         icon: "add",
