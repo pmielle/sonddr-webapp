@@ -11,6 +11,7 @@ export class HScrollComponent {
   // --------------------------------------------
   @Input('shadow-color') shadowColor: string = "var(--background-color)";
   @Input('hide-shadows') hideShadows: boolean = false;
+  @Input('left-padding') leftPadding = "var(--gutter)";
   leftShadow = false;
   rightShadow = true;
 

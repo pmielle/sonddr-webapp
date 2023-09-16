@@ -2,7 +2,7 @@
     position: relative;
 
     #scroll-container {
-        padding: 0 var(--gutter);
+        padding-right: var(--gutter);
         
         #intersection-container {
             position: relative;  // for #*-intersect position

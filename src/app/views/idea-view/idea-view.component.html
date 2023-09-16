@@ -8,12 +8,18 @@
             class="bg cover"
             [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
         ></div>
-        <div id="goals" class="flex">
-            <app-goal-chip 
-                *ngFor="let g of idea?.goals" 
-                [goal]="g"
-                [routerLink]="['/', 'ideas', 'goal', g.id]"
-            ></app-goal-chip>
+
+        <div id="goals">
+            <app-h-scroll 
+                [hide-shadows]="true"
+                left-padding="calc(2 * var(--gutter) + 32px)"
+            >
+                <app-goal-chip 
+                    *ngFor="let g of idea?.goals" 
+                    [goal]="g"
+                    [routerLink]="['/', 'ideas', 'goal', g.id]"
+                ></app-goal-chip>
+            </app-h-scroll>
         </div>
     </div>
 

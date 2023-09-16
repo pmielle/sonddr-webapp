@@ -16,8 +16,7 @@
         #goals {
             position: absolute;
             bottom: 10px;
-            left: calc(32px + 2 * var(--gutter));
-            gap: 10px;
+            width: 100%;
         }
     }
 
