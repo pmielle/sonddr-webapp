@@ -22,13 +22,9 @@
 
         .section-header {
             position: sticky;
-            top: var(--top-bar-desktop-height);
+            top: var(--top-bar-height);
             height: var(--header-height);
             z-index: 1;
-    
-            &.mobile {
-                top: var(--top-bar-mobile-height);
-            }
     
             &.invisible {
                 opacity: 0;

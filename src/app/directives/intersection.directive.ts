@@ -10,7 +10,7 @@ import { Subscription, Observable, debounceTime } from 'rxjs';
 export class IntersectionDirective {
 
   @Input() root: HTMLElement | null = null
-  @Input() rootMargin = '0px 0px 0px 0px'
+  @Input() rootMargin = '0px 0px 0px 0px'  // css vars won't work
   @Input() threshold = 1.0
   @Input() debounceTime = 0
   @Input() isContinuous = true

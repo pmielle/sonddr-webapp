@@ -1,7 +1,7 @@
 <div appIntersection (isIntersecting)="this.stuck=!$event"></div>
 <div 
     id="container" 
-    class="gutter frosted" 
+    class="gutter frosted flex column justify-end" 
     [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
     [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
     [ngSwitch]="leftItem"

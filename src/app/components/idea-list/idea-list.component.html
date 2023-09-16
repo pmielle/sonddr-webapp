@@ -18,9 +18,8 @@
             class="section-header flex row justify-start gutter"
             [style.backgroundColor]="s.stuck ? color.transparentColor(stuckBackgroundColor, .66) : 'transparent'"
             [class.invisible]="!s.header"
-            [class.mobile]="screen.isMobile$|async"
             appIntersection 
-            rootMargin="-100px 0px 0px 0px"
+            rootMargin="-101px 0px 0px 0px"
             (isIntersecting)="s.stuck = !$event"
         >
             <span>{{ s.header }}</span>

@@ -7,9 +7,9 @@
 
         #cover-background {
             position: absolute;
-            top: -100px;
+            top: calc(-1 * var(--top-bar-height));
             left: 0;
-            height: calc(100% + 100px);
+            height: calc(100% + var(--top-bar-height));
             width: 100%;
         }
 
