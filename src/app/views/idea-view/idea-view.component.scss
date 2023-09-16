@@ -28,12 +28,12 @@
             gap: var(--spacing);
     
             #title {
-                margin-left: calc(32px + var(--gutter));
+                margin-left: calc(32px + 2 * var(--gutter));
             }
     
             #author {
                 position: relative;
-                margin-left: calc(32px + var(--gutter));
+                margin-left: calc(32px + 2 * var(--gutter));
     
                 #author-name { font-weight: bold; }
                 #date { opacity: 0.5; }
@@ -45,10 +45,20 @@
                     transform: translate(calc(-100% - 10px), -7px);
                 }
             }
-        }
 
-        // external links
-        // ...
+            #external-links {
+                width: 100%;
+
+                #open-in-new {
+                    opacity: 0.5;
+                }
+
+                span {
+                    opacity: 0.5;
+                    margin-left: calc(32px + 2 * var(--gutter));
+                }
+            }
+        }
 
         #content {
             padding-left: calc(32px + 2 * var(--gutter));

@@ -25,7 +25,7 @@
 
     <div id="page-content" class="flex column large-gap">
 
-        <div id="header" class="flex column align-start gutter">
+        <div id="header" class="flex column align-start">
             <h1 id="title" class="no-margin-bottom">{{ idea?.title }}</h1>
             <div id="author">
                 <app-profile-picture [user]="idea?.author" class="pointer"></app-profile-picture>
@@ -34,10 +34,14 @@
                     <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
                 </p>
             </div>
-        </div>
+            <div id="external-links">
+                <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
 
-        <!-- external links
-            ... -->
+                    <mat-icon id="open-in-new">open_in_new</mat-icon>
+                </app-h-scroll>
+                <span id="externa-link-label">External links</span>
+            </div>
+        </div>
         
         <div id="content">
             {{ idea?.content }}
