@@ -1,22 +1,11 @@
 #container {
     --header-height: 48px;
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: var(--spacing);
-
-    &.mobile {
-        grid-template-columns: 1fr;
-    }
-    
-    &:not(.mobile) {
-        padding-right: var(--spacing);
-    }
 
     #sort-by {
         position: absolute;
         top: 0;
-        right: 0;
+        right: var(--gutter);
         z-index: 2;  // above section header
         height: var(--header-height);
     }
@@ -29,19 +18,37 @@
         height: var(--header-height);
     }
 
-    .section-header {
-        position: sticky;
-        top: var(--top-bar-desktop-height);
-        height: var(--header-height);
-        z-index: 1;
+    .section {
 
-        &.mobile {
-            top: var(--top-bar-mobile-height);
+        .section-header {
+            position: sticky;
+            top: var(--top-bar-desktop-height);
+            height: var(--header-height);
+            z-index: 1;
+    
+            &.mobile {
+                top: var(--top-bar-mobile-height);
+            }
+    
+            &.invisible {
+                opacity: 0;
+                pointer-events: none;
+            }
         }
 
-        &.invisible {
-            opacity: 0;
-            pointer-events: none;
+        .section-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: var(--spacing);
+
+            &.mobile {
+                grid-template-columns: 1fr;
+            }
+            
+            &:not(.mobile) {
+                padding-right: var(--spacing);
+            }
         }
     }
+
 }

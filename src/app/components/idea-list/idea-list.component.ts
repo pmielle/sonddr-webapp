@@ -40,6 +40,7 @@ export class IdeaListComponent implements OnChanges {
   // --------------------------------------------
   ngOnChanges(changes: SimpleChanges): void {
     const change = changes["ideas"];
+    if (!change) { return; }
     let ideas = change.currentValue;
     this.sections = ideas && ideas.length ? this.splitIdeasIntoSections(ideas) : undefined;
   }

@@ -1,4 +1,4 @@
-<div id="container" [class.mobile]="screen.isMobile$ | async">
+<div id="container">
 
     <div *ngIf="shouldDisplaySortBy()" id="sort-by" class="flex">
         <button [mat-menu-trigger-for]="menu" mat-button>
@@ -20,12 +20,14 @@
             [class.invisible]="!s.header"
             [class.mobile]="screen.isMobile$|async"
             appIntersection 
-            [rootMargin]="(screen.isMobile$|async) ? '-93px 0px 0px 0px' : '89px 0px 0px 0px'" 
+            rootMargin="-100px 0px 0px 0px"
             (isIntersecting)="s.stuck = !$event"
         >
             <span>{{ s.header }}</span>
         </div>
-        <app-idea-card *ngFor="let i of s.ideas" [idea]="i"></app-idea-card>
+        <div class="section-content" [class.mobile]="screen.isMobile$ | async">
+            <app-idea-card *ngFor="let i of s.ideas" [idea]="i"></app-idea-card>
+        </div>
     </div>
 
 </div>
