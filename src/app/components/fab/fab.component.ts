@@ -57,7 +57,7 @@ export class FabComponent {
       this.mode = {
         icon: "favorite_outline",
         color: "var(--primary-color)",
-        action: () => {console.log("click!!!")}
+        action: () => {this.mainNav.fabClick.next();}
       };
     } else if (e.url == "/messages") {
       this.mode = {

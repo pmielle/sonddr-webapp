@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
+import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
 
@@ -19,10 +20,12 @@ export class IdeaViewComponent implements OnDestroy {
   api = inject(ApiService);
   time = inject(TimeService);
   screen = inject(ScreenSizeService);
+  mainNav = inject(MainNavService);
   
   // attributes
   // --------------------------------------------
   routeSub?: Subscription;
+  fabClickSub?: Subscription;
   idea?: Idea;
 
   // lifecycle hooks
@@ -31,11 +34,15 @@ export class IdeaViewComponent implements OnDestroy {
     this.routeSub = this.route.paramMap.subscribe((map) => {
       const id = map.get("id")!;
       this.api.getIdea(id).then(i => this.idea = i);
-    })
+    });
+    this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
+      console.log("fab click!");
+    });
   }
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
+    this.fabClickSub?.unsubscribe();
   }
 
   // methods
