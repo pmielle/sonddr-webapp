@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
@@ -9,5 +10,6 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
 export class MainNavComponent {
   
   screen = inject(ScreenSizeService);
+  auth = inject(AuthService);
 
 }

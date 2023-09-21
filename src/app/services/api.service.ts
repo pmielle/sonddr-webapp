@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Discussion, Goal, Idea } from 'sonddr-shared';
+import { Discussion, Goal, Idea, User } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
 @Injectable({
@@ -23,6 +23,10 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getUser(id: string): Promise<User> {
+    return this._get<User>(`users/${id}`);
+  }
+
   async getIdea(id: string): Promise<Idea> {
     return this._get<Idea>(`ideas/${id}`);
   }
