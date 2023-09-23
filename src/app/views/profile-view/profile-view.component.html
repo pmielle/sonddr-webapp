@@ -1,1 +1,44 @@
-<p>profile-view works!</p>
+<div id="container">
+
+    <app-top-bar left-item="close">
+        <div class="spacer"></div>
+        <button mat-icon-button><mat-icon>settings</mat-icon></button>
+    </app-top-bar>
+
+    <div id="cover">
+        <div 
+            id="cover-background" 
+            class="bg cover"
+            [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
+        ></div>
+
+        <div id="profile-picture">
+            <app-profile-picture [user]="auth.user$|async" [large]="true"></app-profile-picture>
+        </div>
+    </div>
+
+    <div id="page-content" class="flex column large-gap">
+
+        <div id="header" class="flex column">
+            <h1 id="name" class="no-margin-bottom gutter">{{ (auth.user$|async)?.name }}</h1>
+            <div id="since" class="gutter">member since {{ time.getYear((auth.user$|async)?.date) }} - X ideas</div>
+            <div id="external-links" *ngIf="(auth.user$|async)?.externalLinks?.length">
+                <app-h-scroll>
+                    <mat-icon id="open-in-new">open_in_new</mat-icon>
+                    <app-external-link 
+                        *ngFor="let el of (auth.user$|async)?.externalLinks" 
+                        [external-link]="el"
+                    ></app-external-link>
+                </app-h-scroll>
+                <div id="external-link-label">External links</div>
+            </div>
+        </div>
+        
+        <div id="content" class="gutter">
+            content...
+        </div>
+
+    </div>
+
+
+</div>

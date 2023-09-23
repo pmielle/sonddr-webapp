@@ -28,6 +28,15 @@
         >
             <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
         </div>
+
+        <div 
+        *ngSwitchCase="'close'" 
+        class="left-item"
+        [class.mobile]="screen.isMobile$|async"
+        (click)="location.back()"
+    >
+        <button mat-icon-button><mat-icon>close</mat-icon></button>
+    </div>
     
         <ng-content></ng-content>
 

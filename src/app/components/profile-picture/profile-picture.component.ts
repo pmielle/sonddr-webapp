@@ -8,6 +8,7 @@ import { User } from 'sonddr-shared';
 })
 export class ProfilePictureComponent {
 
+  @Input('large') large = false;
   @Input('user') user?: User|null;
 
 }

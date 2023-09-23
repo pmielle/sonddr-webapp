@@ -18,6 +18,12 @@ export class TimeService {
 
   // public methods
   // --------------------------------------------
+  getYear(date?: Date): string {
+    if (!date) { return ""; }
+    const year = date.getFullYear();
+    return year.toString();
+  }
+
   getNDaysBefore(date: Date, n: number): Date {
     let newDate = new Date(date);  // clone
     newDate.setDate(date.getDate() - n);
