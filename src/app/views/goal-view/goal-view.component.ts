@@ -57,7 +57,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   // methods
   // --------------------------------------------
   onSortByChange(sortBy: SortBy) {
-    if (this.goal == undefined) {
+    if (!this.goal) {
       throw new Error("this.goal should be defined at this point");
     }
     this.api.getIdeas(sortBy, this.goal.id, undefined).then(i => this.ideas = i);

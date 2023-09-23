@@ -21,35 +21,30 @@
             transform: translate(-50%, 25%);
         }
     }
-
-    #page-content {
+        
+    #header {
+        width: 100%;
+        gap: var(--spacing);
         padding-top: var(--large-spacing);
+        padding-bottom: var(--large-spacing);
 
-        #header {
-            width: 100%;
-            gap: var(--spacing);
+        #since {
+            opacity: 0.5;
+        }
 
-            #since {
+        #external-links {
+            max-width: 100%;
+
+            #open-in-new {
                 opacity: 0.5;
             }
 
-            #external-links {
-                max-width: 100%;
-
-                #open-in-new {
-                    opacity: 0.5;
-                }
-
-                #external-link-label {
-                    margin-top: -4px;
-                    opacity: 0.5;
-                    margin-left: var(--gutter);
-                }
+            #external-link-label {
+                margin-top: -4px;
+                opacity: 0.5;
+                margin-left: var(--gutter);
             }
         }
-
-        
-
     }
 
 }
