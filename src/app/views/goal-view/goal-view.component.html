@@ -9,6 +9,8 @@
             <mat-icon>{{ goal?.icon }}</mat-icon>
             <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">{{ goal?.name }}</h1>
         </div>
+        <div class="spacer"></div>
+        <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
     </app-top-bar>
 
     <div id="header">

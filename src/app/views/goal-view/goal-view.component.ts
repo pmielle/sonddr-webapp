@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
@@ -20,6 +21,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   api = inject(ApiService);
   screen = inject(ScreenSizeService);
   color = inject(ColorService);
+  auth = inject(AuthService);
   
   // attributes
   // --------------------------------------------

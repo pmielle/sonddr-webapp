@@ -8,6 +8,6 @@ import { User } from 'sonddr-shared';
 })
 export class ProfilePictureComponent {
 
-  @Input('user') user?: User;
+  @Input('user') user?: User|null;
 
 }

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ExternalLink, Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
@@ -21,6 +22,7 @@ export class IdeaViewComponent implements OnDestroy {
   time = inject(TimeService);
   screen = inject(ScreenSizeService);
   mainNav = inject(MainNavService);
+  auth = inject(AuthService);
   
   // attributes
   // --------------------------------------------
