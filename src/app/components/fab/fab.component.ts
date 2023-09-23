@@ -77,6 +77,13 @@ export class FabComponent {
         label: "Share",
         action: () => {console.log("click in add")}
       };
+    } else if (e.url == "/ideas/profile") {
+      this.mode = {
+        icon: "logout",
+        color: "var(--red)",
+        label: "Log out",
+        action: () => {console.log("click in profile")}
+      };
     } else if (e.url.startsWith("/messages/discussion/")) {
       this.mode = undefined;
     } else if (e.url == "/notifications") {
