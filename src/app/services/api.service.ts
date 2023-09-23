@@ -39,7 +39,8 @@ export class ApiService {
     return this._get<Goal[]>("goals");
   }
 
-  async getIdeas(sortBy: SortBy, goalId?: string): Promise<Idea[]> {  
+
+  async getIdeas(sortBy: SortBy, goalId?: string, authorId?: string): Promise<Idea[]> {  
     let uri = "ideas";
     switch (sortBy) {
       case "recent": uri += "?order=date"; break;
@@ -47,6 +48,7 @@ export class ApiService {
       default: throw new Error(`unexpected sortBy: ${sortBy}`);
     }
     if (goalId) { uri += `&goalId=${goalId}`; }
+    if (authorId) { uri += `&authorId=${authorId}`; }
     return this._get<Idea[]>(uri);
   }
 

@@ -46,7 +46,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
         this.otherGoals = otherGoals;
         this.goal = goal;
       });
-      this.api.getIdeas("recent", id).then(i => this.ideas = i);
+      this.api.getIdeas("recent", id, undefined).then(i => this.ideas = i);
     })
   }
 
@@ -60,7 +60,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
     if (this.goal == undefined) {
       throw new Error("this.goal should be defined at this point");
     }
-    this.api.getIdeas(sortBy, this.goal.id).then(i => this.ideas = i);
+    this.api.getIdeas(sortBy, this.goal.id, undefined).then(i => this.ideas = i);
   }
   
   makeBackgroundColor(): string {
