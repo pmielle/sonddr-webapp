@@ -1,8 +1,12 @@
 <div id="container">
 
-    <app-top-bar left-item="close">
+    <app-top-bar left-item="back">
         <div class="spacer"></div>
-        <button mat-icon-button><mat-icon>settings</mat-icon></button>
+        <app-profile-picture 
+            class="pointer"
+            [user]="auth.user$|async" 
+            [routerLink]="['/', 'ideas', 'profile']"
+        ></app-profile-picture>
     </app-top-bar>
 
     <div id="cover">
@@ -12,27 +16,27 @@
             [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
         ></div>
         <div id="profile-picture">
-            <app-profile-picture [user]="auth.user$|async" [large]="true"></app-profile-picture>
+            <app-profile-picture [user]="user" [large]="true"></app-profile-picture>
         </div>
     </div>
 
     <div id="header" class="flex column">
-        <h1 id="name" class="no-margin-bottom gutter">{{ (auth.user$|async)?.name }}</h1>
+        <h1 id="name" class="no-margin-bottom gutter">{{ user?.name }}</h1>
         <div id="since" class="gutter">
-            member since {{ time.getYear((auth.user$|async)?.date) }} 
+            member since {{ time.getYear(user?.date) }} 
             - {{ ideas?.length }} idea{{ ideas && ideas.length > 1 ? 's' : '' }}
         </div>
-        <div id="external-links" *ngIf="(auth.user$|async)?.externalLinks?.length">
+        <div id="external-links" *ngIf="user?.externalLinks?.length">
             <app-h-scroll>
                 <mat-icon id="open-in-new">open_in_new</mat-icon>
                 <app-external-link 
-                    *ngFor="let el of (auth.user$|async)?.externalLinks" 
+                    *ngFor="let el of user?.externalLinks" 
                     [external-link]="el"
                 ></app-external-link>
             </app-h-scroll>
             <div id="external-link-label">External links</div>
         </div>
-        <div id="bio" class="gutter">{{ (auth.user$|async)?.bio }}</div>
+        <div id="bio" class="gutter">{{ user?.bio }}</div>
     </div>
         
     <app-idea-list 

@@ -56,6 +56,14 @@ export class FabComponent {
         label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
       };
+    } else if (e.url.startsWith("/ideas/user/")) {
+      const userId = e.url.split(/\//)[3];
+      this.mode = {
+        icon: "add",
+        color: "var(--blue)",
+        label: "Send a<br>message",
+        action: () => {this.router.navigateByUrl(`/messages`)}  // TODO: start a discussion
+      };
     } else if (e.url.startsWith("/ideas/idea/")) {
       this.mode = {
         icon: "favorite_outline",

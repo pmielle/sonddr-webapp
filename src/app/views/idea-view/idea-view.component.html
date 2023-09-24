@@ -35,9 +35,19 @@
         <div id="header" class="flex column align-start">
             <h1 id="title" class="no-margin-bottom">{{ idea?.title }}</h1>
             <div id="author">
-                <app-profile-picture [user]="idea?.author" class="pointer"></app-profile-picture>
+                <app-profile-picture 
+                    [user]="idea?.author" 
+                    class="pointer"
+                    [routerLink]="['/', 'ideas', 'user', idea?.author?.id]"
+                ></app-profile-picture>
                 <p class="no-margin-bottom">
-                    <span id="author-name" class="pointer">{{ idea?.author?.name }}</span>
+                    <span 
+                        id="author-name" 
+                        class="pointer"
+                        [routerLink]="['/', 'ideas', 'user', idea?.author?.id]"
+                    >
+                        {{ idea?.author?.name }}
+                    </span>
                     <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
                 </p>
             </div>

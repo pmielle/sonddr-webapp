@@ -34,6 +34,7 @@ import { ProfilePictureComponent } from './components/profile-picture/profile-pi
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { ExternalLinkComponent } from './components/external-link/external-link.component';
 import { ProfileViewComponent } from './views/profile-view/profile-view.component';
+import { UserViewComponent } from './views/user-view/user-view.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { ProfileViewComponent } from './views/profile-view/profile-view.componen
     IdeaViewComponent,
     ExternalLinkComponent,
     ProfileViewComponent,
+    UserViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +83,7 @@ import { ProfileViewComponent } from './views/profile-view/profile-view.componen
         {path: "goal/:id", component: GoalViewComponent},
         {path: "add", component: AddViewComponent},
         {path: "profile", component: ProfileViewComponent},
+        {path: "user/:id", component: UserViewComponent},
       ]},
       {path: "search", component: SearchViewComponent},
       {path: "messages", component: MessagesTabComponent, children: [
