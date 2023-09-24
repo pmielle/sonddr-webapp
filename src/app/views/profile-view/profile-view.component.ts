@@ -1,4 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Idea, User } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
@@ -11,7 +12,7 @@ import { TimeService } from 'src/app/services/time.service';
   templateUrl: './profile-view.component.html',
   styleUrls: ['./profile-view.component.scss']
 })
-export class ProfileViewComponent implements OnInit {
+export class ProfileViewComponent implements OnInit, OnDestroy {
 
   // dependencies
   // --------------------------------------------
@@ -24,15 +25,20 @@ export class ProfileViewComponent implements OnInit {
   // --------------------------------------------
   user?: User;
   ideas?: Idea[];
+  userSub?: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit(): void {
-    this.auth.user$.subscribe(user => {
+    this.userSub = this.auth.user$.subscribe(user => {
       if (!user) { return; }
       this.api.getIdeas("recent", undefined, user.id).then(i => this.ideas = i);
       this.user = user;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSub?.unsubscribe();
   }
 
   // methods
