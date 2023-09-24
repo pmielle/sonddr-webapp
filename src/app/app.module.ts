@@ -91,7 +91,9 @@ import { UserViewComponent } from './views/user-view/user-view.component';
         {path: "discussion/:id", component: DiscussionViewComponent},
       ]},
       {path: "notifications", component: NotificationsViewComponent},
-    ]),
+    ], {
+      scrollPositionRestoration: "enabled",
+    }),
   ],
   providers: [
     {
