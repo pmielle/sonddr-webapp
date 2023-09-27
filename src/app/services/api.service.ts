@@ -16,6 +16,7 @@ export class ApiService {
   // attributes
   // --------------------------------------------
   private apiUrl = "http://localhost:3000";
+  private goals?: Goal[];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -36,7 +37,14 @@ export class ApiService {
   }
   
   async getGoals(): Promise<Goal[]> {
-    return this._get<Goal[]>("goals");
+    // return from cache
+    if (this.goals) {
+      return this.goals;
+    }
+    // get from db + add to cache + return
+    const goals = await this._get<Goal[]>("goals");
+    this.goals = goals;
+    return goals;
   }
 
 
