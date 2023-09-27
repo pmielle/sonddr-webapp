@@ -33,7 +33,18 @@
                     icon="add"
                     color="var(--background-color)" 
                     foreground-color="var(--grey)"
+                    [mat-menu-trigger-for]="menu"
                 ></app-chip>
+                <mat-menu #menu="matMenu">
+                    <button 
+                        *ngFor="let g of selectableGoals" 
+                        mat-menu-item 
+                        (click)="selectGoal(g)"
+                    >
+                        {{ g.name }}
+                    </button>
+                </mat-menu>
+
                 <app-goal-chip 
                     *ngFor="let g of selectedGoals" 
                     [goal]="g"

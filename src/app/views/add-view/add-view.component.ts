@@ -28,6 +28,7 @@ export class AddViewComponent {
   ideas?: Idea[];
   goals?: Goal[];
   selectedGoals: Goal[] = [];
+  selectableGoals: Goal[] = [];
   coverPreview?: string;
   title = "";
   content = "";
@@ -44,6 +45,7 @@ export class AddViewComponent {
 
       // get all goals
       this.goals = goals;
+      this.selectableGoals = goals;
 
       // preselect a goal if query param
       const id = map.get("preselected");
@@ -78,7 +80,7 @@ export class AddViewComponent {
   }
 
   refreshFabDispaly() {
-    if (this.content && this.title) {
+    if (this.content && this.title && this.selectedGoals.length) {
       this.mainNav.showFab();
     } else {
       this.mainNav.hideFab();
@@ -86,10 +88,18 @@ export class AddViewComponent {
   }
 
   selectGoal(goal: Goal) {
-    if (this.selectedGoals.find(g => g.id === goal.id)) {
-      return;
+    // add it to selected list
+    if (! this.selectedGoals.find(g => g.id === goal.id)) {
+      this.selectedGoals.unshift(goal);
     }
-    this.selectedGoals.unshift(goal);
+    // remove it from selectable list
+    const i = this.selectableGoals.findIndex(g => g.id === goal.id);
+    console.log(i);
+    if (i !== -1) {
+      console.log(this.selectableGoals.length);
+      this.selectableGoals.splice(i, 1);
+      console.log(this.selectableGoals.length);
+    }
   }
 
 }
