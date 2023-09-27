@@ -29,6 +29,8 @@ export class AddViewComponent {
   goals?: Goal[];
   selectedGoals: Goal[] = [];
   coverPreview?: string;
+  title = "";
+  content = "";
 
   // lifecycle hooks
   // --------------------------------------------

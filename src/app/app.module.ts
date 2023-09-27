@@ -75,6 +75,7 @@ import { UserViewComponent } from './views/user-view/user-view.component';
     MatRippleModule,
     MatButtonModule,
     MatMenuModule,
+    FormsModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
       {path: "ideas", component: IdeasTabComponent, children: [

@@ -29,4 +29,33 @@
             width: 100%;
         }
     }
+
+    #form {
+        position: relative;
+        margin-left: calc(2 * var(--gutter) + 32px);  
+        margin-top: var(--large-spacing);  
+        margin-right: var(--gutter);
+
+        #title {
+            width: 100%;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        #content-container {
+            position: relative;
+            width: 100%;
+
+            #content {
+                width: 100%;
+            }
+
+            app-profile-picture {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translate(calc(-100% - 10px), -7px);
+            }
+        }
+    }
 }

@@ -44,8 +44,23 @@
 
     <!-- ... -->
     
-    <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
 
-    <!-- ... -->
+    <div id="form" class="flex column gap">
+        <input 
+            id="title"
+            type="text" 
+            placeholder="Choose a title"
+            [(ngModel)]="title"
+        >
+
+        <div id="content-container">
+            <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+            <textarea 
+                id="content"
+                placeholder="Explain your idea..."
+                [(ngModel)]="content"
+            ></textarea>
+        </div>
+    </div>
 
 </div>

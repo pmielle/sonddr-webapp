@@ -6,6 +6,7 @@
 @use 'app/styles/scroll.scss';
 @use 'app/styles/size.scss';
 @use 'app/styles/text.scss';
+@use 'app/styles/forms.scss';
 
 @use '@angular/material' as mat;
 @include mat.core();
