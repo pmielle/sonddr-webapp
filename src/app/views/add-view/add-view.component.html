@@ -1,1 +1,55 @@
-<p>{{ selectedGoals.size }}</p>
+<div id="container">
+
+    <app-top-bar left-item="close">
+        <h2 class="no-margin-bottom">Share an idea</h2>
+    </app-top-bar>
+
+    <div id="cover">
+        <div 
+            id="cover-background" 
+            class="bg cover"
+            [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"            
+        ></div>
+        
+        <div 
+            id="upload" 
+            class="flex column" 
+            mat-ripple
+            [matRippleCentered]="true"
+            [matRippleUnbounded]="true"
+            (click)="uploadCover()"
+        >
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Upload a cover</span>
+        </div>
+
+        <div id="goals">
+            <app-h-scroll 
+                [hide-shadows]="true"
+                left-padding="calc(2 * var(--gutter) + 32px)"
+            >
+                <app-chip 
+                    label="Related goal(s)" 
+                    icon="add"
+                    color="var(--background-color)" 
+                    foreground-color="var(--grey)"
+                ></app-chip>
+                <app-goal-chip 
+                    *ngFor="let g of selectedGoals" 
+                    [goal]="g"
+                ></app-goal-chip>
+            </app-h-scroll>
+        </div>
+    </div>
+
+    <!-- ... -->
+    
+    <app-profile-picture 
+        class="pointer"
+        [user]="auth.user$|async" 
+        [routerLink]="['/', 'ideas', 'profile']"
+    ></app-profile-picture>
+
+    <!-- ... -->
+
+</div>

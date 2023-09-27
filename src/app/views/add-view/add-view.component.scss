@@ -1,0 +1,32 @@
+#container {
+
+    #cover {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16/9;
+        max-height: 300px;
+
+        #cover-background {
+            position: absolute;
+            top: calc(-1 * var(--top-bar-height));
+            left: 0;
+            height: calc(100% + var(--top-bar-height));
+            width: 100%;
+            background-color: var(--grey);
+        }
+
+        #upload {
+            position: absolute;
+            top: calc(50% - var(--spacing));
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--background-color);
+        }
+
+        #goals {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+        }
+    }
+}
