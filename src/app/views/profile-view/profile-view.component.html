@@ -22,16 +22,18 @@
             member since {{ time.getYear((auth.user$|async)?.date) }} 
             - {{ ideas?.length }} idea{{ ideas && ideas.length > 1 ? 's' : '' }}
         </div>
-        <div id="external-links" *ngIf="(auth.user$|async)?.externalLinks?.length">
-            <app-h-scroll>
-                <mat-icon id="open-in-new">open_in_new</mat-icon>
-                <app-external-link 
-                    *ngFor="let el of (auth.user$|async)?.externalLinks" 
-                    [external-link]="el"
-                ></app-external-link>
-            </app-h-scroll>
-            <div id="external-link-label">External links</div>
-        </div>
+        <app-h-scroll id="external-links" *ngIf="(auth.user$|async)?.externalLinks?.length">
+            <app-external-link 
+                *ngFor="let el of (auth.user$|async)?.externalLinks" 
+                [external-link]="el"
+            ></app-external-link>
+            <app-chip 
+                label="Add a link" 
+                icon="add" 
+                foreground-color="var(--background-color)" 
+                color="var(--foreground-color)"
+            ></app-chip>
+        </app-h-scroll>
         <div id="bio" class="gutter">{{ (auth.user$|async)?.bio }}</div>
     </div>
         
