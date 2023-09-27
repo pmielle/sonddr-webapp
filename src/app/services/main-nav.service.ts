@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,8 @@ export class MainNavService {
 
   // attributes
   // --------------------------------------------
-  hideNavbar = false;
-  hideFab = false;
+  isNavBarHidden = false;
+  isFabHidden = false;
   fabClick = new EventEmitter<void>();
 
   // lifecycle hooks
@@ -24,6 +23,12 @@ export class MainNavService {
 
   // methods
   // --------------------------------------------
-  // ...
+  hideNavBar() {
+    this.isNavBarHidden = true;
+  }
+
+  showNavBar() {
+    this.isNavBarHidden = false;
+  }
   
 }

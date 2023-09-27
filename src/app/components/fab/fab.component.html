@@ -1,4 +1,4 @@
-<div id="container" *ngIf="this.mode as m" [class.mobile]="screen.isMobile$ | async" [class.hidden]="mainNav.hideNavbar">
+<div id="container" *ngIf="this.mode as m" [class.mobile]="screen.isMobile$ | async" [class.hidden]="mainNav.isFabHidden">
     <button 
         mat-fab 
         [style.backgroundColor]="m.color" 
