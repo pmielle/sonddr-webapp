@@ -30,5 +30,13 @@ export class MainNavService {
   showNavBar() {
     this.isNavBarHidden = false;
   }
+
+  hideFab() {
+    this.isFabHidden = true;
+  }
+
+  showFab() {
+    this.isFabHidden = false;
+  }
   
 }

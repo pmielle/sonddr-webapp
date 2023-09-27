@@ -50,6 +50,7 @@
             id="title"
             type="text" 
             placeholder="Choose a title"
+            (keyup)="refreshFabDispaly()"
             [(ngModel)]="title"
         >
 
@@ -57,7 +58,8 @@
             <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
             <textarea 
                 id="content"
-                placeholder="Explain your idea..."
+                placeholder="Explain your idea"
+                (keyup)="refreshFabDispaly()"
                 [(ngModel)]="content"
             ></textarea>
         </div>

@@ -56,8 +56,9 @@ export class AddViewComponent {
       }
     });
 
-    // hide bottom bar
+    // hide bottom bar and fab
     this.mainNav.hideNavBar();
+    this.mainNav.hideFab();
   }
 
   ngOnDestroy(): void {
@@ -65,14 +66,23 @@ export class AddViewComponent {
     // unsubscribe
     this.mainSub?.unsubscribe();
 
-    // restore nav bar
+    // restore nav bar and fab
     this.mainNav.showNavBar();
+    this.mainNav.showFab();
   }
 
   // methods
   // --------------------------------------------
   uploadCover() {
     console.log("upload cover...");
+  }
+
+  refreshFabDispaly() {
+    if (this.content && this.title) {
+      this.mainNav.showFab();
+    } else {
+      this.mainNav.hideFab();
+    }
   }
 
   selectGoal(goal: Goal) {
