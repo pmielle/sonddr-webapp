@@ -39,7 +39,7 @@ export class ApiService {
   async getGoals(): Promise<Goal[]> {
     // return from cache
     if (this.goals) {
-      return this.goals;
+      return structuredClone(this.goals);
     }
     // get from db + add to cache + return
     const goals = await this._get<Goal[]>("goals");
