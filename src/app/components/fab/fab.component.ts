@@ -41,64 +41,65 @@ export class FabComponent {
   // methods
   // --------------------------------------------
   onRouteChange(e: NavigationEnd) {
-    if (e.url == "/ideas") {
+    const url = e.urlAfterRedirects;
+    if (url === "/ideas") {
       this.mode = {
         icon: "add",
         color: "var(--primary-color)",
         label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl("/ideas/add")}
       };
-    } else if (e.url.startsWith("/ideas/goal/")) {
-      const goalId = e.url.split(/\//)[3];
+    } else if (url.startsWith("/ideas/goal/")) {
+      const goalId = url.split(/\//)[3];
       this.mode = {
         icon: "add",
         color: "var(--primary-color)",
         label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
       };
-    } else if (e.url.startsWith("/ideas/user/")) {
-      const userId = e.url.split(/\//)[3];
+    } else if (url.startsWith("/ideas/user/")) {
+      const userId = url.split(/\//)[3];
       this.mode = {
         icon: "add",
         color: "var(--blue)",
         label: "Send a<br>message",
         action: () => {this.router.navigateByUrl(`/messages`)}  // TODO: start a discussion
       };
-    } else if (e.url.startsWith("/ideas/idea/")) {
+    } else if (url.startsWith("/ideas/idea/")) {
       this.mode = {
         icon: "favorite_outline",
         color: "var(--primary-color)",
         label: "Support",
         action: () => {this.mainNav.fabClick.next();}
       };
-    } else if (e.url == "/messages") {
+    } else if (url === "/messages") {
       this.mode = {
         icon: "add",
         color: "var(--blue)",
         label: "Start a<br>discussion",
         action: () => {console.log("click in messages")}
       };
-    } else if (e.url.startsWith("/ideas/add")) {
+    } else if (url.startsWith("/ideas/add")) {
       this.mode = {
         icon: "done",
         color: "var(--green)",
         label: "Share",
         action: () => {console.log("click in add")}
       };
-    } else if (e.url == "/ideas/profile") {
+    } else if (url === "/ideas/profile") {
       this.mode = {
         icon: "logout",
         color: "var(--red)",
         label: "Log out",
         action: () => {console.log("click in profile")}
       };
-    } else if (e.url.startsWith("/messages/discussion/")) {
+    } else if (url.startsWith("/messages/discussion/")) {
       this.mode = undefined;
-    } else if (e.url == "/notifications") {
+    } else if (url === "/notifications") {
       this.mode = undefined;
-    } else if (e.url == "/search") {
+    } else if (url === "/search") {
       this.mode = undefined;
-    } else if (e.url == "/") {
+    } else if (url === "/") {
       this.mode = undefined;
     } else {
       throw new Error("unimplemented");
