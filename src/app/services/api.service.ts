@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Discussion, Goal, Idea, User } from 'sonddr-shared';
+import { Comment, Discussion, Goal, Idea, User } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
 @Injectable({
@@ -47,7 +47,6 @@ export class ApiService {
     return goals;
   }
 
-
   async getIdeas(sortBy: SortBy, goalId?: string, authorId?: string): Promise<Idea[]> {  
     let uri = "ideas";
     switch (sortBy) {
@@ -58,6 +57,18 @@ export class ApiService {
     if (goalId) { uri += `&goalId=${goalId}`; }
     if (authorId) { uri += `&authorId=${authorId}`; }
     return this._get<Idea[]>(uri);
+  }
+
+  async getComments(sortBy: SortBy, ideaId?: string, authorId?: string): Promise<Comment[]> {  
+    let uri = "comments";
+    switch (sortBy) {
+      case "recent": uri += "?order=date"; break;
+      case "popular": uri += "?order=supports"; break;
+      default: throw new Error(`unexpected sortBy: ${sortBy}`);
+    }
+    if (ideaId) { uri += `&ideaId=${ideaId}`; }
+    if (authorId) { uri += `&authorId=${authorId}`; }
+    return this._get<Comment[]>(uri);
   }
 
   async getDiscussions(): Promise<Discussion[]> {

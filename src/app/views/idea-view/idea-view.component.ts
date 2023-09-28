@@ -1,7 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ExternalLink, Idea } from 'sonddr-shared';
+import { Comment, ExternalLink, Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
@@ -29,6 +29,7 @@ export class IdeaViewComponent implements OnDestroy {
   routeSub?: Subscription;
   fabClickSub?: Subscription;
   idea?: Idea;
+  comments?: Comment[];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -36,6 +37,7 @@ export class IdeaViewComponent implements OnDestroy {
     this.routeSub = this.route.paramMap.subscribe((map) => {
       const id = map.get("id")!;
       this.api.getIdea(id).then(i => this.idea = i);
+      this.api.getComments("recent", id, undefined).then(c => this.comments = c);
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
       console.log("fab click!");

@@ -35,6 +35,7 @@ import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { ExternalLinkComponent } from './components/external-link/external-link.component';
 import { ProfileViewComponent } from './views/profile-view/profile-view.component';
 import { UserViewComponent } from './views/user-view/user-view.component';
+import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { UserViewComponent } from './views/user-view/user-view.component';
     ExternalLinkComponent,
     ProfileViewComponent,
     UserViewComponent,
+    CommentSectionComponent,
   ],
   imports: [
     BrowserModule,
