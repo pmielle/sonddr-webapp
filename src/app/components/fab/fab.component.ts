@@ -24,11 +24,9 @@ export class FabComponent {
   screen = inject(ScreenSizeService);
   mainNav = inject(MainNavService);
 
-
   // attributes
   // --------------------------------------------
   mode?: FabMode;
-
 
   // lifecycle hooks
   // --------------------------------------------

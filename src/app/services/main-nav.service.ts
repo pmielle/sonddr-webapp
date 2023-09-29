@@ -13,6 +13,7 @@ export class MainNavService {
   // --------------------------------------------
   isNavBarHidden = false;
   isFabHidden = false;
+  isFabDisabled = false;
   fabClick = new EventEmitter<void>();
 
   // lifecycle hooks
@@ -26,7 +27,6 @@ export class MainNavService {
   hideNavBar() {
     this.isNavBarHidden = true;
   }
-
   showNavBar() {
     this.isNavBarHidden = false;
   }
@@ -34,9 +34,20 @@ export class MainNavService {
   hideFab() {
     this.isFabHidden = true;
   }
-
   showFab() {
     this.isFabHidden = false;
+  }
+
+  enableFab() {
+    this.isFabDisabled = false;
+  }
+  disableFab() {
+    this.isFabDisabled = true;
+  }
+
+  restoreFab() {
+    this.isFabHidden = false;
+    this.isFabDisabled = false;
   }
   
 }

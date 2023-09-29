@@ -68,7 +68,7 @@
         </div>
 
         <app-comment-section-preview
-            *ngIf="comments"
+            *ngIf="comments && comments.length"
             [comment]="comments[0]"
             [total-nb]="comments.length"
             (sort-by-change)="onSortByChange($event)"

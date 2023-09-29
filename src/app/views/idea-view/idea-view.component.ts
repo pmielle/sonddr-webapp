@@ -48,7 +48,7 @@ export class IdeaViewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
-    this.mainNav.showFab();
+    this.mainNav.restoreFab();
   }
 
   // methods

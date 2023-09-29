@@ -58,9 +58,9 @@ export class AddViewComponent {
       }
     });
 
-    // hide bottom bar and fab
+    // hide bottom bar and disable fab
     this.mainNav.hideNavBar();
-    this.mainNav.hideFab();
+    this.mainNav.disableFab();
   }
 
   ngOnDestroy(): void {
@@ -70,7 +70,7 @@ export class AddViewComponent {
 
     // restore nav bar and fab
     this.mainNav.showNavBar();
-    this.mainNav.showFab();
+    this.mainNav.restoreFab();
   }
 
   // methods
@@ -81,9 +81,9 @@ export class AddViewComponent {
 
   refreshFabDispaly() {
     if (this.content && this.title && this.selectedGoals.length) {
-      this.mainNav.showFab();
+      this.mainNav.enableFab();
     } else {
-      this.mainNav.hideFab();
+      this.mainNav.disableFab();
     }
   }
 
@@ -94,11 +94,8 @@ export class AddViewComponent {
     }
     // remove it from selectable list
     const i = this.selectableGoals.findIndex(g => g.id === goal.id);
-    console.log(i);
     if (i !== -1) {
-      console.log(this.selectableGoals.length);
       this.selectableGoals.splice(i, 1);
-      console.log(this.selectableGoals.length);
     }
   }
 

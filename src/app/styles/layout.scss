@@ -38,3 +38,8 @@
 .hidden {
     display: none;
 }
+
+.disabled {
+    filter: grayscale(100%);
+    pointer-events: none;
+}
