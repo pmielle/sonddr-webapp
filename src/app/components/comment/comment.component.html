@@ -1,1 +1,47 @@
-{{ comment?.content }}
+<div id="container" *ngIf="comment">
+    <div id="author">
+        <app-profile-picture 
+            [user]="comment.author"
+            class="pointer"
+            [routerLink]="['/', 'ideas', 'user', comment.author.id]"
+        ></app-profile-picture>
+        <span 
+            id="author-name" 
+            class="pointer no-margin-bottom"
+            [routerLink]="['/', 'ideas', 'user', comment.author.id]"
+        >
+            {{ comment.author.name }}
+        </span>
+    </div>
+
+    <p id="ago">{{ time.makeAgo(comment.date) }}</p>
+
+    <div id="content">
+        <div id="rating" class="flex column">
+            <mat-icon 
+                id="upvote"
+                mat-ripple 
+                [matRippleCentered]="true" 
+                [matRippleUnbounded]="true"
+            >
+                keyboard_arrow_up
+            </mat-icon>
+            <p 
+                id="rating-value" 
+                class="no-margin-bottom"
+                [style.color]="chooseRatingColor()"
+            >
+                {{ comment.rating }}
+            </p>
+            <mat-icon 
+                id="downvote"
+                mat-ripple 
+                [matRippleCentered]="true" 
+                [matRippleUnbounded]="true"
+            >
+                keyboard_arrow_down
+            </mat-icon>
+        </div>
+        <p>{{ comment.content }}</p>
+    </div>
+</div>

@@ -21,6 +21,6 @@
     }
 
     #expand {
-        margin-top: var(--spacing);
+        margin-left: calc(2 * var(--gutter) + 32px);
     }
 }

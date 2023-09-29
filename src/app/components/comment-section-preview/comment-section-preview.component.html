@@ -1,4 +1,4 @@
-<div id="container" class="flex column align-start gutter">
+<div id="container" class="flex column align-start">
 
     <div id="sort-by" class="flex">
         <button [mat-menu-trigger-for]="menu" mat-button>
@@ -12,12 +12,10 @@
     </div>
 
     <div class="section">
-        <div class="section-header flex row justify-start">
+        <div class="section-header flex row justify-start gutter">
             <span>{{ header }}</span>
         </div>
-        <div class="section-content">
-            <app-comment [comment]="comment"></app-comment>
-        </div>
+        <app-comment [comment]="comment"></app-comment>
     </div>
 
     <app-chip 
