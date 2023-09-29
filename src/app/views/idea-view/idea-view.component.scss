@@ -73,6 +73,15 @@
         app-comment-section-preview {
             width: 100%;
         }
+
+        #input {
+            width: 100%;
+            padding-bottom: var(--large-spacing);
+
+            input {
+                flex: 1;
+            }
+        }
     }
 
 }

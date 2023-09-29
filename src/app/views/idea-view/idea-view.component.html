@@ -74,6 +74,20 @@
             (sort-by-change)="onSortByChange($event)"
         ></app-comment-section-preview>
 
+        <div 
+            id="input"
+            class="flex gutter"
+            appIntersection 
+            (isIntersecting)="onInputIntersection($event)"
+        >
+            <input type="text" placeholder="What do you think?">
+            <app-chip
+                label="Comment"
+                color="var(--green)"
+                icon="send"
+            ></app-chip>
+        </div>
+
     </div>
 
 </div>

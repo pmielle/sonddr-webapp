@@ -48,10 +48,19 @@ export class IdeaViewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
+    this.mainNav.showFab();
   }
 
   // methods
   // --------------------------------------------
+  onInputIntersection(isIntersecting: boolean) {
+    if (isIntersecting) {
+      this.mainNav.hideFab();
+    } else {
+      this.mainNav.showFab();
+    }
+  }
+
   onSortByChange(sortBy: SortBy) {
     if (!this.idea) {
       throw new Error("this.idea should be defined at this point");
