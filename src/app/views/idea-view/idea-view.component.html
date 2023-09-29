@@ -80,6 +80,7 @@
             appIntersection 
             (isIntersecting)="onInputIntersection($event)"
         >
+            <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
             <input type="text" placeholder="What do you think?">
             <app-chip
                 label="Comment"

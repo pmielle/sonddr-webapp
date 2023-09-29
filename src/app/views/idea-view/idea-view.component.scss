@@ -79,6 +79,8 @@
             padding-bottom: var(--large-spacing);
 
             input {
+                margin-left: var(--gutter);
+                margin-right: var(--gutter);
                 flex: 1;
             }
         }
