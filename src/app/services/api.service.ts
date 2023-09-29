@@ -63,7 +63,7 @@ export class ApiService {
     let uri = "comments";
     switch (sortBy) {
       case "recent": uri += "?order=date"; break;
-      case "popular": uri += "?order=supports"; break;
+      case "popular": uri += "?order=rating"; break;
       default: throw new Error(`unexpected sortBy: ${sortBy}`);
     }
     if (ideaId) { uri += `&ideaId=${ideaId}`; }

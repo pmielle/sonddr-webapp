@@ -36,6 +36,8 @@ import { ExternalLinkComponent } from './components/external-link/external-link.
 import { ProfileViewComponent } from './views/profile-view/profile-view.component';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
+import { CommentSectionPreviewComponent } from './components/comment-section-preview/comment-section-preview.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 
 @NgModule({
@@ -66,6 +68,8 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
     ProfileViewComponent,
     UserViewComponent,
     CommentSectionComponent,
+    CommentSectionPreviewComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,

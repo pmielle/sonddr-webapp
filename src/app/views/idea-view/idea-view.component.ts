@@ -2,6 +2,7 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comment, ExternalLink, Idea } from 'sonddr-shared';
+import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
@@ -51,6 +52,11 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  // ...
+  onSortByChange(sortBy: SortBy) {
+    if (!this.idea) {
+      throw new Error("this.idea should be defined at this point");
+    }
+    this.api.getComments(sortBy, this.idea.id, undefined).then(c => this.comments = c);
+  }
 
 }

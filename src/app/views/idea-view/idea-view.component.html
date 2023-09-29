@@ -67,7 +67,12 @@
             {{ idea?.content }}
         </div>
 
-        <app-comment-section [comments]="comments"></app-comment-section>
+        <app-comment-section-preview
+            *ngIf="comments"
+            [comment]="comments[0]"
+            [total-nb]="comments.length"
+            (sort-by-change)="onSortByChange($event)"
+        ></app-comment-section-preview>
 
     </div>
 
