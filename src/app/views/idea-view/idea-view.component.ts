@@ -1,7 +1,7 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Comment, ExternalLink, Idea } from 'sonddr-shared';
+import { Comment, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -49,29 +49,13 @@ export class IdeaViewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
-    this.mainNav.restoreFab();
   }
 
   // methods
   // --------------------------------------------
   openComments() {
     this.inComments = true;
-    this.mainNav.hideNavBar();
-    this.mainNav.hideFab();
-  }
-
-  closeComments() {
-    this.inComments = false;
-    this.mainNav.showNavBar();
-    this.mainNav.restoreFab();
-  }
-
-  onInputIntersection(isIntersecting: boolean) {
-    if (isIntersecting) {
-      this.mainNav.hideFab();
-    } else {
-      this.mainNav.showFab();
-    }
+    // ...
   }
 
   onSortByChange(sortBy: SortBy) {

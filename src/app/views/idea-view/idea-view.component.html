@@ -1,4 +1,4 @@
-<div id="container" *ngIf="!inComments; else commentsView">
+<div id="container">
 
     <app-top-bar left-item="back">
         <div class="spacer"></div>
@@ -67,20 +67,7 @@
             {{ idea?.content }}
         </div>
 
-        <app-comment-section-preview
-            *ngIf="comments && comments.length"
-            [comment]="comments[0]"
-            [total-nb]="comments.length"
-            (sort-by-change)="onSortByChange($event)"
-            (see-more)="openComments()"
-        ></app-comment-section-preview>
-
-        <div 
-            id="input"
-            class="flex gutter"
-            appIntersection 
-            (isIntersecting)="onInputIntersection($event)"
-        >
+        <div id="input" class="flex gutter">
             <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
             <input type="text" placeholder="What do you think?">
             <app-chip
@@ -90,20 +77,14 @@
             ></app-chip>
         </div>
 
+        <app-comment-section-preview
+            *ngIf="comments && comments.length"
+            [comment]="comments[0]"
+            [total-nb]="comments.length"
+            (sort-by-change)="onSortByChange($event)"
+            (see-more)="openComments()"
+        ></app-comment-section-preview>
+
     </div>
 
 </div>
-
-<ng-template #commentsView>
-    <div id="comments-container">
-        <app-top-bar>
-            <button mat-icon-button (click)="closeComments()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </app-top-bar>
-
-        <app-comment-section [comments]="comments"></app-comment-section>
-
-    </div>
-    
-</ng-template>
