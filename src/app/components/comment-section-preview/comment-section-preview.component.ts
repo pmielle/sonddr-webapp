@@ -19,6 +19,7 @@ export class CommentSectionPreviewComponent {
   @Input('comment') comment?: Comment;
   @Input('total-nb') totalNb?: number;
   @Output("sort-by-change") sortByChange = new EventEmitter<SortBy>();
+  @Output('see-more') seeMore = new EventEmitter<void>();
 
   // attributes
   // --------------------------------------------

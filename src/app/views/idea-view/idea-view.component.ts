@@ -31,6 +31,7 @@ export class IdeaViewComponent implements OnDestroy {
   fabClickSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
+  inComments = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -53,6 +54,18 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  openComments() {
+    this.inComments = true;
+    this.mainNav.hideNavBar();
+    this.mainNav.hideFab();
+  }
+
+  closeComments() {
+    this.inComments = false;
+    this.mainNav.showNavBar();
+    this.mainNav.restoreFab();
+  }
+
   onInputIntersection(isIntersecting: boolean) {
     if (isIntersecting) {
       this.mainNav.hideFab();
