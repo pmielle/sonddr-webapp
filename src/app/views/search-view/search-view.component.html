@@ -1,1 +1,31 @@
-<p>search-view works!</p>
+<div id="container">
+    <app-top-bar>
+        <div id="top-bar-content" class="flex">
+            <button mat-icon-button [disabled]="searchString.length === 0" (click)="clearSearch()">
+                <mat-icon>{{ searchString.length > 0 ? 'close' : 'search' }}</mat-icon>
+            </button>
+            <input 
+                type="text" 
+                placeholder="Search" 
+                [(ngModel)]="searchString"
+                (keydown.enter)="search('recent')"
+            >
+            <app-profile-picture 
+                [user]="(auth.user$|async)"
+                [routerLink]="['/', 'ideas', 'profile']"
+            ></app-profile-picture>
+        </div>
+    </app-top-bar>
+
+    <p id="results-label" class="gutter">{{ makeSearchResultsLabel() }}</p>
+
+    <app-idea-list *ngIf="ideas; else noResults"
+        [ideas]="ideas"
+        (sort-by-change)="onSortByChange($event)"
+    ></app-idea-list>
+    
+    <ng-template #noResults>
+        <!-- TODO: display something here eventually -->
+    </ng-template>
+
+</div>

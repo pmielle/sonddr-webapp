@@ -25,6 +25,8 @@
             top: var(--top-bar-height);
             height: var(--header-height);
             z-index: 1;
+            backdrop-filter: blur(5px);
+
     
             &.invisible {
                 opacity: 0;
