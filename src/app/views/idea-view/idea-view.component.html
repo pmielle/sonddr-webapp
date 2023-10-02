@@ -77,13 +77,11 @@
             ></app-chip>
         </div>
 
-        <app-comment-section-preview
+        <app-comment-section
             *ngIf="comments && comments.length"
-            [comment]="comments[0]"
-            [total-nb]="comments.length"
+            [comments]="comments"
             (sort-by-change)="onSortByChange($event)"
-            (see-more)="openComments()"
-        ></app-comment-section-preview>
+        ></app-comment-section>
 
     </div>
 

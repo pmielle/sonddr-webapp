@@ -1,0 +1,58 @@
+<div id="container" [class.collapsed]="isCollapsed">
+
+    <div *ngIf="shouldDisplaySortBy()" id="sort-by" class="flex">
+        <button [mat-menu-trigger-for]="menu" mat-button>
+            <span>Sort by</span>
+            <mat-icon>sort</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="updateSortBy('recent')">Recent</button>
+            <button mat-menu-item (click)="updateSortBy('popular')">Popular</button>
+        </mat-menu>
+    </div>
+
+    <div id="first-section-header-background"></div>
+    
+    <ng-container *ngIf="isCollapsed; else expanded">
+        <div class="section" *ngIf="sections && sections.length && sections[0].comments.length">
+            <div
+                class="section-header flex row justify-start gutter"
+                [style.backgroundColor]="color.transparentColor('#212121', .66)"
+                [class.invisible]="!sections[0].header"
+            >
+                <span>{{ sections[0].header }}</span>
+            </div>
+            <div class="section-content" [class.mobile]="screen.isMobile$ | async">
+                <app-comment [comment]="sections[0].comments[0]"></app-comment>
+            </div>
+        </div>
+        <app-chip 
+            id="expand"
+            [label]="makeLabel()"
+            icon="expand_more"
+            color="var(--foreground-color)"
+            foreground-color="var(--darker-background-color)"
+            (click)="isCollapsed = false"
+        ></app-chip>
+    </ng-container>
+
+    <ng-template #expanded>
+        <div class="section" *ngFor="let s of sections">
+            <div
+                class="section-header flex row justify-start gutter"
+                [style.backgroundColor]="color.transparentColor('#212121', .66)"
+                [class.invisible]="!s.header"
+                appIntersection 
+                rootMargin="-101px 0px 0px 0px"
+                (isIntersecting)="s.stuck = !$event"
+            >
+                <span>{{ s.header }}</span>
+            </div>
+            <div class="section-content" [class.mobile]="screen.isMobile$ | async">
+                <app-comment *ngFor="let c of s.comments" [comment]="c"></app-comment>
+            </div>
+        </div>
+    </ng-template>
+
+
+</div>
