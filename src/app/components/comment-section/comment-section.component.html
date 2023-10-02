@@ -17,7 +17,6 @@
         <div class="section" *ngIf="sections && sections.length && sections[0].comments.length">
             <div
                 class="section-header flex row justify-start gutter"
-                [style.backgroundColor]="color.transparentColor('#212121', .66)"
                 [class.invisible]="!sections[0].header"
             >
                 <span>{{ sections[0].header }}</span>
@@ -40,7 +39,7 @@
         <div class="section" *ngFor="let s of sections">
             <div
                 class="section-header flex row justify-start gutter"
-                [style.backgroundColor]="color.transparentColor('#212121', .66)"
+                [style.backgroundColor]="s.stuck ? color.transparentColor('#303030', .66) : 'transparent'"
                 [class.invisible]="!s.header"
                 appIntersection 
                 rootMargin="-101px 0px 0px 0px"
@@ -53,6 +52,5 @@
             </div>
         </div>
     </ng-template>
-
 
 </div>

@@ -31,7 +31,6 @@ export class IdeaViewComponent implements OnDestroy {
   fabClickSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
-  inComments = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -53,11 +52,6 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  openComments() {
-    this.inComments = true;
-    // ...
-  }
-
   onSortByChange(sortBy: SortBy) {
     if (!this.idea) {
       throw new Error("this.idea should be defined at this point");
