@@ -1,1 +1,17 @@
-<p>notifications-view works!</p>
+<div id="container">
+    
+    <app-top-bar [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
+        <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">Notifications</h1>
+        <div class="spacer"></div>
+        <app-profile-picture 
+            class="pointer"
+            [user]="auth.user$|async" 
+            [routerLink]="['/', 'ideas', 'profile']"
+        ></app-profile-picture>
+    </app-top-bar>
+
+    <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter">Notifications</h1>
+
+    <p>notifications-view works!</p>
+
+</div>

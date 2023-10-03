@@ -1,10 +1,17 @@
 <div id="container">
-    <ng-container *ngIf="discussions !== undefined" else loading>
-        <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.name }}</p>
-    </ng-container>
     
-    
-    <ng-template #loading>
-        loading...
-    </ng-template>
+    <app-top-bar [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
+        <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">Messages</h1>
+        <div class="spacer"></div>
+        <app-profile-picture 
+            class="pointer"
+            [user]="auth.user$|async" 
+            [routerLink]="['/', 'ideas', 'profile']"
+        ></app-profile-picture>
+    </app-top-bar>
+
+    <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter">Messages</h1>
+
+    <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.name }}</p>
+
 </div>

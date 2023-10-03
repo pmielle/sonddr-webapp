@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
   selector: 'app-notifications-view',
@@ -6,5 +9,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./notifications-view.component.scss']
 })
 export class NotificationsViewComponent {
+
+  // dependencies
+  // --------------------------------------------
+  api = inject(ApiService);
+  screen = inject(ScreenSizeService);
+  auth = inject(AuthService);
+
+  
+  // attributes
+  // --------------------------------------------
+  // ...
+
+
+  // lifecycle hooks
+  // --------------------------------------------
+  ngOnInit() {
+    // ...
+  }
+
 
 }
