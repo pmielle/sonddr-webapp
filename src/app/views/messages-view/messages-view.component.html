@@ -12,6 +12,6 @@
 
     <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter">Messages</h1>
 
-    <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.name }}</p>
+    <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.users.length }}</p>
 
 </div>
