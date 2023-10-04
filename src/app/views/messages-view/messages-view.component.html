@@ -10,8 +10,14 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter">Messages</h1>
+    <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter no-margin-bottom">Messages</h1>
 
-    <p *ngFor="let d of discussions" [routerLink]="['discussion', d.id]">{{ d.users.length }}</p>
+    <div id="discussions">
+        <app-discussion 
+            *ngFor="let d of discussions" 
+            [discussion]="d"
+            [routerLink]="['discussion', d.id]"
+        ></app-discussion>
+    </div>
 
 </div>

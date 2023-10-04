@@ -10,8 +10,10 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter">Notifications</h1>
+    <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter no-margin-bottom">Notifications</h1>
 
-    <p>notifications-view works!</p>
+    <div id="notifications">
+        <p>notifications-view works!</p>
+    </div>
 
 </div>

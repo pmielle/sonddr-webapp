@@ -107,10 +107,13 @@ export class ApiService {
     }
   }
   
-  private _convertApiDocToDoc(apiDoc: any): any {
+  private _convertApiDocToDoc(apiDoc: any) {
     for (let [key, value] of Object.entries(apiDoc)) {
       if (key == "date" || key.endsWith("Date")) {
         apiDoc[key] = new Date(value as any);
+      }
+      if (value instanceof Object) {
+        this._convertApiDocToDoc(value);
       }
     }
   }
