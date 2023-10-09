@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
-import { Discussion, Message } from 'sonddr-shared';
+import { Discussion, Message, User } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -43,6 +43,17 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
-  // ...
+  findOtherUser(loggedInUser: User|undefined|null): User|undefined {
+    if (!this.discussion) { return undefined; }
+    if (!loggedInUser) { return undefined; }
+    let otherUsers = this.discussion.users.filter(u => u.id !== loggedInUser.id);
+    if (!otherUsers.length) { 
+      throw new Error(`Failed to find another user for discussion ${this.discussion.id}`); 
+    }
+    if (otherUsers.length > 1) {
+      console.warn("Display of more than 1 other user is not yet supported: using the first one");
+    }
+    return otherUsers[0];
+  }
 
 }

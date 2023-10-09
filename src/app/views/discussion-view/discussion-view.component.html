@@ -1,3 +1,22 @@
-<p>{{ discussion?.id }}</p>
-
-<p *ngFor="let m of messages">{{ m.content }}</p>
+<div id="container">
+    <app-top-bar left-item="back">
+        <ng-container *ngIf="findOtherUser(auth.user$|async) as otherUser">
+            <app-profile-picture 
+                class="pointer"
+                [user]="otherUser"
+                [routerLink]="['/', 'ideas', 'user', otherUser.id]"
+            ></app-profile-picture>
+            <h2 
+                id="title" 
+                class="no-margin-bottom pointer"
+                [routerLink]="['/', 'ideas', 'user', otherUser.id]"
+            >{{ otherUser.name }}</h2>
+        </ng-container>
+        <div class="spacer"></div>
+        <app-profile-picture
+            class="pointer"
+            [user]="auth.user$|async"
+            [routerLink]="['/', 'ideas', 'profile']"
+        ></app-profile-picture>
+    </app-top-bar>
+</div>
