@@ -1,11 +1,16 @@
 #container {
     position: relative;
+    padding-bottom: 67px;  // input height
 
     app-top-bar {
 
         #title {
             padding-left: var(--spacing);
         }
+    }
+
+    #messages {
+        flex-direction: column-reverse;
     }
 
     #input {

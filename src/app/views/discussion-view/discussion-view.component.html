@@ -20,20 +20,22 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
-    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <div id="messages" class="flex">
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+        <p *ngFor="let m of messages">{{ m.content }}</p>
+    </div>
 
     <div id="input" class="flex gutter frosted">
         <app-profile-picture [user]="auth.user$|async"></app-profile-picture>

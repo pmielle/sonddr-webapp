@@ -36,7 +36,10 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
       this.api.getDiscussion(id).then(d => this.discussion = d);
-      this.api.getMessages(id).then(m => this.messages = m); 
+      this.api.getMessages(id).then(m => {
+        this.messages = m;
+        setTimeout(() => this.scrollToBottom(), 0);
+      }); 
     });
   }
 
@@ -47,6 +50,10 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  scrollToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
   findOtherUser(loggedInUser: User|undefined|null): User|undefined {
     if (!this.discussion) { return undefined; }
     if (!loggedInUser) { return undefined; }
