@@ -42,7 +42,6 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
-    console.log("restoreeeeee");
     this.mainNav.restoreNavBar();
   }
 
