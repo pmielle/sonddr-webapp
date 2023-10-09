@@ -75,6 +75,10 @@ export class ApiService {
     return this._get<Discussion[]>("discussions");
   }
 
+  async getDiscussion(id: string): Promise<Discussion> {
+    return this._get<Discussion>(`discussions/${id}`);
+  }
+
   async getNotifications(): Promise<Notification[]> {
     return this._get<Notification[]>("notifications");
   }
