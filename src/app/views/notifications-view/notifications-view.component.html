@@ -13,7 +13,7 @@
     <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter no-margin-bottom">Notifications</h1>
 
     <div id="notifications">
-        <p>notifications-view works!</p>
+        <app-notification *ngFor="let n of notifications" [notification]="n"></app-notification>
     </div>
 
 </div>

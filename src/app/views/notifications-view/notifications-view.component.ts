@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Notification } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -19,14 +20,13 @@ export class NotificationsViewComponent {
   
   // attributes
   // --------------------------------------------
-  // ...
+  notifications?: Notification[] = undefined;
 
 
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit() {
-    // ...
+    this.api.getNotifications().then(n => this.notifications = n);
   }
-
 
 }
