@@ -3,10 +3,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    &.multi {
+    &.multi-2 {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        white-space: normal;
+    }
+
+    &.multi-4 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
         white-space: normal;
     }
 }
