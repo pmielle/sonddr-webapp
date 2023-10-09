@@ -51,6 +51,7 @@ import { NotificationComponent } from './components/notification/notification.co
     IdeasViewComponent,
     SearchViewComponent,
     MessagesViewComponent,
+    DiscussionViewComponent,
     NotificationsViewComponent,
     IdeasTabComponent,
     MessagesTabComponent,

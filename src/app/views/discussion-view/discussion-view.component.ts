@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
-import { Discussion } from 'sonddr-shared';
+import { Discussion, Message } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -24,6 +24,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   routeSub?: Subscription;
   discussion?: Discussion;
+  messages?: Message[];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -32,7 +33,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
       this.api.getDiscussion(id).then(d => this.discussion = d);
-      // ...
+      this.api.getMessages(id).then(m => this.messages = m); 
     });
   }
 

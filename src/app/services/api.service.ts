@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Comment, Discussion, Goal, Idea, Notification, User } from 'sonddr-shared';
+import { Comment, Discussion, Goal, Idea, Message, Notification, User } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
 @Injectable({
@@ -73,6 +73,14 @@ export class ApiService {
 
   async getDiscussions(): Promise<Discussion[]> {
     return this._get<Discussion[]>("discussions");
+  }
+
+  async getMessages(discussionId?: string): Promise<Message[]> {
+    let uri = "messages";
+    if (discussionId) {
+      uri += `?discussionId=${discussionId}`;
+    }
+    return this._get<Message[]>(uri);
   }
 
   async getDiscussion(id: string): Promise<Discussion> {
