@@ -70,20 +70,25 @@
             padding-right: var(--gutter);
         }
 
-        #input {
+        #comments {
             width: 100%;
-            padding-top: var(--large-spacing);
+            
+            #input {
+                padding-top: var(--large-spacing);
+                padding-bottom: var(--large-spacing);
+    
+                input {
+                    margin-left: var(--gutter);
+                    margin-right: var(--gutter);
+                    flex: 1;
+                }
+            }
 
-            input {
-                margin-left: var(--gutter);
-                margin-right: var(--gutter);
-                flex: 1;
+            #no-comments {
+                padding-bottom: calc(56px + var(--spacing));
             }
         }
 
-        app-comment-section-preview {
-            width: 100%;
-        }
         
     }
 }

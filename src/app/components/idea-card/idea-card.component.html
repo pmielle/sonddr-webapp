@@ -20,7 +20,13 @@
         </div>
     </div>
     <div id="bottom" class="flex column align-start gutter">
-        <h2 id="title" class="no-margin-bottom pointer ellipsis multi-2">{{ idea.title }}</h2>
+        <h2 
+            id="title" 
+            class="no-margin-bottom pointer ellipsis multi-2"
+            [routerLink]="['/', 'ideas', 'idea', idea.id]"
+        >
+            {{ idea.title }}
+        </h2>
         <div id="author">
             <app-profile-picture 
                 [user]="idea.author" 

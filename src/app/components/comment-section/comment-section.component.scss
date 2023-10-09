@@ -8,7 +8,7 @@
     }
     
     &:not(.collapsed) {
-        padding-bottom: calc(56px + 2 * var(--spacing));  // space for fab
+        padding-bottom: calc(56px + var(--spacing) + var(--large-spacing));  // space for fab
     }
 
     #sort-by {

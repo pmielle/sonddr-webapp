@@ -1,6 +1,7 @@
 #container {
     --header-height: 48px;
     position: relative;
+    padding-bottom: calc(var(--spacing) + var(--large-spacing) + 56px);  // fab space
 
     #sort-by {
         position: absolute;
