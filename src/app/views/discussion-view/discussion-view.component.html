@@ -20,8 +20,12 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <div id="messages" class="flex justify-end small-gap">
-        <app-message *ngFor="let m of messages" [message]="m"></app-message>
+    <div id="messages" class="flex justify-end small-gap" *ngIf="auth.user$|async as loggedInUser">
+        <app-message 
+            *ngFor="let m of messages" 
+            [message]="m"
+            [from-user]="loggedInUser.id === m.author.id"
+        ></app-message>
     </div>
 
     <div id="input" class="flex gutter frosted">

@@ -1,11 +1,19 @@
 #container {
     width: 100%; 
+    --radius: var(--spacing);
 
     #bubble {
         align-self: flex-start;
-        border-radius: var(--spacing);
+        border-radius: var(--radius);
         border-bottom-left-radius: 0;
         background-color: var(--grey);
         padding: 5px 10px;
+
+        &.from-user {
+            align-self: flex-end;
+            background-color: var(--blue);
+            border-bottom-left-radius: var(--radius);
+            border-bottom-right-radius: 0;
+        }
     }
 }

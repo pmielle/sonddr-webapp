@@ -1,5 +1,5 @@
 <div id="container" class="flex column gutter">
-    <div id="bubble">
+    <div *ngIf="fromUser !== undefined" id="bubble" [class.from-user]="fromUser">
         <p class="no-margin-bottom">{{ message?.content }}</p>
     </div>
 </div>
