@@ -1,6 +1,27 @@
 #container {
+    position: relative;
 
-    #title {
-        padding-left: var(--spacing);
+    app-top-bar {
+
+        #title {
+            padding-left: var(--spacing);
+        }
     }
+
+    #input {
+        position: fixed;
+        bottom: var(--nav-bar-height);
+        left: 0;
+        padding-top: var(--spacing);
+        padding-bottom: var(--spacing);
+        width: 100%;
+
+        input {
+            margin-left: var(--gutter);
+            margin-right: var(--gutter);
+            flex: 1;
+        }
+    }
+    
+
 }

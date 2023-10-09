@@ -12,6 +12,7 @@ export class MainNavService {
   // attributes
   // --------------------------------------------
   isNavBarHidden = false;
+  isNavBarFlat = false;
   isFabHidden = false;
   isFabDisabled = false;
   fabClick = new EventEmitter<void>();
@@ -29,6 +30,13 @@ export class MainNavService {
   }
   showNavBar() {
     this.isNavBarHidden = false;
+  }
+
+  flattenNavBar() {
+    this.isNavBarFlat = true;
+  }
+  restoreNavBar() {
+    this.isNavBarFlat = false;
   }
 
   hideFab() {

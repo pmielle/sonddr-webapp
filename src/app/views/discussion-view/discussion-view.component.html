@@ -19,4 +19,31 @@
             [routerLink]="['/', 'ideas', 'profile']"
         ></app-profile-picture>
     </app-top-bar>
+
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+    <p *ngFor="let m of messages">{{ m.content }}</p>
+
+    <div id="input" class="flex gutter frosted">
+        <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+        <input type="text" placeholder="Your message">
+        <app-chip
+            label="Message"
+            color="var(--blue)"
+            icon="send"
+        ></app-chip>
+    </div>
+
+
 </div>

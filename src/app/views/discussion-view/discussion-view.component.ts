@@ -4,6 +4,7 @@ import { Subscription, switchMap } from 'rxjs';
 import { Discussion, Message, User } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   api = inject(ApiService);
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
+  mainNav = inject(MainNavService);
   
   // attributes
   // --------------------------------------------
@@ -29,6 +31,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit(): void {
+    this.mainNav.flattenNavBar();
     this.routeSub = this.route.paramMap.subscribe(map => {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
@@ -39,6 +42,8 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
+    console.log("restoreeeeee");
+    this.mainNav.restoreNavBar();
   }
 
   // methods
