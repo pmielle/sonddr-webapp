@@ -40,6 +40,7 @@ import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { DiscussionComponent } from './components/discussion/discussion.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { MessageComponent } from './components/message/message.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { NotificationComponent } from './components/notification/notification.co
     CommentSectionComponent,
     DiscussionComponent,
     NotificationComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,

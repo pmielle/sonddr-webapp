@@ -20,21 +20,8 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <div id="messages" class="flex">
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
-        <p *ngFor="let m of messages">{{ m.content }}</p>
+    <div id="messages" class="flex justify-end small-gap">
+        <app-message *ngFor="let m of messages" [message]="m"></app-message>
     </div>
 
     <div id="input" class="flex gutter frosted">

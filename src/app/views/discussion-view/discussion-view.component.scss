@@ -1,6 +1,7 @@
 #container {
     position: relative;
-    padding-bottom: 67px;  // input height
+    --input-height: 67px;
+    padding-bottom: var(--input-height);
 
     app-top-bar {
 
@@ -11,6 +12,17 @@
 
     #messages {
         flex-direction: column-reverse;
+        min-height: calc(
+            100vh 
+            - var(--nav-bar-height) 
+            - var(--top-bar-height) 
+            - var(--input-height)
+        );
+        padding-bottom: var(--spacing);
+
+        app-message {
+            width: 100%;
+        }
     }
 
     #input {

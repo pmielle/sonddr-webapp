@@ -1,0 +1,11 @@
+#container {
+    width: 100%; 
+
+    #bubble {
+        align-self: flex-start;
+        border-radius: var(--spacing);
+        border-bottom-left-radius: 0;
+        background-color: var(--grey);
+        padding: 5px 10px;
+    }
+}
