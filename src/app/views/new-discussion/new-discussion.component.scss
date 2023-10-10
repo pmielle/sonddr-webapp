@@ -18,6 +18,15 @@
                 - 67px
             );
         }
+
+        #to {
+            padding-top: var(--spacing);
+            padding-left: 28px;  // to match close button
+
+            input {
+                width: 100%;
+            }
+        }
     }
 
     #input {

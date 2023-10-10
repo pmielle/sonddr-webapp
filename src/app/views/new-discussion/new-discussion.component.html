@@ -12,7 +12,11 @@
     <div 
         id="content"
         [class.mobile]="screen.isMobile$|async"    
-    ></div>
+    >
+        <div id="to" class="gutter">
+            <input type="text" placeholder="To:">
+        </div>
+    </div>
 
     <div 
         id="input" 
