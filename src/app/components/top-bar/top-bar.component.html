@@ -5,6 +5,7 @@
     [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
     [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
     [ngSwitch]="leftItem"
+    (click)="onClick()"
 >
     <div id="content" class="flex justify-start">
 
