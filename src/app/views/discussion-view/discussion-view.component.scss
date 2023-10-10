@@ -1,7 +1,5 @@
 #container {
     position: relative;
-    --input-height: 67px;
-    padding-bottom: var(--input-height);
 
     app-top-bar {
 
@@ -12,13 +10,25 @@
 
     #messages {
         flex-direction: column-reverse;
-        min-height: calc(
-            100vh 
-            - var(--nav-bar-height) 
-            - var(--top-bar-height) 
-            - var(--input-height)
-        );
         padding-bottom: var(--spacing);
+        padding-top: var(--large-spacing);
+        
+        &.mobile {
+            min-height: calc(
+                100vh 
+                - var(--nav-bar-height) 
+                - var(--top-bar-height) 
+                - 67px
+            );
+        }
+
+        &:not(.mobile) {
+            min-height: calc(
+                100vh 
+                - var(--top-bar-height) 
+                - 67px
+            );
+        }
 
         app-message {
             width: 100%;
@@ -30,12 +40,19 @@
     }
 
     #input {
-        position: fixed;
-        bottom: var(--nav-bar-height);
+        position: sticky;
         left: 0;
         padding-top: var(--spacing);
         padding-bottom: var(--spacing);
         width: 100%;
+
+        &.mobile {
+            bottom: var(--nav-bar-height);
+        }
+
+        &:not(.mobile) {
+            bottom: 0;
+        }
 
         input {
             margin-left: var(--gutter);

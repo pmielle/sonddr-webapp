@@ -20,7 +20,11 @@
         ></app-profile-picture>
     </app-top-bar>
 
-    <div id="messages" class="flex justify-end small-gap" *ngIf="auth.user$|async as loggedInUser">
+    <div id="messages" 
+        class="flex justify-end small-gap" 
+        [class.mobile]="screen.isMobile$|async"
+        *ngIf="auth.user$|async as loggedInUser"
+    >
         <app-message 
             *ngFor="let m of messages; let i = index"
             [class.with-spacer]="shouldHaveSpacer(i)"
@@ -29,7 +33,11 @@
         ></app-message>
     </div>
 
-    <div id="input" class="flex gutter frosted">
+    <div 
+        id="input" 
+        class="flex gutter frosted"
+        [class.mobile]="screen.isMobile$|async"
+    >
         <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
         <input type="text" placeholder="Your message">
         <app-chip
