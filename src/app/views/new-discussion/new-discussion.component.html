@@ -8,4 +8,24 @@
             [routerLink]="['/', 'ideas', 'profile']"
         ></app-profile-picture>
     </app-top-bar>
+
+    <div 
+        id="content"
+        [class.mobile]="screen.isMobile$|async"    
+    ></div>
+
+    <div 
+        id="input" 
+        class="flex gutter frosted"
+        [class.mobile]="screen.isMobile$|async"
+    >
+        <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+        <input type="text" placeholder="Your message">
+        <app-chip
+            label="Message"
+            color="var(--blue)"
+            icon="send"
+        ></app-chip>
+    </div>
+
 </div>
