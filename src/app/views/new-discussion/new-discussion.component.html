@@ -1,1 +1,11 @@
-<p>new-discussion works!</p>
+<div id="container">
+    <app-top-bar left-item="close">
+        <h2 class="no-margin-bottom">New discussion</h2>
+        <div class="spacer"></div>
+        <app-profile-picture 
+            class="pointer"
+            [user]="auth.user$|async"
+            [routerLink]="['/', 'ideas', 'profile']"
+        ></app-profile-picture>
+    </app-top-bar>
+</div>
