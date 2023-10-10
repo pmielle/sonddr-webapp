@@ -27,6 +27,7 @@ export class MainNavService {
   isFabDisabled = false;
   fabClick = new EventEmitter<void>();
   tab$ = new BehaviorSubject<Tab|undefined>(undefined);
+  atTabRoot$ = new BehaviorSubject<boolean|undefined>(undefined);
   fabMode$ = new BehaviorSubject<FabMode|undefined>(undefined);
   routerSub?: Subscription;
   
@@ -46,18 +47,34 @@ export class MainNavService {
   }
 
   scrollToBottom(smooth: boolean = false) {
-    window.scrollTo({top: document.body.scrollHeight, left: 0, behavior: smooth ? "smooth" : "instant"});
+    window.scrollTo({
+      top: document.body.scrollHeight, 
+      left: 0, 
+      behavior: smooth ? "smooth" : "instant"
+    });
   }
 
   scrollToTop(smooth: boolean = false) {
-    window.scrollTo({top: 0, left: 0, behavior: smooth ? "smooth" : "instant"});
+    window.scrollTo({
+      top: 0, 
+      left: 0, 
+      behavior: smooth ? "smooth" : "instant"
+    });
   }
 
   onRouteChange(e: NavigationEnd) {
     const url = e.urlAfterRedirects;
     this.updateTab(url);
     this.updateFab(url);
+    this.updateAtTabRoot(url);
   }
+
+  updateAtTabRoot(url: string) {
+    this.atTabRoot$.next(
+      ["/ideas", "/search", "/messages", "/notifications"].includes(url)
+    );
+    
+  } 
 
   updateTab(url: string) {
     if (url.startsWith("/ideas")) {

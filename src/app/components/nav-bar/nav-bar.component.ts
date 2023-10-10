@@ -14,7 +14,11 @@ export class NavBarComponent {
 
   onClick(tab: Tab) {
     if (this.mainNav.tab$.getValue() === tab) {
-      this.mainNav.scrollToTop(true);
+      if (this.mainNav.atTabRoot$.getValue()) {
+        this.mainNav.scrollToTop(true);
+      } else {
+        this.mainNav.goToTab(tab);
+      }
     } else {
       this.mainNav.goToTab(tab);
     }
