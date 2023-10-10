@@ -1,6 +1,6 @@
 <div 
     id="container" 
-    *ngIf="this.mode as m" 
+    *ngIf="(mainNav.fabMode$|async) as m" 
     [ngClass]="{
         'mobile': screen.isMobile$|async,
         'hidden': (screen.isMobile$|async) && mainNav.isFabHidden,

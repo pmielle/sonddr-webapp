@@ -3,6 +3,12 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, filter } from 'rxjs';
 
 export type Tab = "ideas" | "search" | "messages" | "notifications";
+export type FabMode = {
+  icon: string,
+  color: string,
+  label?: string,
+  action: () => void,
+};
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +27,9 @@ export class MainNavService {
   isFabDisabled = false;
   fabClick = new EventEmitter<void>();
   tab$ = new BehaviorSubject<Tab|undefined>(undefined);
-  routerSub?: Subscription;  // TODO: clarify where to unsubscribe
+  fabMode$ = new BehaviorSubject<FabMode|undefined>(undefined);
+  routerSub?: Subscription;
+  
 
   // lifecycle hooks
   // --------------------------------------------
@@ -47,8 +55,11 @@ export class MainNavService {
 
   onRouteChange(e: NavigationEnd) {
     const url = e.urlAfterRedirects;
+    this.updateTab(url);
+    this.updateFab(url);
+  }
 
-    // update current tab
+  updateTab(url: string) {
     if (url.startsWith("/ideas")) {
       this.tab$.next("ideas");
     } else if (url.startsWith("/search")) {
@@ -58,8 +69,76 @@ export class MainNavService {
     } else if (url.startsWith("/notifications")) {
       this.tab$.next("notifications");
     } else {
+      console.error(`cannot select tab: ${url} is not an exepected url`);
       this.tab$.next(undefined);
-      throw new Error(`unexpected url: ${url}`);
+    }
+  }
+
+  updateFab(url: string) {
+    if (url === "/ideas") {
+      this.fabMode$.next({
+        icon: "add",
+        color: "var(--primary-color)",
+        label: "Share<br>an idea",
+        action: () => {this.router.navigateByUrl("/ideas/add")}
+      });
+    } else if (url.startsWith("/ideas/goal/")) {
+      const goalId = url.split(/\//)[3];
+      this.fabMode$.next({
+        icon: "add",
+        color: "var(--primary-color)",
+        label: "Share<br>an idea",
+        action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
+      });
+    } else if (url.startsWith("/ideas/user/")) {
+      const userId = url.split(/\//)[3];
+      this.fabMode$.next({
+        icon: "add",
+        color: "var(--blue)",
+        label: "Send a<br>message",
+        action: () => {this.router.navigateByUrl(`/messages/new-discussion?preselected=${userId}`)}
+      });
+    } else if (url.startsWith("/ideas/idea/")) {
+      this.fabMode$.next({
+        icon: "favorite_outline",
+        color: "var(--primary-color)",
+        label: "Support",
+        action: () => {this.fabClick.next();}
+      });
+    } else if (url === "/messages") {
+      this.fabMode$.next({
+        icon: "add",
+        color: "var(--blue)",
+        label: "Start a<br>discussion",
+        action: () => {this.router.navigateByUrl(`/messages/new-discussion`)}
+      });
+    } else if (url.startsWith("/ideas/add")) {
+      this.fabMode$.next({
+        icon: "done",
+        color: "var(--green)",
+        label: "Share",
+        action: () => {console.log("click in add")}
+      });
+    } else if (url.startsWith("/messages/new-discussion")) {
+      this.fabMode$.next(undefined);
+    } else if (url === "/ideas/profile") {
+      this.fabMode$.next({
+        icon: "logout",
+        color: "var(--red)",
+        label: "Log out",
+        action: () => {console.log("click in profile")}
+      });
+    } else if (url.startsWith("/messages/discussion/")) {
+      this.fabMode$.next(undefined);
+    } else if (url === "/notifications") {
+      this.fabMode$.next(undefined);
+    } else if (url === "/search") {
+      this.fabMode$.next(undefined);
+    } else if (url === "/") {
+      this.fabMode$.next(undefined);
+    } else {
+      console.error(`cannot set fab mobe: ${url} is not an exepected url`);
+      this.fabMode$.next(undefined);
     }
   }
 
