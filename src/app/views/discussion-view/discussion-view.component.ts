@@ -38,7 +38,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       this.api.getDiscussion(id).then(d => this.discussion = d);
       this.api.getMessages(id).then(m => {
         this.messages = m;
-        setTimeout(() => this.scrollToBottom(), 0);
+        setTimeout(() => this.mainNav.scrollToBottom(), 0);
       }); 
     });
   }
@@ -57,10 +57,6 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     if (!previousMessage) { return false; }
     const fromSameAuthor = message.author.id === previousMessage.author.id;
     return !fromSameAuthor;
-  }
-
-  scrollToBottom() {
-    window.scrollTo(0, document.body.scrollHeight);
   }
 
   findOtherUser(loggedInUser: User|undefined|null): User|undefined {
