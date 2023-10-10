@@ -8,6 +8,7 @@
         border-bottom-left-radius: 0;
         background-color: var(--grey);
         padding: 5px 10px;
+        max-width: 80%;
 
         &.from-user {
             align-self: flex-end;

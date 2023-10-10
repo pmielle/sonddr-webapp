@@ -50,6 +50,15 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  shouldHaveSpacer(i: number): boolean {
+    const message = this.messages?.[i];
+    const previousMessage = this.messages?.[i - 1];
+    if (!message) { throw new Error(`Failed to get message with index ${i}`); }
+    if (!previousMessage) { return false; }
+    const fromSameAuthor = message.author.id === previousMessage.author.id;
+    return !fromSameAuthor;
+  }
+
   scrollToBottom() {
     window.scrollTo(0, document.body.scrollHeight);
   }
