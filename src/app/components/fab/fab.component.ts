@@ -61,7 +61,7 @@ export class FabComponent {
         icon: "add",
         color: "var(--blue)",
         label: "Send a<br>message",
-        action: () => {this.router.navigateByUrl(`/messages`)}  // TODO: start a discussion
+        action: () => {this.router.navigateByUrl(`/messages/new-discussion?preselected=${userId}`)}
       };
     } else if (url.startsWith("/ideas/idea/")) {
       this.mode = {
@@ -75,7 +75,7 @@ export class FabComponent {
         icon: "add",
         color: "var(--blue)",
         label: "Start a<br>discussion",
-        action: () => {console.log("click in messages")}
+        action: () => {this.router.navigateByUrl(`/messages/new-discussion`)}
       };
     } else if (url.startsWith("/ideas/add")) {
       this.mode = {
@@ -84,6 +84,8 @@ export class FabComponent {
         label: "Share",
         action: () => {console.log("click in add")}
       };
+    } else if (url.startsWith("/messages/new-discussion")) {
+      this.mode = undefined;
     } else if (url === "/ideas/profile") {
       this.mode = {
         icon: "logout",

@@ -41,6 +41,7 @@ import { CommentSectionComponent } from './components/comment-section/comment-se
 import { DiscussionComponent } from './components/discussion/discussion.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { MessageComponent } from './components/message/message.component';
+import { NewDiscussionComponent } from './views/new-discussion/new-discussion.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { MessageComponent } from './components/message/message.component';
     DiscussionComponent,
     NotificationComponent,
     MessageComponent,
+    NewDiscussionComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +104,7 @@ import { MessageComponent } from './components/message/message.component';
       {path: "search", component: SearchViewComponent},
       {path: "messages", component: MessagesTabComponent, children: [
         {path: "", component: MessagesViewComponent},
+        {path: "new-discussion", component: NewDiscussionComponent},
         {path: "discussion/:id", component: DiscussionViewComponent},
       ]},
       {path: "notifications", component: NotificationsViewComponent},
