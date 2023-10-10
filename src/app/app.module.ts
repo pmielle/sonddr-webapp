@@ -126,7 +126,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         return () =>
         keycloak.init({
           config: {
-            url: "http://192.168.1.14:8080",
+            url: "http://0.0.0.0:8080",
             realm: "sonddr",
             clientId: "sonddr-frontend",
           },

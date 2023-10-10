@@ -15,7 +15,7 @@ export class ApiService {
 
   // attributes
   // --------------------------------------------
-  private apiUrl = "http://192.168.1.14:3000";
+  private apiUrl = "http://0.0.0.0:3000";
   private goals?: Goal[];
 
   // lifecycle hooks
