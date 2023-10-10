@@ -14,7 +14,7 @@ export class ScreenSizeService {
 
   // attributes
   // --------------------------------------------
-  mobileMediaQuery = '(max-width: 500px)';
+  mobileMediaQuery = '(max-width: 500px)';  // keep in sync with scss styles
   isMobile$ = new BehaviorSubject<boolean>(this.checkIsMobile());
 
 

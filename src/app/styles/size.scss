@@ -2,6 +2,11 @@
     --large-profile-picture-size: 56px;
     --nav-bar-height: 84px;  // mobile
     --nav-bar-width: 100px;  // desktop
-    --bottom-safe-area: 34px;  // mobile
     --top-bar-height: 48px;
 }
+
+@media (min-width: 500px) {  // keep in sync with screen size service
+    :root {
+        --top-bar-height: 100px;
+    }
+  }
