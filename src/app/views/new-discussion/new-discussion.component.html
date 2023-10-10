@@ -14,7 +14,18 @@
         [class.mobile]="screen.isMobile$|async"    
     >
         <div id="to" class="gutter">
-            <input type="text" placeholder="To:">
+            <app-chip 
+                *ngIf="selectedUser as u else noSelect" 
+                id="selected"
+                [label]="u.name"
+                icon="close"
+                color="var(--foreground-color)"
+                foreground-color="var(--background-color)"
+                (click)="this.selectedUser = undefined"
+            ></app-chip>
+            <ng-template #noSelect>
+                <input type="text" placeholder="To:">
+            </ng-template>
         </div>
     </div>
 

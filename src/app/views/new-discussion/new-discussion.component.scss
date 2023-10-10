@@ -21,10 +21,14 @@
 
         #to {
             padding-top: var(--spacing);
-            padding-left: 28px;  // to match close button
-
+            
+            #selected {
+                margin-left: 4px;
+            }
+            
             input {
                 width: 100%;
+                padding-left: 18px;
             }
         }
     }
