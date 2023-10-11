@@ -4,6 +4,8 @@ import { lastValueFrom } from 'rxjs';
 import { Comment, Discussion, Goal, Idea, Message, Notification, User } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
+type PostResponse = { insertedId: string };
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,8 +26,12 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async postIdea(title: string, content: string, goalIds: string[]) {
+    return this._post(`ideas`, {title: title, content: content, goalIds: goalIds});
+  }
+
   async createUser(id: string, name: string): Promise<void> {
-    return this._put(`users/${id}`, {id: id, name: name});
+    return this._put(`users/${id}`, {name: name});
   }
 
   async getUser(id: string): Promise<User> {
@@ -104,7 +110,8 @@ export class ApiService {
   }
 
   private async _post(path: string, payload: object): Promise<string> {
-    return lastValueFrom(this.db.post<string>(`${this.apiUrl}/${path}`, payload));
+    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.apiUrl}/${path}`, payload));
+    return response.insertedId;
   }
 
   private async _patch(path: string, payload: object): Promise<void> {

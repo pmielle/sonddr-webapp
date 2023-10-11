@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, from } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
@@ -21,6 +21,7 @@ export class AddViewComponent {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   mainNav = inject(MainNavService);
+  router = inject(Router);
   
   // attributes
   // --------------------------------------------
@@ -61,6 +62,11 @@ export class AddViewComponent {
     // hide bottom bar and disable fab
     this.mainNav.hideNavBar();
     this.mainNav.disableFab();
+
+    // listen to fab clicks
+    this.mainNav.fabClick.subscribe(() => {
+      this.submit();
+    });
   }
 
   ngOnDestroy(): void {
@@ -75,12 +81,25 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  formIsValid(): boolean {
+    return (this.content && this.title && this.selectedGoals.length) ? true : false;
+  }
+
+  async submit(): Promise<void> {
+    if (this.formIsValid()) {
+      const id = await this.api.postIdea(this.title, this.content, this.selectedGoals.map(g => g.id));
+      this.router.navigateByUrl(`/ideas/idea/${id}`, {replaceUrl: true});
+    } else {
+      throw new Error("submit should not be callable if one input is empty");
+    }
+  }
+
   uploadCover() {
     console.log("upload cover...");
   }
 
   refreshFabDispaly() {
-    if (this.content && this.title && this.selectedGoals.length) {
+    if (this.formIsValid()) {
       this.mainNav.enableFab();
     } else {
       this.mainNav.disableFab();

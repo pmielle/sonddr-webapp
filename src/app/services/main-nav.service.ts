@@ -134,7 +134,7 @@ export class MainNavService {
         icon: "done",
         color: "var(--green)",
         label: "Share",
-        action: () => {console.log("click in add")}
+        action: () => {this.fabClick.next();}
       });
     } else if (url.startsWith("/messages/new-discussion")) {
       this.fabMode$.next(undefined);
