@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +8,10 @@ import { ApiService } from './services/api.service';
 })
 export class AppComponent {
 
+  auth = inject(AuthService);
+  
   constructor() {
+
   }
 
 }

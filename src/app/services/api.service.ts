@@ -24,6 +24,10 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async createUser(id: string, name: string): Promise<void> {
+    return this._put(`users/${id}`, {id: id, name: name});
+  }
+
   async getUser(id: string): Promise<User> {
     return this._get<User>(`users/${id}`);
   }
@@ -111,8 +115,8 @@ export class ApiService {
     return lastValueFrom(this.db.delete<void>(`${this.apiUrl}/${path}`));
   }
 
-  private async _put(path: string, payload: object): Promise<string> {
-    return lastValueFrom(this.db.put<string>(`${this.apiUrl}/${path}`, payload));
+  private async _put(path: string, payload: object): Promise<void> {
+    await lastValueFrom(this.db.put(`${this.apiUrl}/${path}`, payload));
   }
 
   private _convertApiDataToData(apiData: any): any {
