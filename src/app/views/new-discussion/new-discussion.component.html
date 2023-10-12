@@ -55,12 +55,17 @@
         [class.mobile]="screen.isMobile$|async"
     >
         <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-        <input type="text" placeholder="Your message" [(ngModel)]="content">
+        <input 
+            type="text" 
+            placeholder="Your message" 
+            [(ngModel)]="content"
+        />
         <app-chip
             label="Message"
             color="var(--blue)"
             icon="send"
             (click)="submit()"
+            [class.disabled]="!this.formIsValid()"
         ></app-chip>
     </div>
 
