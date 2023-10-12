@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
@@ -19,6 +19,7 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   route = inject(ActivatedRoute);
   api = inject(ApiService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -26,6 +27,7 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
   selectedUser?: User;
   searchString = "";
   searchResults?: User[];
+  content = "";
 
   // lifecycle hooks
   // --------------------------------------------
@@ -45,6 +47,18 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  formIsValid(): boolean {
+    return (this.selectedUser && this.content.length) ? true : false;
+  }
+
+  async submit() {
+    if (!this.formIsValid()) {
+      throw new Error("submit() should not be callable when form is not valid");
+    }
+    const insertedId = await this.api.createNewDiscussion(this.selectedUser!.id, this.content);
+    this.router.navigateByUrl(`/messages/discussion/${insertedId}`, {replaceUrl: true});
+  }
+
   selectUser(user: User) {
     this.selectedUser = user;
     this.searchResults = undefined;

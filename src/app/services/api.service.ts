@@ -26,6 +26,9 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async createNewDiscussion(toUserId: string, firstMessageContent: string): Promise<string> {
+    return this._post("discussions", {toUserId: toUserId, firstMessageContent: firstMessageContent});
+  }
 
   async searchUsers(nameRegex: string): Promise<User[]> {
     return this._get<User[]>(`users?regex=${nameRegex}`);
