@@ -58,7 +58,15 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
   }
 
   onInputKeyup(e: KeyboardEvent) {
-    this.search();
+    if (e.code === "Enter") {
+      this.search();
+    // search if at least 3 characters 
+    // or if a search has been forced already using 'Enter'
+    } else if (this.searchString.length > 2 || this.searchResults?.length) {
+      this.search();
+    } else {
+      this.clearSearch();
+    }
   }
 
   async search() {
