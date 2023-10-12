@@ -24,6 +24,8 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   routeSub?: Subscription;
   selectedUser?: User;
+  searchString = "";
+  searchResults?: User[];
 
   // lifecycle hooks
   // --------------------------------------------
@@ -43,6 +45,32 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
-  // ...
+  selectUser(user: User) {
+    this.selectedUser = user;
+    this.searchResults = undefined;
+    this.searchString = "";
+  }
+
+  clearUser() {
+    this.selectedUser = undefined;
+    this.searchResults = undefined;
+    this.searchString = "";
+  }
+
+  onInputKeyup(e: KeyboardEvent) {
+    this.search();
+  }
+
+  async search() {
+    if (!this.searchString) { 
+      this.clearSearch(); 
+      return;
+    }
+    this.searchResults = await this.api.searchUsers(this.searchString);
+  }
+
+  clearSearch() {
+    this.searchResults = undefined;
+  }
   
 }

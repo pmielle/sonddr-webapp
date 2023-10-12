@@ -21,12 +21,32 @@
                 icon="close"
                 color="var(--foreground-color)"
                 foreground-color="var(--background-color)"
-                (click)="this.selectedUser = undefined"
+                (click)="clearUser()"
             ></app-chip>
             <ng-template #noSelect>
-                <input type="text" placeholder="To:">
+                <input 
+                    type="text" 
+                    placeholder="To:" 
+                    [(ngModel)]="searchString" 
+                    (keyup)="onInputKeyup($event)"
+                />
             </ng-template>
         </div>
+
+
+        <div id="search-results">
+            <div 
+                *ngFor="let u of searchResults"
+                class="result flex column align-start small-gap"
+                mat-ripple
+                (click)="selectUser(u)"
+            >
+                <app-profile-picture class="picture" [user]="u"></app-profile-picture>
+                <p class="name no-margin-bottom">{{ u.name }}</p>
+                <p class="id no-margin-bottom">{{ u.id }}</p>
+            </div>
+        </div>
+
     </div>
 
     <div 

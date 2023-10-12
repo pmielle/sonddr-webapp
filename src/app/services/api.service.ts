@@ -26,7 +26,12 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
-  async postIdea(title: string, content: string, goalIds: string[]) {
+
+  async searchUsers(nameRegex: string): Promise<User[]> {
+    return this._get<User[]>(`users?regex=${nameRegex}`);
+  }
+
+  async postIdea(title: string, content: string, goalIds: string[]): Promise<string> {
     return this._post(`ideas`, {title: title, content: content, goalIds: goalIds});
   }
 
