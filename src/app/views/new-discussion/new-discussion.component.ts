@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'sonddr-shared';
@@ -11,7 +11,7 @@ import { ScreenSizeService } from 'src/app/services/screen-size.service';
   templateUrl: './new-discussion.component.html',
   styleUrls: ['./new-discussion.component.scss']
 })
-export class NewDiscussionComponent implements OnInit, OnDestroy {
+export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // dependencies
   // --------------------------------------------
@@ -28,6 +28,8 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
   searchString = "";
   searchResults?: User[];
   content = "";
+  @ViewChild('toField') toField?: ElementRef;
+  @ViewChild('messageField') messageField?: ElementRef;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -37,8 +39,13 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
       if (id) {
         const user = await this.api.getUser(id);
         this.selectedUser = user;
+        this.messageField?.nativeElement.focus();
       }
     });
+  }
+  
+  ngAfterViewInit(): void {
+    this.toField?.nativeElement.focus();
   }
 
   ngOnDestroy(): void {

@@ -29,6 +29,7 @@
                     placeholder="To:" 
                     [(ngModel)]="searchString" 
                     (keyup)="onInputKeyup($event)"
+                    #toField
                 />
             </ng-template>
         </div>
@@ -59,6 +60,7 @@
             type="text" 
             placeholder="Your message" 
             [(ngModel)]="content"
+            #messageField
         />
         <app-chip
             label="Message"
