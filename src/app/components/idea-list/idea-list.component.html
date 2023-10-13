@@ -19,7 +19,7 @@
             [style.backgroundColor]="s.stuck ? color.transparentColor(stuckBackgroundColor, .66) : 'transparent'"
             [class.invisible]="!s.header"
             appIntersection 
-            rootMargin="-49px 0px 0px 0px"
+            [rootMargin]="(screen.isMobile$|async) ? '-49px 0px 0px 0px' : '-101px 0px 0px 0px'"
             (isIntersecting)="s.stuck = !$event"
         >
             <span>{{ s.header }}</span>
