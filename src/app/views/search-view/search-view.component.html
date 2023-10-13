@@ -8,7 +8,8 @@
                 type="text" 
                 placeholder="Search" 
                 [(ngModel)]="searchString"
-                (keydown.enter)="search('recent')"
+                (keydown.enter)="search()"
+                #input
             >
             <app-profile-picture 
                 [user]="(auth.user$|async)"
@@ -21,7 +22,7 @@
 
     <app-idea-list *ngIf="ideas; else noResults"
         [ideas]="ideas"
-        (sort-by-change)="onSortByChange($event)"
+        [hide-sort-by]="true"
     ></app-idea-list>
     
     <ng-template #noResults>

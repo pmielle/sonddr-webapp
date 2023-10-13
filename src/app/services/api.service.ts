@@ -26,6 +26,10 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async searchIdeas(titleRegex: string): Promise<Idea[]> {
+    return this._get<Idea[]>(`ideas?regex=${titleRegex}`);
+  }
+
   async createNewDiscussion(toUserId: string, firstMessageContent: string): Promise<string> {
     return this._post("discussions", {toUserId: toUserId, firstMessageContent: firstMessageContent});
   }

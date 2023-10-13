@@ -1,6 +1,6 @@
 <div id="container">
 
-    <div *ngIf="shouldDisplaySortBy()" id="sort-by" class="flex">
+    <div *ngIf="!hideSortBy && shouldDisplaySortBy()" id="sort-by" class="flex">
         <button [mat-menu-trigger-for]="menu" mat-button>
             <span>Sort by</span>
             <mat-icon>sort</mat-icon>
@@ -19,7 +19,7 @@
             [style.backgroundColor]="s.stuck ? color.transparentColor(stuckBackgroundColor, .66) : 'transparent'"
             [class.invisible]="!s.header"
             appIntersection 
-            rootMargin="-101px 0px 0px 0px"
+            rootMargin="-49px 0px 0px 0px"
             (isIntersecting)="s.stuck = !$event"
         >
             <span>{{ s.header }}</span>

@@ -28,6 +28,7 @@ export class IdeaListComponent implements OnChanges {
   // i/o
   // --------------------------------------------
   @Input("ideas") ideas?: Idea[];
+  @Input("hide-sort-by") hideSortBy = false;
   @Input("stuck-background-color") stuckBackgroundColor: string = "#303030";
   @Output("sort-by-change") sortByChange = new EventEmitter<SortBy>();
 

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './search-view.component.html',
   styleUrls: ['./search-view.component.scss']
 })
-export class SearchViewComponent {
+export class SearchViewComponent implements AfterViewInit {
 
   // dependencies
   // --------------------------------------------
@@ -20,13 +20,16 @@ export class SearchViewComponent {
   // --------------------------------------------
   searchString: string = "";
   ideas?: Idea[];
+  @ViewChild('input') input?: ElementRef;
+
+  // lifecycle hooks
+  // --------------------------------------------
+  ngAfterViewInit(): void {
+    this.input?.nativeElement.focus();
+  }
 
   // methods
   // --------------------------------------------
-  onSortByChange(sortBy: SortBy) {
-    this.search(sortBy);
-  }
-  
   makeSearchResultsLabel(): string {
     if (!this.ideas) { return ""; }
     const nb = this.ideas.length;
@@ -34,17 +37,19 @@ export class SearchViewComponent {
     return `${nb} search result${plural ? 's': ''}`;
   }
 
-  search(sortBy: SortBy) {
+  search() {
+    this.input?.nativeElement.blur();
     if (!this.searchString) { 
       this.clearSearch();
       return;
     }
-    this.api.getIdeas(sortBy).then(i => this.ideas = i);  // TODO: filter by search string
+    this.api.searchIdeas(this.searchString).then(i => this.ideas = i);
   }
 
   clearSearch() {
     this.searchString = "";
     this.ideas = undefined;
+    this.input?.nativeElement.focus();
   }
 
 }
