@@ -27,6 +27,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   routeSub?: Subscription;
   discussion?: Discussion;
   messages?: Message[];
+  content: string = "";
 
   // lifecycle hooks
   // --------------------------------------------
@@ -50,6 +51,32 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  formIsValid() {
+    return (this.content.length && this.discussion) ? true : false;
+  }
+
+  send() {
+    if (! this.formIsValid()) {
+      throw new Error("send() should not be callable if content is empty");
+    }
+    const loggedInUser = this.auth.user$.getValue();
+    if (! loggedInUser) {
+      throw new Error("Failed to get logged in user");
+    }
+    this.api.postMessage(this.discussion!.id, this.content);  // TODO: get the real message and replace the dummy one
+    this.messages?.unshift({
+      id: "TBD",
+      discussionId: "TBD",
+      content: this.content,
+      author: loggedInUser,
+      date: new Date(),
+    });
+    setTimeout(() => {
+      this.mainNav.scrollToBottom();
+    }, 0);
+    this.content = "";
+  }
+
   shouldHaveSpacer(i: number): boolean {
     const message = this.messages?.[i];
     const previousMessage = this.messages?.[i - 1];
