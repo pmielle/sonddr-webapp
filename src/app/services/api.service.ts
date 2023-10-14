@@ -26,6 +26,10 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getMessage(id: string): Promise<Message> {
+    return this._get<Message>(`messages/${id}`);
+  }
+
   async postMessage(discussionId: string, content: string): Promise<string> {
     return this._post("messages", {discussionId: discussionId, content: content});
   }

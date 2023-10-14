@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
+const placeholderId = "TBD";
+
 @Component({
   selector: 'app-discussion-view',
   templateUrl: './discussion-view.component.html',
@@ -59,22 +61,45 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     if (! this.formIsValid()) {
       throw new Error("send() should not be callable if content is empty");
     }
-    const loggedInUser = this.auth.user$.getValue();
-    if (! loggedInUser) {
-      throw new Error("Failed to get logged in user");
-    }
-    this.api.postMessage(this.discussion!.id, this.content);  // TODO: get the real message and replace the dummy one
-    this.messages?.unshift({
-      id: "TBD",
-      discussionId: "TBD",
-      content: this.content,
-      author: loggedInUser,
-      date: new Date(),
+    // fetch the real message asynchronously
+    this.api.postMessage(this.discussion!.id, this.content).then(async insertedId => {
+      const message = await this.api.getMessage(insertedId);
+      this.replacePlaceholderWithRealMessage(message);
     });
+    // add a placeholder message while waiting for the real one
+    if (!this.messages) {
+      throw new Error("messages is undefined");
+    }
+    this.messages.unshift(this.makePlaceholderMessage());
     setTimeout(() => {
       this.mainNav.scrollToBottom();
     }, 0);
     this.content = "";
+  }
+
+  replacePlaceholderWithRealMessage(message: Message) {
+    if (!this.messages) {
+      throw new Error("messages is undefined");
+    }
+    const i = this.messages.findIndex(m => m.id === placeholderId);    
+    if (i === -1) {
+      throw new Error(`Failed to replace placeholder message with the real one`);
+    }
+    this.messages[i] = message;
+  }
+
+  makePlaceholderMessage(): Message {
+    const loggedInUser = this.auth.user$.getValue();
+    if (! loggedInUser) {
+      throw new Error("Failed to get logged in user");
+    }
+    return {
+      id: placeholderId,
+      discussionId: placeholderId,
+      content: this.content,
+      author: loggedInUser,
+      date: new Date(),
+    }
   }
 
   shouldHaveSpacer(i: number): boolean {
