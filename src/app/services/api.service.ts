@@ -26,6 +26,14 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getComment(id: string): Promise<Comment> {
+    return this._get<Comment>(`comments/${id}`);
+  }
+
+  async postComment(ideaId: string, content: string): Promise<string> {
+    return this._post("comments", {ideaId: ideaId, content: content});
+  }
+
   async getMessage(id: string): Promise<Message> {
     return this._get<Message>(`messages/${id}`);
   }
