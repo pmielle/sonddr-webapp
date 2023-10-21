@@ -1,13 +1,15 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Comment, Idea } from 'sonddr-shared';
+import { Comment, Idea, User } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
+
+const placeholderId = "TBD";
 
 @Component({
   selector: 'app-idea-view',
@@ -52,6 +54,41 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  postComment(body: string) {
+    if (!this.idea) { throw new Error("Cannot post comment if idea is not loaded"); }
+    if (!this.comments) { throw new Error("Cannot post comment if comments are not loaded"); }
+    const placeholderComment = this.makePlaceholderComment(body, this.idea.id);
+    const newComments = [...this.comments];  // otherwise same reference, and @Input is not updated
+    newComments.unshift(placeholderComment);
+    this.comments = newComments;
+    this.api.postComment(this.idea.id, body).then(async insertedId => {
+      const comment = await this.api.getComment(insertedId); 
+      this.replacePlaceholderComment(comment);
+    });
+  }
+
+  makePlaceholderComment(body: string, ideaId: string): Comment {
+    const user = this.auth.user$.getValue();
+    if (!user) { throw new Error("Cannot post comment if user is not logged in"); }
+    return {
+      id: placeholderId,
+      ideaId: ideaId, 
+      content: body,
+      author: user,
+      rating: 0,
+      date: new Date(),
+    };
+  }
+
+  replacePlaceholderComment(comment: Comment) {
+    if (!this.comments) { throw new Error("Cannot replace placeholder comment if comments is undefined"); }
+    const indexOfPlaceholder = this.comments.findIndex(c => c.id === placeholderId);
+    if (indexOfPlaceholder === -1) { throw new Error(`Found no comment with id ${placeholderId}`); }
+    const newComments = [...this.comments];  // otherwise same reference, and @Input is not updated
+    newComments[indexOfPlaceholder] = comment;
+    this.comments = newComments;
+  }
+
   onSortByChange(sortBy: SortBy) {
     if (!this.idea) {
       throw new Error("this.idea should be defined at this point");

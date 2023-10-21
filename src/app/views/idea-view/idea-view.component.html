@@ -67,27 +67,11 @@
             {{ idea?.content }}
         </div>
 
-        <div id="comments">
-            <div id="input" class="flex gutter">
-                <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-                <input type="text" placeholder="What do you think?">
-                <app-chip
-                    label="Comment"
-                    color="var(--green)"
-                    icon="send"
-                ></app-chip>
-            </div>
-    
-            <app-comment-section
-                *ngIf="comments && comments.length; else noComments"
-                [comments]="comments"
-                (sort-by-change)="onSortByChange($event)"
-            ></app-comment-section>
-
-            <ng-template #noComments>
-                <div id="no-comments"></div>
-            </ng-template>
-        </div>
+        <app-comment-section
+            [comments]="comments"
+            (sort-by-change)="onSortByChange($event)"
+            (post-comment)="postComment($event)"
+        ></app-comment-section>
 
     </div>
 

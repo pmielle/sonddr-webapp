@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { Comment, Idea } from 'sonddr-shared';
+import { AuthService } from 'src/app/services/auth.service';
 import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
@@ -24,17 +25,21 @@ export class CommentSectionComponent {
   screen = inject(ScreenSizeService);
   color = inject(ColorService);
   time = inject(TimeService);
+  auth = inject(AuthService);
 
   // i/o
   // --------------------------------------------
   @Input("comments") comments?: Comment[];
   @Output("sort-by-change") sortByChange = new EventEmitter<SortBy>();
+  @Output("post-comment") postComment = new EventEmitter<string>();
 
   // attributes
   // --------------------------------------------
   sections?: ListSection[];
   sortBy: SortBy = "recent";
   isCollapsed = true;
+  commentBody = "";
+  @ViewChild('input') input?: ElementRef;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -47,11 +52,22 @@ export class CommentSectionComponent {
 
   // methods
   // --------------------------------------------
-  makeLabel(): string {
-    if (!this.comments) { return ""; }
-    if (!this.comments.length) { return ""; }
+  send() {
+    if (!this.formIsValid()) { return; }
+    this.postComment.next(this.commentBody);
+    this.commentBody = "";
+    this.input?.nativeElement.blur();
+  }
+
+  formIsValid(): boolean {
+    return (this.commentBody.length) ? true : false;
+  }
+
+  makeLabel(): string|undefined {
+    if (!this.comments) { return undefined; }
+    if (!this.comments.length) { return undefined; }
     const otherNb = this.comments.length - 1;
-    if (otherNb <= 0) { return ""; }
+    if (otherNb <= 0) { return undefined; }
     const plural = otherNb > 1;
     return `See ${otherNb} other comment${plural ? 's' : ''}`;
   }
