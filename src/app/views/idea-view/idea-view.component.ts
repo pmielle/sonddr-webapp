@@ -1,7 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Comment, Idea, User } from 'sonddr-shared';
+import { Subscription, combineLatest, filter } from 'rxjs';
+import { Comment, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -29,31 +30,58 @@ export class IdeaViewComponent implements OnDestroy {
   
   // attributes
   // --------------------------------------------
-  routeSub?: Subscription;
+  mainSub?: Subscription;
   fabClickSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
+  hasCheered?: boolean;
 
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit(): void {
-    this.routeSub = this.route.paramMap.subscribe((map) => {
-      const id = map.get("id")!;
+    this.mainSub = combineLatest([
+      this.route.paramMap,
+      this.auth.user$.pipe(filter(u => u !== undefined)),
+    ]).subscribe(([map, user]) => {
+      const id = map.get("id");
+      if (!user) { throw new Error("user is not defined"); }
+      if (!id) { throw new Error("id not found in url params"); }
       this.api.getIdea(id).then(i => this.idea = i);
       this.api.getComments("recent", id, undefined).then(c => this.comments = c);
+      this.updateHasCheered(id, user.id);
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
-      this.cheer();
+      this.onFabClick();
     });
   }
 
   ngOnDestroy(): void {
-    this.routeSub?.unsubscribe();
+    this.mainSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  onFabClick() {
+    if (this.hasCheered) {
+      console.log("delete cheer...");  // TODO: continue here
+    } else {
+      this.cheer();
+    }
+  }
+
+  updateHasCheered(ideaId: string, userId: string) {
+    this.api.getCheer(ideaId, userId)
+      .then(() => this.hasCheered = true )
+      .catch((err) => {
+        if (err instanceof HttpErrorResponse && err.status === 404) {
+          this.hasCheered = false;
+        } else {
+          throw err;
+        }
+      });
+  }
+
   cheer() {
     const user = this.auth.user$.getValue();
     if (!this.idea) { throw new Error("cannot cheer if idea is undefined"); }
