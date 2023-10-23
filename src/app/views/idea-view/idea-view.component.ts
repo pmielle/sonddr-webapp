@@ -43,7 +43,7 @@ export class IdeaViewComponent implements OnDestroy {
       this.api.getComments("recent", id, undefined).then(c => this.comments = c);
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
-      console.log("fab click!");
+      this.cheer();
     });
   }
 
@@ -54,6 +54,13 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  cheer() {
+    const user = this.auth.user$.getValue();
+    if (!this.idea) { throw new Error("cannot cheer if idea is undefined"); }
+    if (!user) { throw new Error("cannot cheer if user is undefined"); }
+    this.api.cheer(this.idea.id, user.id);
+  }
+
   postComment(body: string) {
     if (!this.idea) { throw new Error("Cannot post comment if idea is not loaded"); }
     if (!this.comments) { throw new Error("Cannot post comment if comments are not loaded"); }

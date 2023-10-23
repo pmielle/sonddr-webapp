@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Comment, Discussion, Goal, Idea, Message, Notification, User } from 'sonddr-shared';
+import { Cheer, Comment, Discussion, Goal, Idea, Message, Notification, User, makeCheerId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
 type PostResponse = { insertedId: string };
@@ -26,6 +26,16 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async getCheer(ideaId: string, userId: string): Promise<Cheer> {
+    const id = makeCheerId(ideaId, userId);
+    return this._get<Cheer>(`cheers/${id}`);
+  }
+
+  async cheer(ideaId: string, userId: string): Promise<void> {
+    const id = makeCheerId(ideaId, userId);
+    return this._put(`cheers/${id}`, {ideaId: ideaId});
+  }
+
   async getComment(id: string): Promise<Comment> {
     return this._get<Comment>(`comments/${id}`);
   }
