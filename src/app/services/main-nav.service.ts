@@ -42,6 +42,24 @@ export class MainNavService {
 
   // methods
   // --------------------------------------------
+  setCheerFab() {
+    this.fabMode$.next({
+      icon: "favorite_outline",
+      color: "var(--primary-color)",
+      label: "Cheer",
+      action: () => {this.fabClick.next();}
+    });
+  }
+
+  setHasCheeredFab() {
+    this.fabMode$.next({
+      icon: "favorite",
+      color: "var(--primary-color)",
+      label: "✅",
+      action: () => {this.fabClick.next();}
+    });
+  }
+
   goToTab(tab: Tab) {
     this.router.navigateByUrl(`/${tab}`);
   }
@@ -73,7 +91,6 @@ export class MainNavService {
     this.atTabRoot$.next(
       ["/ideas", "/search", "/messages", "/notifications"].includes(url)
     );
-    
   } 
 
   updateTab(url: string) {
@@ -116,12 +133,7 @@ export class MainNavService {
         action: () => {this.router.navigateByUrl(`/messages/new-discussion?preselected=${userId}`)}
       });
     } else if (url.startsWith("/ideas/idea/")) {
-      this.fabMode$.next({
-        icon: "favorite_outline",
-        color: "var(--primary-color)",
-        label: "Support",
-        action: () => {this.fabClick.next();}
-      });
+      this.fabMode$.next(undefined);  // handled by the view depending on the cheering status
     } else if (url === "/messages") {
       this.fabMode$.next({
         icon: "add",

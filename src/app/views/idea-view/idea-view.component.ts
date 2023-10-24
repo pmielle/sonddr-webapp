@@ -48,7 +48,13 @@ export class IdeaViewComponent implements OnDestroy {
       if (!id) { throw new Error("id not found in url params"); }
       this.api.getIdea(id).then(i => this.idea = i);
       this.api.getComments("recent", id, undefined).then(c => this.comments = c);
-      this.updateHasCheered(id, user.id);
+      this.api.getCheer(id, user.id)
+      .then(() => this.setHasCheered(true))
+      .catch((err) => {
+        if (err instanceof HttpErrorResponse && err.status === 404) {
+          this.setHasCheered(false);
+        } else { throw err; }
+      });
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
       this.onFabClick();
@@ -64,29 +70,33 @@ export class IdeaViewComponent implements OnDestroy {
   // --------------------------------------------
   onFabClick() {
     if (this.hasCheered) {
-      console.log("delete cheer...");  // TODO: continue here
-    } else {
+      this.setHasCheered(false);
+      this.deleteCheer();
+    } else {  
+      this.setHasCheered(true);
       this.cheer();
     }
   }
 
-  updateHasCheered(ideaId: string, userId: string) {
-    this.api.getCheer(ideaId, userId)
-      .then(() => this.hasCheered = true )
-      .catch((err) => {
-        if (err instanceof HttpErrorResponse && err.status === 404) {
-          this.hasCheered = false;
-        } else {
-          throw err;
-        }
-      });
+  setHasCheered(hasCheered: boolean) {
+    if (hasCheered) {
+      this.hasCheered = true;
+      this.mainNav.setHasCheeredFab();
+    } else {
+      this.hasCheered = false;
+      this.mainNav.setCheerFab();
+    }
   }
 
-  cheer() {
+  async cheer() {
     const user = this.auth.user$.getValue();
     if (!this.idea) { throw new Error("cannot cheer if idea is undefined"); }
     if (!user) { throw new Error("cannot cheer if user is undefined"); }
-    this.api.cheer(this.idea.id, user.id);
+    return this.api.cheer(this.idea.id, user.id);
+  }
+
+  async deleteCheer() {
+    console.log("implement delete cheer");  // TODO: continue here
   }
 
   postComment(body: string) {
