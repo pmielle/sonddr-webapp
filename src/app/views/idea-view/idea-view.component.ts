@@ -68,6 +68,18 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  upvoteComment(commentId: string) {
+    const user = this.auth.user$.getValue();
+    if (!user) { throw new Error("cannot upvote if user is undefined"); }
+    this.api.upvoteComment(commentId, user.id);
+  }
+
+  downvoteComment(commentId: string) {
+    const user = this.auth.user$.getValue();
+    if (!user) { throw new Error("cannot downvote if user is undefined"); }
+    this.api.downvoteComment(commentId, user.id);
+  }
+
   onFabClick() {
     if (this.hasCheered) {
       this.setHasCheered(false);

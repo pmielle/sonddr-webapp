@@ -32,6 +32,8 @@ export class CommentSectionComponent {
   @Input("comments") comments?: Comment[];
   @Output("sort-by-change") sortByChange = new EventEmitter<SortBy>();
   @Output("post-comment") postComment = new EventEmitter<string>();
+  @Output("upvote") upvote = new EventEmitter<string>();
+  @Output("downvote") downvote = new EventEmitter<string>();
 
   // attributes
   // --------------------------------------------
@@ -52,7 +54,7 @@ export class CommentSectionComponent {
 
   // methods
   // --------------------------------------------
-  send() {
+  onPostComment() {
     if (!this.formIsValid()) { return; }
     this.postComment.next(this.commentBody);
     this.commentBody = "";

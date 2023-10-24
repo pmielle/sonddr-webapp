@@ -71,6 +71,8 @@
             [comments]="comments"
             (sort-by-change)="onSortByChange($event)"
             (post-comment)="postComment($event)"
+            (upvote)="upvoteComment($event)"
+            (downvote)="downvoteComment($event)"
         ></app-comment-section>
 
     </div>

@@ -6,7 +6,7 @@
             type="text" 
             placeholder="What do you think?"
             [(ngModel)]="commentBody"
-            (keydown.enter)="send()"
+            (keydown.enter)="onPostComment()"
             #input
         />
         <app-chip
@@ -14,7 +14,7 @@
             color="var(--green)"
             icon="send"
             [class.disabled]="!this.formIsValid()"
-            (click)="send()"
+            (click)="onPostComment()"
         ></app-chip>
     </div>
 
@@ -42,7 +42,12 @@
                     <span>{{ sections[0].header }}</span>
                 </div>
                 <div class="section-content" [class.mobile]="screen.isMobile$ | async">
-                    <app-comment [comment]="sections[0].comments[0]"></app-comment>
+                    <app-comment 
+                        *ngIf="sections[0].comments[0] as c"
+                        [comment]="c"
+                        (upvote)="upvote.next(c.id)"
+                        (downvote)="downvote.next(c.id)"
+                    ></app-comment>
                 </div>
             </div>
             <app-chip 
@@ -69,7 +74,12 @@
                     <span>{{ s.header }}</span>
                 </div>
                 <div class="section-content" [class.mobile]="screen.isMobile$ | async">
-                    <app-comment *ngFor="let c of s.comments" [comment]="c"></app-comment>
+                    <app-comment 
+                        *ngFor="let c of s.comments" 
+                        [comment]="c"
+                        (upvote)="upvote.next(c.id)"
+                        (downvote)="downvote.next(c.id)"
+                    ></app-comment>
                 </div>
             </div>
         </ng-template>

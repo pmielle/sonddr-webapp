@@ -23,6 +23,7 @@
                 mat-ripple 
                 [matRippleCentered]="true" 
                 [matRippleUnbounded]="true"
+                (click)="upvote.next()"
             >
                 keyboard_arrow_up
             </mat-icon>
@@ -38,6 +39,7 @@
                 mat-ripple 
                 [matRippleCentered]="true" 
                 [matRippleUnbounded]="true"
+                (click)="downvote.next()"
             >
                 keyboard_arrow_down
             </mat-icon>

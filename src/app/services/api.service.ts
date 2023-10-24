@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
-import { Cheer, Comment, Discussion, Goal, Idea, Message, Notification, User, makeCheerId } from 'sonddr-shared';
+import { Cheer, Comment, Discussion, Goal, Idea, Message, Notification, User, makeCheerId, makeVoteId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
 type PostResponse = { insertedId: string };
@@ -26,6 +26,16 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async upvoteComment(commentId: string, userId: string) {
+    const id = makeVoteId(commentId, userId);
+    return this._put(`votes/${id}`, {commentId: commentId, value: 1});
+  }
+
+  async downvoteComment(commentId: string, userId: string) {
+    const id = makeVoteId(commentId, userId);
+    return this._put(`votes/${id}`, {commentId: commentId, value: -1});
+  }
+
   async deleteCheer(ideaId: string, userId: string) {
     const id = makeCheerId(ideaId, userId);
     return this._delete(`cheers/${id}`);
