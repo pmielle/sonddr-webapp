@@ -26,6 +26,11 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async deleteCheer(ideaId: string, userId: string) {
+    const id = makeCheerId(ideaId, userId);
+    return this._delete(`cheers/${id}`);
+  }
+
   async getCheer(ideaId: string, userId: string): Promise<Cheer> {
     const id = makeCheerId(ideaId, userId);
     return this._get<Cheer>(`cheers/${id}`);

@@ -96,7 +96,10 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   async deleteCheer() {
-    console.log("implement delete cheer");  // TODO: continue here
+    const user = this.auth.user$.getValue();
+    if (!this.idea) { throw new Error("cannot delete cheer if idea is undefined"); }
+    if (!user) { throw new Error("cannot delete cheer if user is undefined"); }
+    return this.api.deleteCheer(this.idea.id, user.id);
   }
 
   postComment(body: string) {
