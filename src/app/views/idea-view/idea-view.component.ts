@@ -30,31 +30,22 @@ export class IdeaViewComponent implements OnDestroy {
   
   // attributes
   // --------------------------------------------
-  mainSub?: Subscription;
+  routeSub?: Subscription;
   fabClickSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
-  hasCheered?: boolean;
 
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit(): void {
-    this.mainSub = combineLatest([
-      this.route.paramMap,
-      this.auth.user$.pipe(filter(u => u !== undefined)),
-    ]).subscribe(([map, user]) => {
+    this.routeSub = this.route.paramMap.subscribe(map => {
       const id = map.get("id");
-      if (!user) { throw new Error("user is not defined"); }
       if (!id) { throw new Error("id not found in url params"); }
-      this.api.getIdea(id).then(i => this.idea = i);
-      this.api.getComments("recent", id, undefined).then(c => this.comments = c);
-      this.api.getCheer(id, user.id)
-      .then(() => this.setHasCheered(true))
-      .catch((err) => {
-        if (err instanceof HttpErrorResponse && err.status === 404) {
-          this.setHasCheered(false);
-        } else { throw err; }
+      this.api.getIdea(id).then(i => {
+        this.idea = i;
+        this.setHasCheered(i.userHasCheered);
       });
+      this.api.getComments("recent", id, undefined).then(c => this.comments = c);
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
       this.onFabClick();
@@ -62,7 +53,7 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.mainSub?.unsubscribe();
+    this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
   }
 
@@ -81,7 +72,8 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   onFabClick() {
-    if (this.hasCheered) {
+    if (!this.idea) { throw new Error("cannot react to fab click if idea is undefined"); }
+    if (this.idea.userHasCheered) {
       this.setHasCheered(false);
       this.deleteCheer();
     } else {  
@@ -91,11 +83,12 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   setHasCheered(hasCheered: boolean) {
+    if (!this.idea) { throw new Error("cannot set userHasCheered if idea is undefined"); }
     if (hasCheered) {
-      this.hasCheered = true;
+      this.idea.userHasCheered = true;
       this.mainNav.setHasCheeredFab();
     } else {
-      this.hasCheered = false;
+      this.idea.userHasCheered = false;
       this.mainNav.setCheerFab();
     }
   }
