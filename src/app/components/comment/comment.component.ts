@@ -21,6 +21,29 @@ export class CommentComponent {
 
   // methods
   // --------------------------------------------
+  onUpvoteClick() {
+    this.upvote.next();
+    this.updateRating(1);
+  }
+
+  onDownvoteClick() {
+    this.downvote.next();
+    this.updateRating(-1);
+  }
+
+  updateRating(newUserVote: 1|-1) {
+    if (! this.comment) { throw new Error("Cannot vote for an undefined comment"); }
+    const ratingDiff = this.comment.userVote 
+      ? this.comment.userVote - newUserVote 
+      : -1 * newUserVote;
+    this.comment.rating -= ratingDiff;
+    this.comment.userVote = newUserVote;
+  }
+
+  chooseNewRating(previousRating: number, previousUserVote: number, newUserVote: number): number {
+    return previousRating + (previousUserVote - newUserVote);
+  }
+
   chooseRatingColor(): string {
     if (!this.comment) { return ""; }
     if (this.comment.rating === 0) { return "" };

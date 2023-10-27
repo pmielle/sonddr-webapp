@@ -20,10 +20,11 @@
         <div id="rating" class="flex column">
             <mat-icon 
                 id="upvote"
+                [class.active]="comment.userVote === 1"
                 mat-ripple 
                 [matRippleCentered]="true" 
                 [matRippleUnbounded]="true"
-                (click)="upvote.next()"
+                (click)="onUpvoteClick()"
             >
                 keyboard_arrow_up
             </mat-icon>
@@ -36,10 +37,11 @@
             </p>
             <mat-icon 
                 id="downvote"
+                [class.active]="comment.userVote === -1"
                 mat-ripple 
                 [matRippleCentered]="true" 
                 [matRippleUnbounded]="true"
-                (click)="downvote.next()"
+                (click)="onDownvoteClick()"
             >
                 keyboard_arrow_down
             </mat-icon>

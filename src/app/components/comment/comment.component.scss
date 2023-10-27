@@ -36,6 +36,10 @@
     
             mat-icon {
                 opacity: 0.5;
+
+                &.active {
+                    opacity: 1;
+                }
             }
     
             #upvote {
