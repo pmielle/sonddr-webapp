@@ -71,6 +71,12 @@ export class IdeaViewComponent implements OnDestroy {
     this.api.downvoteComment(commentId, user.id);
   }
 
+  deleteCommentVote(commentId: string) {
+    const user = this.auth.user$.getValue();
+    if (!user) { throw new Error("cannot downvote if user is undefined"); }
+    this.api.deleteVote(commentId, user.id);
+  }
+
   onFabClick() {
     if (!this.idea) { throw new Error("cannot react to fab click if idea is undefined"); }
     if (this.idea.userHasCheered) {

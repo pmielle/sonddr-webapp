@@ -26,6 +26,11 @@ export class ApiService {
 
   // public methods
   // --------------------------------------------
+  async deleteVote(commentId: string, userId: string) {
+    const id = makeVoteId(commentId, userId);
+    return this._delete(`votes/${id}`);
+  }
+
   async upvoteComment(commentId: string, userId: string) {
     const id = makeVoteId(commentId, userId);
     return this._put(`votes/${id}`, {commentId: commentId, value: 1});

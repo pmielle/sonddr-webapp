@@ -34,6 +34,7 @@ export class CommentSectionComponent {
   @Output("post-comment") postComment = new EventEmitter<string>();
   @Output("upvote") upvote = new EventEmitter<string>();
   @Output("downvote") downvote = new EventEmitter<string>();
+  @Output("delete-vote") deleteVote = new EventEmitter<string>();
 
   // attributes
   // --------------------------------------------

@@ -18,24 +18,36 @@ export class CommentComponent {
   @Input('comment') comment?: Comment;
   @Output('upvote') upvote = new EventEmitter<void>();
   @Output('downvote') downvote = new EventEmitter<void>();
+  @Output('delete-vote') deleteVote = new EventEmitter<void>();
 
   // methods
   // --------------------------------------------
   onUpvoteClick() {
-    this.upvote.next();
-    this.updateRating(1);
+    if (this.comment?.userVote && this.comment.userVote === 1) {
+      this.deleteVote.next();
+      this.updateRating(undefined);
+    } else {
+      this.upvote.next();
+      this.updateRating(1);
+    }
   }
 
   onDownvoteClick() {
-    this.downvote.next();
-    this.updateRating(-1);
+    if (this.comment?.userVote && this.comment.userVote === -1) {
+      this.deleteVote.next();
+      this.updateRating(undefined);
+    } else {
+      this.downvote.next();
+      this.updateRating(-1);
+    }
   }
 
-  updateRating(newUserVote: 1|-1) {
+  updateRating(newUserVote: 1|-1|undefined) {
     if (! this.comment) { throw new Error("Cannot vote for an undefined comment"); }
+    if (this.comment.userVote === newUserVote) { return; }
     const ratingDiff = this.comment.userVote 
-      ? this.comment.userVote - newUserVote 
-      : -1 * newUserVote;
+      ? newUserVote ? this.comment.userVote - newUserVote : this.comment.userVote
+      : newUserVote ? -1 * newUserVote : 0;
     this.comment.rating -= ratingDiff;
     this.comment.userVote = newUserVote;
   }
