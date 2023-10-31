@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { Cheer, Comment, Discussion, Goal, Idea, Message, Notification, User, makeCheerId, makeVoteId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
@@ -139,8 +139,8 @@ export class ApiService {
     return this._get<Comment[]>(uri);
   }
 
-  async getDiscussions(): Promise<Discussion[]> {
-    return this._get<Discussion[]>("discussions");
+  getDiscussions(): Observable<Discussion[]> {
+    return this._getSSE<Discussion[]>("discussions");
   }
 
   async getMessages(discussionId?: string): Promise<Message[]> {
@@ -161,6 +161,22 @@ export class ApiService {
 
   // private methods
   // --------------------------------------------
+  private _getSSE<T>(path: string): Observable<T> {
+    const source = new EventSource(`${this.apiUrl}/${path}`);
+    return new Observable(subscriber => {
+      source.onmessage = (message: MessageEvent<string>) => {
+        const payload = JSON.parse(message.data, (key, value) => {
+          if (/[Dd]ate$/.test(key)) {
+            value = new Date(value);
+          }
+          return value;
+        });
+        subscriber.next(payload);
+      };
+      source.onerror = (err) => subscriber.error(err);
+    });
+  }
+
   private async _get<T>(path: string): Promise<T> {
     let data = await lastValueFrom(this.db.get<T>(`${this.apiUrl}/${path}`));
     this._convertApiDataToData(data);
