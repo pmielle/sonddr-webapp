@@ -14,7 +14,7 @@
 
     <div id="discussions">
         <app-discussion 
-            *ngFor="let d of discussions" 
+            *ngFor="let d of userData.discussions$|async" 
             [discussion]="d"
             [routerLink]="['discussion', d.id]"
         ></app-discussion>

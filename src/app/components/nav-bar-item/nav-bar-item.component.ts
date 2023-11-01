@@ -18,4 +18,5 @@ export class NavBarItemComponent {
   @Input("label") label!: string;
   @Input("icon") icon!: string;
   @Input("outlined") outlined = false;
+  @Input("badge") badge: string|number|null|undefined;
 }

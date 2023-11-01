@@ -155,8 +155,8 @@ export class ApiService {
     return this._get<Discussion>(`discussions/${id}`);
   }
 
-  async getNotifications(): Promise<Notification[]> {
-    return this._get<Notification[]>("notifications");
+  getNotifications(): Observable<Notification[]> {
+    return this._getSSE<Notification[]>("notifications");
   }
 
   // private methods
