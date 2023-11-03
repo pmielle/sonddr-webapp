@@ -15,15 +15,26 @@ export class UserDataService {
   discussions$ = new BehaviorSubject<Discussion[]|undefined>(undefined);
   notifications$ = new BehaviorSubject<Notification[]|undefined>(undefined);
   userSub?: Subscription;
+  discussionsSub?: Subscription;
+  notificationsSub?: Subscription;
 
   constructor() {
+
     this.auth.user$.subscribe((user) => {
+
+      this.discussionsSub?.unsubscribe();
+      this.notificationsSub?.unsubscribe();
+
       if (! user) { 
         this.discussions$.next(undefined);
+        this.notifications$.next(undefined);
         return;
       }
-      this.api.getDiscussions().subscribe(this.discussions$);
-      this.api.getNotifications().subscribe(this.notifications$);
+      
+      this.discussionsSub = this.api.getDiscussions().subscribe(this.discussions$);
+      this.notificationsSub = this.api.getNotifications().subscribe(this.notifications$);
+      
     });
+
   }
 }
