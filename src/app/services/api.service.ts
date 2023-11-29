@@ -1,31 +1,38 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
-import { Change, Cheer, Comment, Discussion, Doc, Goal, Idea, Message, Notification, User, makeCheerId, makeVoteId } from 'sonddr-shared';
+import { Change, Cheer, Comment, Discussion, Goal, Idea, Message, Notification, PostResponse, User, makeCheerId, makeVoteId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 
-type PostResponse = { insertedId: string };
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
+  
   // dependencies
   // --------------------------------------------
   private db = inject(HttpClient);
+
 
   // attributes
   // --------------------------------------------
   private apiUrl = "http://0.0.0.0:3000";
   private goals?: Goal[];
 
+
   // lifecycle hooks
   // --------------------------------------------
   constructor() { }
 
+
   // public methods
   // --------------------------------------------
+  isChange(obj: any): boolean {
+    return 'docId' in obj && 'type' in obj;
+  }
+
   async deleteVote(commentId: string, userId: string) {
     const id = makeVoteId(commentId, userId);
     return this._delete(`votes/${id}`);
@@ -139,10 +146,6 @@ export class ApiService {
     return this._get<Comment[]>(uri);
   }
 
-  getDiscussions(): Observable<Discussion[]> {    
-    return this._getSSE<Discussion>("discussions");
-  }
-
   async getMessages(discussionId?: string): Promise<Message[]> {
     let uri = "messages";
     if (discussionId) {
@@ -155,41 +158,19 @@ export class ApiService {
     return this._get<Discussion>(`discussions/${id}`);
   }
 
-  getNotifications(): Observable<Notification[]> {
-    return this._getSSE<Notification>("notifications");
+  getDiscussions(): Observable<Discussion[]|Change<Discussion>> {    
+    return this._getAndWatch<Discussion>("discussions");
   }
+
+  getNotifications(): Observable<Notification[]|Change<Notification>> {
+    return this._getAndWatch<Notification>("notifications");
+  }
+
 
   // private methods
   // --------------------------------------------
-  private _updateValue<T extends Doc>(value: T[], change: Change<T>): T[] {
-    switch (change.type) {
-      case "delete": {
-        value = value.filter(doc => doc.id !== change.docId);
-        break;
-      }
-      case "insert": {
-        if (change.payload === undefined) { throw new Error("Insert changes must have a payload") }
-        value.unshift(change.payload);
-        break;
-      }
-      case "update": {
-        if (change.payload === undefined) { throw new Error("Update changes must have a payload") }
-        const i = value.findIndex(doc => doc.id === change.docId);
-        if (i === -1) { throw new Error(`Failed to find document with id ${change.docId} to update it`) }
-        value[i] = change.payload;
-        break;
-      }
-    }
-    return value;
-  }
-
-  private _isChange(payload: any): boolean {
-    return 'docId' in payload && 'type' in payload;
-  }
-
-  private _getSSE<T extends Doc>(path: string): Observable<T[]> {
+  private _getAndWatch<T>(path: string): Observable<T[]|Change<T>> {
     const source = new EventSource(`${this.apiUrl}/${path}`);
-    let value: T[]|undefined = undefined;
     return new Observable(subscriber => {
       source.onmessage = (message: MessageEvent<string>) => {
         const payload = JSON.parse(message.data, (key, value) => {
@@ -198,13 +179,9 @@ export class ApiService {
           }
           return value;
         });
-        if (this._isChange(payload)) {
-          if (value === undefined) { throw new Error("Cannot handle change if initial value is undefined"); }
-          value = this._updateValue(value, payload as Change<T>);
-        } else {
-          value = payload as T[];
-        }
-        subscriber.next(value);
+        // each message can be either a T[] (initial value)
+        //     or a Change<T> if db has been updated
+        subscriber.next(payload as T[]|Change<T>);
       };
       source.onerror = (err) => subscriber.error(err);
       return () => {

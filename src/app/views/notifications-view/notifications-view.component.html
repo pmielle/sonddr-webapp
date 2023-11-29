@@ -13,7 +13,8 @@
     <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter no-margin-bottom">Notifications</h1>
 
     <div id="notifications">
-        <app-notification *ngFor="let n of userData.notifications$|async" [notification]="n"></app-notification>
+        <!-- TODO: display new notifications here -->
+        <app-notification *ngFor="let n of userData.oldNotifications" [notification]="n"></app-notification>
     </div>
 
 </div>

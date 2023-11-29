@@ -37,14 +37,14 @@
         icon="forum" 
         (click)="onClick('messages')" 
         [outlined]="(mainNav.tab$|async) !== 'messages'" 
-        [badge]="discussionsBadge$|async"
+        [badge]="undefined"
     ></app-nav-bar-item>
     <app-nav-bar-item 
         label="Notifications" 
         icon="notifications" 
         (click)="onClick('notifications')" 
         [outlined]="(mainNav.tab$|async) !== 'notifications'"
-        [badge]="notificationsBadge$|async"
+        [badge]="undefined"
     ></app-nav-bar-item>
 
     <app-fab [class.hidden]="screen.isMobile$ | async"></app-fab>

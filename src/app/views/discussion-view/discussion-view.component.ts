@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Discussion, Message, User } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -39,10 +39,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
       this.api.getDiscussion(id).then(d => this.discussion = d);
-      this.api.getMessages(id).then(m => {
-        this.messages = m;
-        setTimeout(() => this.mainNav.scrollToBottom(), 0);
-      }); 
+      // TODO: get messages from ws here
     });
   }
 
@@ -61,51 +58,37 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     if (! this.formIsValid()) {
       throw new Error("send() should not be callable if content is empty");
     }
-    // fetch the real message asynchronously
-    this.api.postMessage(this.discussion!.id, this.content).then(async insertedId => {
-      const message = await this.api.getMessage(insertedId);
-      this.replacePlaceholderWithRealMessage(message);
-    });
+    // post the message asynchronously
+    // TODO: ws.send here
     // add a placeholder message while waiting for the real one
-    if (!this.messages) {
-      throw new Error("messages is undefined");
-    }
-    this.messages.unshift(this.makePlaceholderMessage());
-    setTimeout(() => {
-      this.mainNav.scrollToBottom();
-    }, 0);
+    this.messages!.unshift(this.makePlaceholderMessage());
+    // scroll to the bottom and reset the input
+    setTimeout(() => this.mainNav.scrollToBottom(), 0);
     this.content = "";
   }
 
   replacePlaceholderWithRealMessage(message: Message) {
-    if (!this.messages) {
-      throw new Error("messages is undefined");
-    }
-    const i = this.messages.findIndex(m => m.id === placeholderId);    
+    const i = this.messages!.findIndex(m => m.id === placeholderId);    
     if (i === -1) {
       throw new Error(`Failed to replace placeholder message with the real one`);
     }
-    this.messages[i] = message;
+    this.messages![i] = message;
   }
 
   makePlaceholderMessage(): Message {
     const loggedInUser = this.auth.user$.getValue();
-    if (! loggedInUser) {
-      throw new Error("Failed to get logged in user");
-    }
     return {
       id: placeholderId,
       discussionId: placeholderId,
       content: this.content,
-      author: loggedInUser,
+      author: loggedInUser!,
       date: new Date(),
     }
   }
 
   shouldHaveSpacer(i: number): boolean {
-    const message = this.messages?.[i];
+    const message = this.messages![i];
     const previousMessage = this.messages?.[i - 1];
-    if (!message) { throw new Error(`Failed to get message with index ${i}`); }
     if (!previousMessage) { return false; }
     const fromSameAuthor = message.author.id === previousMessage.author.id;
     return !fromSameAuthor;

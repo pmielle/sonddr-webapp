@@ -13,8 +13,9 @@
     <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter no-margin-bottom">Messages</h1>
 
     <div id="discussions">
+        <!-- TODO: display active discussions here -->
         <app-discussion 
-            *ngFor="let d of userData.discussions$|async" 
+            *ngFor="let d of userData.olderDiscussions" 
             [discussion]="d"
             [routerLink]="['discussion', d.id]"
         ></app-discussion>
