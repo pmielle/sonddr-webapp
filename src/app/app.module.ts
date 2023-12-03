@@ -43,6 +43,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { MessageComponent } from './components/message/message.component';
 import { NewDiscussionComponent } from './views/new-discussion/new-discussion.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { RedDotComponent } from './components/red-dot/red-dot.component';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     NotificationComponent,
     MessageComponent,
     NewDiscussionComponent,
+    RedDotComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,20 +1,40 @@
 <div id="container">
-    
+
     <app-top-bar [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
         <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">Notifications</h1>
         <div class="spacer"></div>
-        <app-profile-picture 
+        <app-profile-picture
             class="pointer"
-            [user]="auth.user$|async" 
+            [user]="auth.user$|async"
             [routerLink]="['/', 'ideas', 'profile']"
         ></app-profile-picture>
     </app-top-bar>
 
     <h1 id="title" *ngIf="screen.isMobile$ | async" class="gutter no-margin-bottom">Notifications</h1>
 
-    <div id="notifications">
-        <!-- TODO: display new notifications here -->
+    <div id="new-notifications" class="notifications" *ngIf="userData.newNotifications.length > 0; else noNew">
+      <p id="n-unread">{{ userData.newNotifications.length }} unread <app-red-dot></app-red-dot></p>
+      <app-notification *ngFor="let n of userData.newNotifications" [notification]="n"></app-notification>
+    </div>
+
+    <ng-template #noNew>
+      <div id="no-new">No new notification</div>
+    </ng-template>
+
+    <div id="old-notifications" class="notifications" *ngIf="showOlder; else loadOlder">
         <app-notification *ngFor="let n of userData.oldNotifications" [notification]="n"></app-notification>
     </div>
+
+    <ng-template #loadOlder>
+      <div id="load-older" *ngIf="userData.oldNotifications.length > 0">
+        <app-chip
+            label="Show older notifications"
+            icon="expand_more"
+            color="var(--foreground-color)"
+            foreground-color="var(--background-color)"
+            (click)="showOlder=true">
+        </app-chip>
+      </div>
+    </ng-template>
 
 </div>

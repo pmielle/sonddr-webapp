@@ -15,10 +15,10 @@ export class NotificationsViewComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   userData = inject(UserDataService);
-  
+
   // attributes
   // --------------------------------------------
-  // ...
+  showOlder = false;
 
   // lifecycle hooks
   // --------------------------------------------
