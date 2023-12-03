@@ -15,7 +15,7 @@ export class MessagesViewComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   userData = inject(UserDataService);
-  
+
   // attributes
   // --------------------------------------------
   // ...
