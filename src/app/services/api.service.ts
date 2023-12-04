@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { Change, Cheer, Comment, Discussion, Goal, Idea, Message, Notification, PostResponse, User, makeCheerId, makeVoteId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
+import { ChatRoom } from '../types/chat-room';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { SortBy } from '../components/idea-list/idea-list.component';
 })
 export class ApiService {
 
-  
+
   // dependencies
   // --------------------------------------------
   private db = inject(HttpClient);
@@ -18,7 +19,9 @@ export class ApiService {
 
   // attributes
   // --------------------------------------------
-  private apiUrl = "http://0.0.0.0:3000";
+  private apiAuthority = "0.0.0.0:3000";
+  private apiWsUrl = `ws://${this.apiAuthority}`;
+  private apiHttpUrl = `http://${this.apiAuthority}`;
   private goals?: Goal[];
 
 
@@ -110,7 +113,7 @@ export class ApiService {
   async getGoal(id: string): Promise<Goal> {
     return this._get<Goal>(`goals/${id}`);
   }
-  
+
   async getGoals(): Promise<Goal[]> {
     // return from cache
     if (this.goals) {
@@ -122,7 +125,7 @@ export class ApiService {
     return goals;
   }
 
-  async getIdeas(sortBy: SortBy, goalId?: string, authorId?: string): Promise<Idea[]> {  
+  async getIdeas(sortBy: SortBy, goalId?: string, authorId?: string): Promise<Idea[]> {
     let uri = "ideas";
     switch (sortBy) {
       case "recent": uri += "?order=date"; break;
@@ -134,7 +137,7 @@ export class ApiService {
     return this._get<Idea[]>(uri);
   }
 
-  async getComments(sortBy: SortBy, ideaId?: string, authorId?: string): Promise<Comment[]> {  
+  async getComments(sortBy: SortBy, ideaId?: string, authorId?: string): Promise<Comment[]> {
     let uri = "comments";
     switch (sortBy) {
       case "recent": uri += "?order=date"; break;
@@ -146,19 +149,11 @@ export class ApiService {
     return this._get<Comment[]>(uri);
   }
 
-  async getMessages(discussionId?: string): Promise<Message[]> {
-    let uri = "messages";
-    if (discussionId) {
-      uri += `?discussionId=${discussionId}`;
-    }
-    return this._get<Message[]>(uri);
-  }
-
   async getDiscussion(id: string): Promise<Discussion> {
     return this._get<Discussion>(`discussions/${id}`);
   }
 
-  getDiscussions(): Observable<Discussion[]|Change<Discussion>> {    
+  getDiscussions(): Observable<Discussion[]|Change<Discussion>> {
     return this._getAndWatch<Discussion>("discussions");
   }
 
@@ -166,11 +161,17 @@ export class ApiService {
     return this._getAndWatch<Notification>("notifications");
   }
 
+  getChatRoom(discussionId: string): ChatRoom {
+    const ws = new WebSocket(`${this.apiWsUrl}/messages`);  // TODO: get websocket to that discussion id
+    return new ChatRoom(ws);
+
+  }
 
   // private methods
   // --------------------------------------------
+
   private _getAndWatch<T>(path: string): Observable<T[]|Change<T>> {
-    const source = new EventSource(`${this.apiUrl}/${path}`);
+    const source = new EventSource(`${this.apiHttpUrl}/${path}`);
     return new Observable(subscriber => {
       source.onmessage = (message: MessageEvent<string>) => {
         const payload = JSON.parse(message.data, (key, value) => {
@@ -191,26 +192,26 @@ export class ApiService {
   }
 
   private async _get<T>(path: string): Promise<T> {
-    let data = await lastValueFrom(this.db.get<T>(`${this.apiUrl}/${path}`));
+    let data = await lastValueFrom(this.db.get<T>(`${this.apiHttpUrl}/${path}`));
     this._convertApiDataToData(data);
     return data;
   }
 
   private async _post(path: string, payload: object): Promise<string> {
-    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.apiUrl}/${path}`, payload));
+    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.apiHttpUrl}/${path}`, payload));
     return response.insertedId;
   }
 
   private async _patch(path: string, payload: object): Promise<void> {
-    return lastValueFrom(this.db.patch<void>(`${this.apiUrl}/${path}`, payload));
+    return lastValueFrom(this.db.patch<void>(`${this.apiHttpUrl}/${path}`, payload));
   }
 
   private async _delete(path: string): Promise<void> {
-    return lastValueFrom(this.db.delete<void>(`${this.apiUrl}/${path}`));
+    return lastValueFrom(this.db.delete<void>(`${this.apiHttpUrl}/${path}`));
   }
 
   private async _put(path: string, payload: object): Promise<void> {
-    await lastValueFrom(this.db.put(`${this.apiUrl}/${path}`, payload));
+    await lastValueFrom(this.db.put(`${this.apiHttpUrl}/${path}`, payload));
   }
 
   private _convertApiDataToData(apiData: any): any {
@@ -220,7 +221,7 @@ export class ApiService {
       this._convertApiDocToDoc(apiData);
     }
   }
-  
+
   private _convertApiDocToDoc(apiDoc: any) {
     for (let [key, value] of Object.entries(apiDoc)) {
       if (key == "date" || key.endsWith("Date")) {

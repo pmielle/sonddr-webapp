@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Discussion, Message, User } from 'sonddr-shared';
+import { Discussion, Message, User, placeholder_id } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { ChatRoom } from 'src/app/types/chat-room';
 
-const placeholderId = "TBD";
 
 @Component({
   selector: 'app-discussion-view',
@@ -23,13 +23,14 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   mainNav = inject(MainNavService);
-  
+
   // attributes
   // --------------------------------------------
   routeSub?: Subscription;
   discussion?: Discussion;
   messages?: Message[];
   content: string = "";
+  chatRoom?: ChatRoom;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -39,13 +40,14 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
       this.api.getDiscussion(id).then(d => this.discussion = d);
-      // TODO: get messages from ws here
+      this.chatRoom = this.api.getChatRoom(id);
     });
   }
 
   ngOnDestroy(): void {
-    this.routeSub?.unsubscribe();
     this.mainNav.restoreNavBar();
+    this.routeSub?.unsubscribe();
+    this.chatRoom?.leave();
   }
 
   // methods
@@ -59,7 +61,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       throw new Error("send() should not be callable if content is empty");
     }
     // post the message asynchronously
-    // TODO: ws.send here
+    this.chatRoom!.send(this.content);
     // add a placeholder message while waiting for the real one
     this.messages!.unshift(this.makePlaceholderMessage());
     // scroll to the bottom and reset the input
@@ -68,7 +70,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   }
 
   replacePlaceholderWithRealMessage(message: Message) {
-    const i = this.messages!.findIndex(m => m.id === placeholderId);    
+    const i = this.messages!.findIndex(m => m.id === placeholder_id);
     if (i === -1) {
       throw new Error(`Failed to replace placeholder message with the real one`);
     }
@@ -78,8 +80,8 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   makePlaceholderMessage(): Message {
     const loggedInUser = this.auth.user$.getValue();
     return {
-      id: placeholderId,
-      discussionId: placeholderId,
+      id: placeholder_id,
+      discussionId: placeholder_id,
       content: this.content,
       author: loggedInUser!,
       date: new Date(),
@@ -98,8 +100,8 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     if (!this.discussion) { return undefined; }
     if (!loggedInUser) { return undefined; }
     let otherUsers = this.discussion.users.filter(u => u.id !== loggedInUser.id);
-    if (!otherUsers.length) { 
-      throw new Error(`Failed to find another user for discussion ${this.discussion.id}`); 
+    if (!otherUsers.length) {
+      throw new Error(`Failed to find another user for discussion ${this.discussion.id}`);
     }
     if (otherUsers.length > 1) {
       console.warn("Display of more than 1 other user is not yet supported: using the first one");
