@@ -1,27 +1,28 @@
+import { Observable } from "rxjs";
+import { Change, Message } from "sonddr-shared";
+
 export class ChatRoom {
 
   ws: WebSocket;
-  // TODO: create an obs of message[]|change<message> or something like this
 
   constructor(ws: WebSocket) {
     this.ws = ws;
-    ws.onmessage = (message) => this.onMessage(message);
-    ws.onerror = (e) => console.error(e);
   }
 
-  onMessage(message: MessageEvent<string>) {
-    const payload = JSON.parse(message.data, (key, value) => {
-      if (/[Dd]ate$/.test(key)) {
-        value = new Date(value);
-      }
-      return value;
+  listen(): Observable<Message[]|Change<Message>> {
+    return new Observable<Message[]|Change<Message>>(subscriber => {
+      this.ws.onmessage = (message: MessageEvent<string>) => {
+        const payload = JSON.parse(message.data, (key, value) => {
+          if (/[Dd]ate$/.test(key)) {
+            value = new Date(value);
+          }
+          return value;
+        });
+        subscriber.next(payload);
+      };
+      this.ws.onerror = (e) => subscriber.error(e);
+      return () => this.ws.close();
     });
-    // TODO: do something with new messages
-    console.log(payload);
-  }
-
-  leave() {
-    this.ws.close();
   }
 
   send(message: string) {

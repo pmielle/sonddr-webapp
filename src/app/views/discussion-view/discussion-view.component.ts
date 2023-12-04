@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Discussion, Message, User, placeholder_id } from 'sonddr-shared';
+import { Discussion, Message, User, placeholder_id, Change } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
@@ -31,6 +31,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   messages?: Message[];
   content: string = "";
   chatRoom?: ChatRoom;
+  chatRoomSub?: Subscription;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -41,17 +42,24 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       if (!id) { throw new Error("Missing id route param"); }
       this.api.getDiscussion(id).then(d => this.discussion = d);
       this.chatRoom = this.api.getChatRoom(id);
+      this.chatRoomSub = this.chatRoom.listen().subscribe(
+        (payload) => this.onChatRoomUpdate(payload)
+      );
     });
   }
 
   ngOnDestroy(): void {
     this.mainNav.restoreNavBar();
     this.routeSub?.unsubscribe();
-    this.chatRoom?.leave();
+    this.chatRoomSub?.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  onChatRoomUpdate(payload: Message[]|Change<Message>) {
+    console.log(payload);
+  }
+
   formIsValid() {
     return (this.content.length && this.discussion) ? true : false;
   }
