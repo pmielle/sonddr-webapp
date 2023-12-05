@@ -69,23 +69,15 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       throw new Error("send() should not be callable if content is empty");
     }
     // post the message asynchronously
-    this.chatRoom!.send(this.content);
+    const placeholder = this.chatRoom!.send(
+      this.content,
+      this.auth.user$.getValue()!
+    );
     // add a placeholder message while waiting for the real one
-    this.messages!.unshift(this.makePlaceholderMessage());
+    this.messages!.unshift(placeholder);
     // scroll to the bottom and reset the input
     setTimeout(() => this.mainNav.scrollToBottom(), 0);
     this.content = "";
-  }
-
-  makePlaceholderMessage(): Message {
-    const loggedInUser = this.auth.user$.getValue();
-    return {
-      id: placeholder_id,
-      discussionId: placeholder_id,
-      content: this.content,
-      author: loggedInUser!,
-      date: new Date(),
-    }
   }
 
   shouldHaveSpacer(i: number): boolean {

@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { Change, Message } from "sonddr-shared";
+import { Change, Message, User, placeholder_id } from "sonddr-shared";
 
 export class ChatRoom {
 
@@ -25,10 +25,22 @@ export class ChatRoom {
     });
   }
 
-  send(message: string) {
-    // TODO: use PLACEHOLDER_ID and add new message to a the message list
-    // it will be replaced after insertion
+  send(message: string, user: User) {
     this.ws.send(message);
+    return this._makePlaceholderMessage(message, user);
+  }
+
+
+  // private
+  // --------------------------------------------
+  _makePlaceholderMessage(content: string, user: User): Message {
+    return {
+      id: placeholder_id,
+      discussionId: placeholder_id,
+      content: content,
+      author: user,
+      date: new Date(),
+    }
   }
 
 }
