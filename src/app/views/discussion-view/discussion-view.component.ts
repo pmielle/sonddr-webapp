@@ -77,14 +77,6 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     this.content = "";
   }
 
-  replacePlaceholderWithRealMessage(message: Message) {
-    const i = this.messages!.findIndex(m => m.id === placeholder_id);
-    if (i === -1) {
-      throw new Error(`Failed to replace placeholder message with the real one`);
-    }
-    this.messages![i] = message;
-  }
-
   makePlaceholderMessage(): Message {
     const loggedInUser = this.auth.user$.getValue();
     return {
