@@ -37,10 +37,10 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   ngOnInit(): void {
     this.mainNav.flattenNavBar();
-    this.routeSub = this.route.paramMap.subscribe(map => {
+    this.routeSub = this.route.paramMap.subscribe(async map => {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
-      this.api.getDiscussion(id).then(d => this.discussion = d);
+      await this.api.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
       this.chatRoom = this.api.getChatRoom(id);
       this.chatRoomSub = this.chatRoom.listen().subscribe(
         (payload) => this.onChatRoomUpdate(payload)
@@ -57,7 +57,35 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // methods
   // --------------------------------------------
   onChatRoomUpdate(payload: Message[]|Change<Message>) {
-    console.log(payload);
+    if (this.api.isChange(payload)) {
+      const change = payload as Change<Message>;
+      switch (change.type) {
+        case "insert": {
+          this.messages!.unshift(change.payload!);
+          this.mainNav.scrollToBottom();
+          break;
+        }
+        case "update": {
+          const index = this.findIndex(change.docId);
+          this.messages![index] = change.payload!;
+          break;
+        }
+        case "delete": {
+          const index = this.findIndex(change.docId);
+          this.messages!.splice(index, 1);
+          break;
+        }
+      }
+    } else {
+      this.messages = payload as Message[];
+      this.mainNav.scrollToBottom(); // does not work for some weird timing reason
+    }
+  }
+
+  findIndex(id: string): number {
+    const index = this.messages!.findIndex(m => m.id === id);
+    if (index === -1) { throw new Error(`Failed to find message ${id}`); }
+    return index;
   }
 
   formIsValid() {
@@ -76,7 +104,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     // add a placeholder message while waiting for the real one
     this.messages!.unshift(placeholder);
     // scroll to the bottom and reset the input
-    setTimeout(() => this.mainNav.scrollToBottom(), 0);
+    this.mainNav.scrollToBottom();
     this.content = "";
   }
 

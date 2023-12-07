@@ -30,7 +30,7 @@ export class MainNavService {
   atTabRoot$ = new BehaviorSubject<boolean|undefined>(undefined);
   fabMode$ = new BehaviorSubject<FabMode|undefined>(undefined);
   routerSub?: Subscription;
-  
+
 
   // lifecycle hooks
   // --------------------------------------------
@@ -65,17 +65,19 @@ export class MainNavService {
   }
 
   scrollToBottom(smooth: boolean = false) {
-    window.scrollTo({
-      top: document.body.scrollHeight, 
-      left: 0, 
-      behavior: smooth ? "smooth" : "instant"
-    });
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        left: 0,
+        behavior: smooth ? "smooth" : "instant"
+      });
+    }, 0);
   }
 
   scrollToTop(smooth: boolean = false) {
     window.scrollTo({
-      top: 0, 
-      left: 0, 
+      top: 0,
+      left: 0,
       behavior: smooth ? "smooth" : "instant"
     });
   }
@@ -91,7 +93,7 @@ export class MainNavService {
     this.atTabRoot$.next(
       ["/ideas", "/search", "/messages", "/notifications"].includes(url)
     );
-  } 
+  }
 
   updateTab(url: string) {
     if (url.startsWith("/ideas")) {
@@ -203,5 +205,5 @@ export class MainNavService {
     this.isFabHidden = false;
     this.isFabDisabled = false;
   }
-  
+
 }
