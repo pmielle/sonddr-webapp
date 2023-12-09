@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Discussion, Message, User, placeholder_id, Change } from 'sonddr-shared';
+import { Discussion, Message, User, Change } from 'sonddr-shared';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
+import { RealTimeService } from 'src/app/services/real-time.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { ChatRoom } from 'src/app/types/chat-room';
 
@@ -23,6 +24,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   mainNav = inject(MainNavService);
+  realTime = inject(RealTimeService);
 
   // attributes
   // --------------------------------------------
@@ -41,7 +43,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
       await this.api.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
-      this.chatRoom = this.api.getChatRoom(id);
+      this.chatRoom = await this.realTime.getChatRoom(id);
       this.chatRoomSub = this.chatRoom.listen().subscribe(
         (payload) => this.onChatRoomUpdate(payload)
       );

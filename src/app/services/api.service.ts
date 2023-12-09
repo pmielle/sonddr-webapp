@@ -3,7 +3,6 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, lastValueFrom } from 'rxjs';
 import { Change, Cheer, Comment, Discussion, Goal, Idea, Message, Notification, PostResponse, User, makeCheerId, makeVoteId } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
-import { ChatRoom } from '../types/chat-room';
 
 
 @Injectable({
@@ -20,9 +19,9 @@ export class ApiService {
   // attributes
   // --------------------------------------------
   private apiAuthority = "0.0.0.0:3000";
-  private apiWsUrl = `ws://${this.apiAuthority}`;
   private apiHttpUrl = `http://${this.apiAuthority}`;
   private goals?: Goal[];
+  apiWsUrl = `ws://${this.apiAuthority}`;
 
 
   // lifecycle hooks
@@ -159,12 +158,6 @@ export class ApiService {
 
   getNotifications(): Observable<Notification[]|Change<Notification>> {
     return this._getAndWatch<Notification>("notifications");
-  }
-
-  getChatRoom(discussionId: string): ChatRoom {
-    const ws = new WebSocket(`${this.apiWsUrl}/messages`);  // TODO: get websocket to that discussion id
-    return new ChatRoom(ws);
-
   }
 
   // private methods
