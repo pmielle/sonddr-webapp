@@ -27,7 +27,7 @@ export class WebsocketService {
   // public methods
   // --------------------------------------------
   async getChatRoom(discussionId: string): Promise<ChatRoom> {
-    const token = await this.auth.keycloak.getToken();
+    const token = await this.auth.getToken();
     const ws = new WebSocket(`${this.url}/messages?discussionId=${discussionId}&token=${token}`);
     return new ChatRoom(ws);
   }

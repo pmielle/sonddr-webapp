@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AuthService } from './auth.service';
-import { Change, Discussion, Notification, isChange } from 'sonddr-shared';
+import { Change, Discussion, Notification, User, isChange } from 'sonddr-shared';
 import { Subscription } from 'rxjs';
 import { SseService } from './sse.service';
 
@@ -26,21 +26,27 @@ export class UserDataService {
   // lifecycle hooks
   // --------------------------------------------
   constructor() {
-    this.auth.user$.subscribe((user) => {
-      this.discussionsSub?.unsubscribe();
-      this.notificationsSub?.unsubscribe();
-      if (! user) {
-        this.reset();
-        return;
-      }
-      this.discussionsSub = this.sse.getDiscussions().subscribe((payload) => this.onDiscussionsUpdate(payload));
-      this.notificationsSub = this.sse.getNotifications().subscribe((payload) => this.onNotificationsUpdate(payload));
-    });
+    this.auth.user$.subscribe(user => this.onUserUpdate(user));
   }
 
   // methods
   // --------------------------------------------
-  onDiscussionsUpdate(payload: Discussion[]|Change<Discussion>) {
+  async onUserUpdate(user: User | undefined) {
+    this.discussionsSub?.unsubscribe();
+    this.notificationsSub?.unsubscribe();
+    if (!user) {
+      this.reset();
+      return;
+    }
+    this.discussionsSub = (await this.sse.getDiscussions()).subscribe(
+      payload => this.onDiscussionsUpdate(payload)
+    );
+    this.notificationsSub = (await this.sse.getNotifications()).subscribe(
+      payload => this.onNotificationsUpdate(payload)
+    );
+  }
+
+  onDiscussionsUpdate(payload: Discussion[] | Change<Discussion>) {
     if (isChange(payload)) {
       const change = payload as Change<Discussion>;
       switch (change.type) {
@@ -65,7 +71,7 @@ export class UserDataService {
     }
   }
 
-  onNotificationsUpdate(payload: Notification[]|Change<Notification>) {
+  onNotificationsUpdate(payload: Notification[] | Change<Notification>) {
     if (isChange(payload)) {
       const change = payload as Change<Notification>;
       switch (change.type) {
@@ -93,18 +99,18 @@ export class UserDataService {
   findNotification(id: string): [Notification[], number] {
     let index: number;
     index = this.oldNotifications.findIndex(d => d.id === id);
-    if (index !== -1) { return [ this.oldNotifications, index ]; }
+    if (index !== -1) { return [this.oldNotifications, index]; }
     index = this.newNotifications.findIndex(d => d.id === id);
-    if (index !== -1) { return [ this.newNotifications, index ]; }
+    if (index !== -1) { return [this.newNotifications, index]; }
     throw new Error(`Failed to find notification ${id}`);
   }
 
   findDiscussion(id: string): [Discussion[], number] {
     let index: number;
     index = this.olderDiscussions.findIndex(d => d.id === id);
-    if (index !== -1) { return [ this.olderDiscussions, index ]; }
+    if (index !== -1) { return [this.olderDiscussions, index]; }
     index = this.activeDiscussions.findIndex(d => d.id === id);
-    if (index !== -1) { return [ this.activeDiscussions, index ]; }
+    if (index !== -1) { return [this.activeDiscussions, index]; }
     throw new Error(`Failed to find discussion ${id}`);
   }
 
