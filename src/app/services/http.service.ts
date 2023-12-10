@@ -1,15 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
-import { Change, Cheer, Comment, Discussion, Goal, Idea, Message, Notification, PostResponse, User, makeCheerId, makeVoteId } from 'sonddr-shared';
+import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
-
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
-
+export class HttpService {
 
   // dependencies
   // --------------------------------------------
@@ -18,23 +16,15 @@ export class ApiService {
 
   // attributes
   // --------------------------------------------
-  private apiAuthority = "0.0.0.0:3000";
-  private apiHttpUrl = `http://${this.apiAuthority}`;
+  private url = "http://0.0.0.0:3000";
   private goals?: Goal[];
-  apiWsUrl = `ws://${this.apiAuthority}`;
-
 
   // lifecycle hooks
   // --------------------------------------------
   constructor() { }
 
-
   // public methods
   // --------------------------------------------
-  isChange(obj: any): boolean {
-    return 'docId' in obj && 'type' in obj;
-  }
-
   async deleteVote(commentId: string, userId: string) {
     const id = makeVoteId(commentId, userId);
     return this._delete(`votes/${id}`);
@@ -152,59 +142,29 @@ export class ApiService {
     return this._get<Discussion>(`discussions/${id}`);
   }
 
-  getDiscussions(): Observable<Discussion[]|Change<Discussion>> {
-    return this._getAndWatch<Discussion>("discussions");
-  }
-
-  getNotifications(): Observable<Notification[]|Change<Notification>> {
-    return this._getAndWatch<Notification>("notifications");
-  }
-
   // private methods
   // --------------------------------------------
-
-  private _getAndWatch<T>(path: string): Observable<T[]|Change<T>> {
-    const source = new EventSource(`${this.apiHttpUrl}/${path}`);
-    return new Observable(subscriber => {
-      source.onmessage = (message: MessageEvent<string>) => {
-        const payload = JSON.parse(message.data, (key, value) => {
-          if (/[Dd]ate$/.test(key)) {
-            value = new Date(value);
-          }
-          return value;
-        });
-        // each message can be either a T[] (initial value)
-        //     or a Change<T> if db has been updated
-        subscriber.next(payload as T[]|Change<T>);
-      };
-      source.onerror = (err) => subscriber.error(err);
-      return () => {
-        source.close();
-      }
-    });
-  }
-
   private async _get<T>(path: string): Promise<T> {
-    let data = await lastValueFrom(this.db.get<T>(`${this.apiHttpUrl}/${path}`));
+    let data = await lastValueFrom(this.db.get<T>(`${this.url}/${path}`));
     this._convertApiDataToData(data);
     return data;
   }
 
   private async _post(path: string, payload: object): Promise<string> {
-    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.apiHttpUrl}/${path}`, payload));
+    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.url}/${path}`, payload));
     return response.insertedId;
   }
 
-  private async _patch(path: string, payload: object): Promise<void> {
-    return lastValueFrom(this.db.patch<void>(`${this.apiHttpUrl}/${path}`, payload));
-  }
-
   private async _delete(path: string): Promise<void> {
-    return lastValueFrom(this.db.delete<void>(`${this.apiHttpUrl}/${path}`));
+    return lastValueFrom(this.db.delete<void>(`${this.url}/${path}`));
   }
 
   private async _put(path: string, payload: object): Promise<void> {
-    await lastValueFrom(this.db.put(`${this.apiHttpUrl}/${path}`, payload));
+    await lastValueFrom(this.db.put(`${this.url}/${path}`, payload));
+  }
+
+  private async _patch(path: string, payload: object): Promise<void> {
+    return lastValueFrom(this.db.patch<void>(`${this.url}/${path}`, payload));
   }
 
   private _convertApiDataToData(apiData: any): any {

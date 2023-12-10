@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class SearchViewComponent implements AfterViewInit {
   // dependencies
   // --------------------------------------------
   auth = inject(AuthService);
-  api = inject(ApiService);
+  http = inject(HttpService);
 
   // attributes
   // --------------------------------------------
@@ -39,11 +39,11 @@ export class SearchViewComponent implements AfterViewInit {
 
   search() {
     this.input?.nativeElement.blur();
-    if (!this.searchString) { 
+    if (!this.searchString) {
       this.clearSearch();
       return;
     }
-    this.api.searchIdeas(this.searchString).then(i => this.ideas = i);
+    this.http.searchIdeas(this.searchString).then(i => this.ideas = i);
   }
 
   clearSearch() {

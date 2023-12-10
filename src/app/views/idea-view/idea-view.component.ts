@@ -1,10 +1,9 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription, combineLatest, filter } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Comment, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -22,12 +21,12 @@ export class IdeaViewComponent implements OnDestroy {
   // dependencies
   // --------------------------------------------
   route = inject(ActivatedRoute);
-  api = inject(ApiService);
+  http = inject(HttpService);
   time = inject(TimeService);
   screen = inject(ScreenSizeService);
   mainNav = inject(MainNavService);
   auth = inject(AuthService);
-  
+
   // attributes
   // --------------------------------------------
   routeSub?: Subscription;
@@ -41,11 +40,11 @@ export class IdeaViewComponent implements OnDestroy {
     this.routeSub = this.route.paramMap.subscribe(map => {
       const id = map.get("id");
       if (!id) { throw new Error("id not found in url params"); }
-      this.api.getIdea(id).then(i => {
+      this.http.getIdea(id).then(i => {
         this.idea = i;
         this.setHasCheered(i.userHasCheered);
       });
-      this.api.getComments("recent", id, undefined).then(c => this.comments = c);
+      this.http.getComments("recent", id, undefined).then(c => this.comments = c);
     });
     this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
       this.onFabClick();
@@ -62,19 +61,19 @@ export class IdeaViewComponent implements OnDestroy {
   upvoteComment(commentId: string) {
     const user = this.auth.user$.getValue();
     if (!user) { throw new Error("cannot upvote if user is undefined"); }
-    this.api.upvoteComment(commentId, user.id);
+    this.http.upvoteComment(commentId, user.id);
   }
 
   downvoteComment(commentId: string) {
     const user = this.auth.user$.getValue();
     if (!user) { throw new Error("cannot downvote if user is undefined"); }
-    this.api.downvoteComment(commentId, user.id);
+    this.http.downvoteComment(commentId, user.id);
   }
 
   deleteCommentVote(commentId: string) {
     const user = this.auth.user$.getValue();
     if (!user) { throw new Error("cannot downvote if user is undefined"); }
-    this.api.deleteVote(commentId, user.id);
+    this.http.deleteVote(commentId, user.id);
   }
 
   onFabClick() {
@@ -82,7 +81,7 @@ export class IdeaViewComponent implements OnDestroy {
     if (this.idea.userHasCheered) {
       this.setHasCheered(false);
       this.deleteCheer();
-    } else {  
+    } else {
       this.setHasCheered(true);
       this.cheer();
     }
@@ -103,14 +102,14 @@ export class IdeaViewComponent implements OnDestroy {
     const user = this.auth.user$.getValue();
     if (!this.idea) { throw new Error("cannot cheer if idea is undefined"); }
     if (!user) { throw new Error("cannot cheer if user is undefined"); }
-    return this.api.cheer(this.idea.id, user.id);
+    return this.http.cheer(this.idea.id, user.id);
   }
 
   async deleteCheer() {
     const user = this.auth.user$.getValue();
     if (!this.idea) { throw new Error("cannot delete cheer if idea is undefined"); }
     if (!user) { throw new Error("cannot delete cheer if user is undefined"); }
-    return this.api.deleteCheer(this.idea.id, user.id);
+    return this.http.deleteCheer(this.idea.id, user.id);
   }
 
   postComment(body: string) {
@@ -120,8 +119,8 @@ export class IdeaViewComponent implements OnDestroy {
     const newComments = [...this.comments];  // otherwise same reference, and @Input is not updated
     newComments.unshift(placeholderComment);
     this.comments = newComments;
-    this.api.postComment(this.idea.id, body).then(async insertedId => {
-      const comment = await this.api.getComment(insertedId); 
+    this.http.postComment(this.idea.id, body).then(async insertedId => {
+      const comment = await this.http.getComment(insertedId);
       this.replacePlaceholderComment(comment);
     });
   }
@@ -131,7 +130,7 @@ export class IdeaViewComponent implements OnDestroy {
     if (!user) { throw new Error("Cannot post comment if user is not logged in"); }
     return {
       id: placeholderId,
-      ideaId: ideaId, 
+      ideaId: ideaId,
       content: body,
       author: user,
       rating: 0,
@@ -152,7 +151,7 @@ export class IdeaViewComponent implements OnDestroy {
     if (!this.idea) {
       throw new Error("this.idea should be defined at this point");
     }
-    this.api.getComments(sortBy, this.idea.id, undefined).then(c => this.comments = c);
+    this.http.getComments(sortBy, this.idea.id, undefined).then(c => this.comments = c);
   }
 
 }

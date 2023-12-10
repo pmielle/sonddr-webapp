@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
-import { Change, Discussion, Notification } from 'sonddr-shared';
+import { Change, Discussion, Notification, isChange } from 'sonddr-shared';
 import { Subscription } from 'rxjs';
+import { SseService } from './sse.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class UserDataService {
 
   // dependencies
   // --------------------------------------------
-  api = inject(ApiService);
+  sse = inject(SseService);
   auth = inject(AuthService);
 
   // attributes
@@ -33,15 +33,15 @@ export class UserDataService {
         this.reset();
         return;
       }
-      this.discussionsSub = this.api.getDiscussions().subscribe((payload) => this.onDiscussionsUpdate(payload));
-      this.notificationsSub = this.api.getNotifications().subscribe((payload) => this.onNotificationsUpdate(payload));
+      this.discussionsSub = this.sse.getDiscussions().subscribe((payload) => this.onDiscussionsUpdate(payload));
+      this.notificationsSub = this.sse.getNotifications().subscribe((payload) => this.onNotificationsUpdate(payload));
     });
   }
 
   // methods
   // --------------------------------------------
   onDiscussionsUpdate(payload: Discussion[]|Change<Discussion>) {
-    if (this.api.isChange(payload)) {
+    if (isChange(payload)) {
       const change = payload as Change<Discussion>;
       switch (change.type) {
         case "insert": {
@@ -66,7 +66,7 @@ export class UserDataService {
   }
 
   onNotificationsUpdate(payload: Notification[]|Change<Notification>) {
-    if (this.api.isChange(payload)) {
+    if (isChange(payload)) {
       const change = payload as Change<Notification>;
       switch (change.type) {
         case "insert": {

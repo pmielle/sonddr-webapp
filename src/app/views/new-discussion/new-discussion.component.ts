@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, inj
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'sonddr-shared';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
@@ -18,7 +18,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   auth = inject(AuthService);
   screen = inject(ScreenSizeService);
   route = inject(ActivatedRoute);
-  api = inject(ApiService);
+  http = inject(HttpService);
   router = inject(Router);
 
   // attributes
@@ -37,13 +37,13 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
     this.routeSub = this.route.queryParamMap.subscribe(async map => {
       const id = map.get("preselected");
       if (id) {
-        const user = await this.api.getUser(id);
+        const user = await this.http.getUser(id);
         this.selectedUser = user;
         this.messageField?.nativeElement.focus();
       }
     });
   }
-  
+
   ngAfterViewInit(): void {
     this.toField?.nativeElement.focus();
   }
@@ -62,7 +62,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
     if (!this.formIsValid()) {
       throw new Error("submit() should not be callable when form is not valid");
     }
-    const insertedId = await this.api.createNewDiscussion(this.selectedUser!.id, this.content);
+    const insertedId = await this.http.createNewDiscussion(this.selectedUser!.id, this.content);
     this.router.navigateByUrl(`/messages/discussion/${insertedId}`, {replaceUrl: true});
   }
 
@@ -81,7 +81,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   onInputKeyup(e: KeyboardEvent) {
     if (e.code === "Enter") {
       this.search();
-    // search if at least 3 characters 
+    // search if at least 3 characters
     // or if a search has been forced already using 'Enter'
     } else if (this.searchString.length > 2 || this.searchResults?.length) {
       this.search();
@@ -91,15 +91,15 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   async search() {
-    if (!this.searchString) { 
-      this.clearSearch(); 
+    if (!this.searchString) {
+      this.clearSearch();
       return;
     }
-    this.searchResults = await this.api.searchUsers(this.searchString);
+    this.searchResults = await this.http.searchUsers(this.searchString);
   }
 
   clearSearch() {
     this.searchResults = undefined;
   }
-  
+
 }

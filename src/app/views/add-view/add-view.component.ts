@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, from } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
@@ -17,12 +17,12 @@ export class AddViewComponent {
   // dependencies
   // --------------------------------------------
   route = inject(ActivatedRoute);
-  api = inject(ApiService);
+  http = inject(HttpService);
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   mainNav = inject(MainNavService);
   router = inject(Router);
-  
+
   // attributes
   // --------------------------------------------
   mainSub?: Subscription;
@@ -36,12 +36,12 @@ export class AddViewComponent {
 
   // lifecycle hooks
   // --------------------------------------------
-  ngOnInit(): void {  
-    
+  ngOnInit(): void {
+
     // get data
     this.mainSub = combineLatest([
       this.route.queryParamMap,
-      from(this.api.getGoals()),
+      from(this.http.getGoals()),
     ]).subscribe(([map, goals]) => {
 
       // get all goals
@@ -87,7 +87,7 @@ export class AddViewComponent {
 
   async submit(): Promise<void> {
     if (this.formIsValid()) {
-      const id = await this.api.postIdea(this.title, this.content, this.selectedGoals.map(g => g.id));
+      const id = await this.http.postIdea(this.title, this.content, this.selectedGoals.map(g => g.id));
       this.router.navigateByUrl(`/ideas/idea/${id}`, {replaceUrl: true});
     } else {
       throw new Error("submit should not be callable if one input is empty");

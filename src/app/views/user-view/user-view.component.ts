@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { User, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
@@ -18,12 +18,12 @@ export class UserViewComponent {
   // dependencies
   // --------------------------------------------
   route = inject(ActivatedRoute);
-  api = inject(ApiService);
+  http = inject(HttpService);
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   time = inject(TimeService);
   router = inject(Router);
-  
+
   // attributes
   // --------------------------------------------
   routeSub?: Subscription;
@@ -40,8 +40,8 @@ export class UserViewComponent {
           this.router.navigateByUrl("/ideas/profile", {replaceUrl: true});
           return;
         }
-        this.api.getUser(id).then(u => this.user = u);
-        this.api.getIdeas("recent", undefined, id).then(i => this.ideas = i);
+        this.http.getUser(id).then(u => this.user = u);
+        this.http.getIdeas("recent", undefined, id).then(i => this.ideas = i);
       }
     );
   }
@@ -56,7 +56,7 @@ export class UserViewComponent {
     if (!this.user) {
       throw new Error("this.user should be defined at this point");
     }
-    this.api.getIdeas(sortBy, undefined, this.user.id).then(i => this.ideas = i);
+    this.http.getIdeas(sortBy, undefined, this.user.id).then(i => this.ideas = i);
   }
 
 }

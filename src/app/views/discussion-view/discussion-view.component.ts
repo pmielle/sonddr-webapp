@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Discussion, Message, User, Change } from 'sonddr-shared';
-import { ApiService } from 'src/app/services/api.service';
+import { Discussion, Message, User, Change, isChange } from 'sonddr-shared';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
-import { RealTimeService } from 'src/app/services/real-time.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { ChatRoom } from 'src/app/types/chat-room';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 
 @Component({
@@ -20,11 +20,11 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // dependencies
   // --------------------------------------------
   route = inject(ActivatedRoute);
-  api = inject(ApiService);
+  http = inject(HttpService);
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   mainNav = inject(MainNavService);
-  realTime = inject(RealTimeService);
+  websocket = inject(WebsocketService);
 
   // attributes
   // --------------------------------------------
@@ -42,8 +42,8 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.paramMap.subscribe(async map => {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
-      await this.api.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
-      this.chatRoom = await this.realTime.getChatRoom(id);
+      await this.http.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
+      this.chatRoom = await this.websocket.getChatRoom(id);
       this.chatRoomSub = this.chatRoom.listen().subscribe(
         (payload) => this.onChatRoomUpdate(payload)
       );
@@ -59,7 +59,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // methods
   // --------------------------------------------
   onChatRoomUpdate(payload: Message[]|Change<Message>) {
-    if (this.api.isChange(payload)) {
+    if (isChange(payload)) {
       const change = payload as Change<Message>;
       switch (change.type) {
         case "insert": {

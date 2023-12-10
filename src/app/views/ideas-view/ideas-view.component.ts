@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Goal, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
-import { ApiService } from 'src/app/services/api.service';
+import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
@@ -14,11 +14,11 @@ export class IdeasViewComponent implements OnInit {
 
   // dependencies
   // --------------------------------------------
-  api = inject(ApiService);
+  http = inject(HttpService);
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
 
-  
+
   // attributes
   // --------------------------------------------
   goals?: Goal[];
@@ -28,14 +28,14 @@ export class IdeasViewComponent implements OnInit {
   // lifecycle hooks
   // --------------------------------------------
   ngOnInit() {
-    this.api.getGoals().then(g => this.goals = g);
-    this.api.getIdeas("recent").then(i => this.ideas = i);
+    this.http.getGoals().then(g => this.goals = g);
+    this.http.getIdeas("recent").then(i => this.ideas = i);
   }
 
   // methods
   // --------------------------------------------
   onSortByChange(sortBy: SortBy) {
-    this.api.getIdeas(sortBy).then(i => this.ideas = i);
+    this.http.getIdeas(sortBy).then(i => this.ideas = i);
   }
 
 }
