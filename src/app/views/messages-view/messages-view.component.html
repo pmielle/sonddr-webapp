@@ -18,7 +18,7 @@
   </div>
 
   <div id="old-discussions" class="discussions">
-    <p class="n-unread" *ngIf="userData.activeDiscussions.length > 0">Earlier</p>
+    <p class="n-unread" *ngIf="userData.activeDiscussions.length > 0 && userData.olderDiscussions.length > 0">Earlier</p>
     <app-discussion *ngFor="let d of userData.olderDiscussions" [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
   </div>
 

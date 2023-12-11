@@ -39,7 +39,6 @@ export class AuthService {
     let user: User;
     try {
       user = await this.http.getUser(id);
-      this.user$.next(user);
     } catch (err) {
       if (err instanceof HttpErrorResponse && err.status === 404) {
         await this.http.createUser(id, name);
