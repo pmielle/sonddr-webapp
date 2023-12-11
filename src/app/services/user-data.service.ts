@@ -16,6 +16,7 @@ export class UserDataService {
 
   // attributes
   // --------------------------------------------
+  userId?: string;
   discussionsSub?: Subscription;
   notificationsSub?: Subscription;
   oldNotifications: Notification[] = [];
@@ -38,6 +39,7 @@ export class UserDataService {
       this.reset();
       return;
     }
+    this.userId = user.id;
     this.discussionsSub = (await this.sse.getDiscussions()).subscribe(
       payload => this.onDiscussionsUpdate(payload)
     );
@@ -51,7 +53,10 @@ export class UserDataService {
       const change = payload as Change<Discussion>;
       switch (change.type) {
         case "insert": {
-          this.activeDiscussions.unshift(change.payload!);
+          const ref = change.payload!.lastMessage?.author.id === this.userId
+              ? this.olderDiscussions
+              : this.activeDiscussions;
+          ref.unshift(change.payload!);
           break;
         }
         case "delete": {
@@ -60,9 +65,12 @@ export class UserDataService {
           break;
         }
         case "update": {
-          const [ref, index] = this.findDiscussion(change.docId);
-          ref.splice(index, 1);
-          this.activeDiscussions.unshift(change.payload!);
+          const [sourceRef, index] = this.findDiscussion(change.docId);
+          sourceRef.splice(index, 1);
+          const targetRef = change.payload!.lastMessage.author.id === this.userId
+              ? this.olderDiscussions
+              : this.activeDiscussions;
+          targetRef.unshift(change.payload!);
           break;
         }
       }
@@ -115,6 +123,7 @@ export class UserDataService {
   }
 
   reset() {
+    this.userId = undefined;
     this.newNotifications = [];
     this.newNotifications = [];
     this.olderDiscussions = [];
