@@ -33,6 +33,7 @@ export class AddViewComponent {
   coverPreview?: string;
   title = "";
   content = "";
+  cover?: File;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -87,15 +88,20 @@ export class AddViewComponent {
 
   async submit(): Promise<void> {
     if (this.formIsValid()) {
-      const id = await this.http.postIdea(this.title, this.content, this.selectedGoals.map(g => g.id));
+      const id = await this.http.postIdea(
+        this.title,
+        this.content,
+        this.selectedGoals.map(g => g.id),
+        this.cover
+      );
       this.router.navigateByUrl(`/ideas/idea/${id}`, {replaceUrl: true});
     } else {
       throw new Error("submit should not be callable if one input is empty");
     }
   }
 
-  uploadCover() {
-    console.log("upload cover...");
+  uploadCover(file: File) {
+    this.cover = file;
   }
 
   refreshFabDispaly() {

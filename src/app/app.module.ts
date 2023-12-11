@@ -44,6 +44,7 @@ import { MessageComponent } from './components/message/message.component';
 import { NewDiscussionComponent } from './views/new-discussion/new-discussion.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { RedDotComponent } from './components/red-dot/red-dot.component';
+import { FilePickerComponent } from './components/file-picker/file-picker.component';
 
 
 @NgModule({
@@ -82,6 +83,7 @@ import { RedDotComponent } from './components/red-dot/red-dot.component';
     MessageComponent,
     NewDiscussionComponent,
     RedDotComponent,
+    FilePickerComponent,
   ],
   imports: [
     BrowserModule,

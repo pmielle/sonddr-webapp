@@ -5,48 +5,40 @@
     </app-top-bar>
 
     <div id="cover">
-        <div 
-            id="cover-background" 
+        <div
+            id="cover-background"
             class="bg cover"
-            [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"            
+            [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"
         ></div>
-        
-        <div 
-            id="upload" 
-            class="flex column" 
-            mat-ripple
-            [matRippleCentered]="true"
-            [matRippleUnbounded]="true"
-            (click)="uploadCover()"
-        >
-            <mat-icon>cloud_upload</mat-icon>
-            <span>Upload a cover</span>
+
+        <div id="upload">
+          <app-file-picker (upload)="uploadCover($event)"></app-file-picker>
         </div>
 
         <div id="goals">
-            <app-h-scroll 
+            <app-h-scroll
                 [hide-shadows]="true"
                 left-padding="calc(2 * var(--gutter) + 32px)"
             >
-                <app-chip 
-                    label="Add a goal" 
+                <app-chip
+                    label="Add a goal"
                     icon="add"
-                    color="var(--background-color)" 
+                    color="var(--background-color)"
                     foreground-color="var(--grey)"
                     [mat-menu-trigger-for]="menu"
                 ></app-chip>
                 <mat-menu #menu="matMenu">
-                    <button 
-                        *ngFor="let g of selectableGoals" 
-                        mat-menu-item 
+                    <button
+                        *ngFor="let g of selectableGoals"
+                        mat-menu-item
                         (click)="selectGoal(g)"
                     >
                         {{ g.name }}
                     </button>
                 </mat-menu>
 
-                <app-goal-chip 
-                    *ngFor="let g of selectedGoals" 
+                <app-goal-chip
+                    *ngFor="let g of selectedGoals"
                     [goal]="g"
                 ></app-goal-chip>
             </app-h-scroll>
@@ -54,12 +46,12 @@
     </div>
 
     <!-- ... -->
-    
+
 
     <div id="form" class="flex column gap">
-        <input 
+        <input
             id="title"
-            type="text" 
+            type="text"
             placeholder="Choose a title"
             (keyup)="refreshFabDispaly()"
             [(ngModel)]="title"
@@ -67,7 +59,7 @@
 
         <div id="content-container">
             <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-            <textarea 
+            <textarea
                 id="content"
                 placeholder="Explain your idea"
                 (keyup)="refreshFabDispaly()"

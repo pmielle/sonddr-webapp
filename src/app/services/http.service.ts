@@ -83,8 +83,13 @@ export class HttpService {
     return this._get<User[]>(`users?regex=${nameRegex}`);
   }
 
-  async postIdea(title: string, content: string, goalIds: string[]): Promise<string> {
-    return this._post(`ideas`, {title: title, content: content, goalIds: goalIds});
+  async postIdea(title: string, content: string, goalIds: string[], cover?: File): Promise<string> {
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("goalIds", JSON.stringify(goalIds));
+    if (cover) { formData.append("cover", cover); }
+    return this._post(`ideas`, formData);  // multer needs a multipart/form-data
   }
 
   async createUser(id: string, name: string): Promise<void> {
