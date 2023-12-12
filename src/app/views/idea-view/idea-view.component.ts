@@ -58,6 +58,10 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  chooseCover() {
+    return this.idea?.cover ? `url(${this.http.getImageUrl(this.idea.cover)}` : "";
+  }
+
   upvoteComment(commentId: string) {
     const user = this.auth.user$.getValue();
     if (!user) { throw new Error("cannot upvote if user is undefined"); }

@@ -1,5 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
+import { HttpService } from 'src/app/services/http.service';
 import { NumberService } from 'src/app/services/number.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
@@ -16,12 +17,14 @@ export class IdeaCardComponent {
   number = inject(NumberService);
   time = inject(TimeService);
   screen = inject(ScreenSizeService);
+  http = inject(HttpService);
+
 
   // i/o
   // --------------------------------------------
   @Input("idea") idea?: Idea;
 
-  
+
   // attributes
   // --------------------------------------------
   // ...
@@ -29,7 +32,8 @@ export class IdeaCardComponent {
 
   // methods
   // --------------------------------------------
-  // ...
-
+  chooseCover() {
+    return this.idea?.cover ? `url(${this.http.getImageUrl(this.idea.cover)}` : "";
+  }
 
 }

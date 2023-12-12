@@ -25,6 +25,10 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  getImageUrl(filename: string): string {
+    return `${this.url}/uploads/${filename}`;
+  }
+
   async deleteVote(commentId: string, userId: string) {
     const id = makeVoteId(commentId, userId);
     return this._delete(`votes/${id}`);

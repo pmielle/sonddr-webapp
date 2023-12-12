@@ -12,6 +12,7 @@
             left: 0;
             height: calc(100% + var(--top-bar-height));
             width: 100%;
+            background-color: var(--grey);
         }
 
         #goals {
@@ -27,19 +28,19 @@
         #header {
             width: 100%;
             gap: var(--spacing);
-    
+
             #title {
                 margin-left: calc(32px + 2 * var(--gutter));
                 margin-right: var(--gutter);
             }
-    
+
             #author {
                 position: relative;
                 margin-left: calc(32px + 2 * var(--gutter));
-    
+
                 #author-name { font-weight: bold; }
                 #date { opacity: 0.5; }
-    
+
                 app-profile-picture {
                     position: absolute;
                     top: 0;
