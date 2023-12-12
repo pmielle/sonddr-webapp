@@ -1,31 +1,30 @@
 <div id="container">
-    
-    <app-top-bar 
-        [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
-        [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'"
-    >
-        <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">All ideas</h1>
-        <div class="spacer"></div>
-        <app-profile-picture 
-            class="pointer"
-            [user]="auth.user$|async" 
-            [routerLink]="['/', 'ideas', 'profile']"
-        ></app-profile-picture>
-    </app-top-bar>
 
-    <div id="header">
-        <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">All Ideas</h1>
-    
-        <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
-    
-        <app-h-scroll>
-            <app-goal-chip *ngFor="let g of goals" [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
-        </app-h-scroll>
-    </div>
+  <app-top-bar [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
+    [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
+    @if (!(screen.isMobile$|async)) {
+    <h1 class="no-margin-bottom">All ideas</h1>
+    }
+    <div class="spacer"></div>
+    <app-profile-picture class="pointer" [user]="auth.user$|async"
+      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+  </app-top-bar>
 
-    <app-idea-list 
-        [ideas]="ideas"
-        (sort-by-change)="onSortByChange($event)"
-    ></app-idea-list>
+  <div id="header">
+    @if (screen.isMobile$ | async) {
+    <h1 id="title" class="gutter">All Ideas</h1>
+    }
+
+    <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non
+      veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
+
+    <app-h-scroll>
+      @for (g of goals; track g.id) {
+      <app-goal-chip [goal]="g" [routerLink]="['goal', g.id]"></app-goal-chip>
+      }
+    </app-h-scroll>
+  </div>
+
+  <app-idea-list [ideas]="ideas" (sort-by-change)="onSortByChange($event)"></app-idea-list>
 
 </div>

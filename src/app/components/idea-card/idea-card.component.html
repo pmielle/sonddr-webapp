@@ -1,45 +1,34 @@
-<div *ngIf="idea" class="flex column" [class.mobile]="screen.isMobile$ | async">
-    <div
-        id="cover"
-        class="bg cover pointer"
-        [style.backgroundImage]="chooseCover()"
-        mat-ripple
-        [routerLink]="['/', 'ideas', 'idea', idea.id]"
-    >
-        <div id="goals" class="flex">
-            <app-goal-chip *ngFor="let g of idea.goals" [goal]="g" [no-label]="true" [clickable]="false"></app-goal-chip>
-        </div>
-        <div id="cheers" [style.opacity]="idea.supports > 0 ? 1 : .5">
-            <app-chip
-                [icon]="idea.supports > 0 ? 'favorite' : 'favorite_outline'"
-                [label]="number.compact(idea.supports)"
-                color="var(--background-color)"
-                foreground-color="var(--foreground-color)"
-                [clickable]="false"
-            ></app-chip>
-        </div>
+@if (idea) {
+
+<div class="flex column" [class.mobile]="screen.isMobile$ | async">
+
+  <div id="cover" class="bg cover pointer" [style.backgroundImage]="chooseCover()" mat-ripple
+    [routerLink]="['/', 'ideas', 'idea', idea.id]">
+    <div id="goals" class="flex">
+      @for (g of idea.goals; track g.id) {
+        <app-goal-chip [goal]="g" [no-label]="true" [clickable]="false"></app-goal-chip>
+      }
     </div>
-    <div id="bottom" class="flex column align-start gutter">
-        <h2
-            id="title"
-            class="no-margin-bottom pointer ellipsis multi-2"
-            [routerLink]="['/', 'ideas', 'idea', idea.id]"
-        >
-            {{ idea.title }}
-        </h2>
-        <div id="author">
-            <app-profile-picture
-                [user]="idea.author"
-                class="pointer"
-                [routerLink]="['/', 'ideas', 'user', idea.author.id]"
-            ></app-profile-picture>
-            <p class="no-margin-bottom">
-                <span
-                    class="pointer"
-                    [routerLink]="['/', 'ideas', 'user', idea.author.id]"
-                >
-                {{ idea.author.name }}</span> - {{ time.makeAgo(idea.date) }}
-            </p>
-        </div>
+    <div id="cheers" [style.opacity]="idea.supports > 0 ? 1 : .5">
+      <app-chip [icon]="idea.supports > 0 ? 'favorite' : 'favorite_outline'" [label]="number.compact(idea.supports)"
+        color="var(--background-color)" foreground-color="var(--foreground-color)" [clickable]="false"></app-chip>
     </div>
+  </div>
+
+  <div id="bottom" class="flex column align-start gutter">
+    <h2 id="title" class="no-margin-bottom pointer ellipsis multi-2" [routerLink]="['/', 'ideas', 'idea', idea.id]">
+      {{ idea.title }}
+    </h2>
+    <div id="author">
+      <app-profile-picture [user]="idea.author" class="pointer"
+        [routerLink]="['/', 'ideas', 'user', idea.author.id]"></app-profile-picture>
+      <p class="no-margin-bottom">
+        <span class="pointer" [routerLink]="['/', 'ideas', 'user', idea.author.id]">
+          {{ idea.author.name }}</span> - {{ time.makeAgo(idea.date) }}
+      </p>
+    </div>
+  </div>
+
 </div>
+
+}

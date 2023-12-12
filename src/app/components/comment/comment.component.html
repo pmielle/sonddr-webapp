@@ -1,51 +1,30 @@
-<div id="container" *ngIf="comment">
-    <div id="author">
-        <app-profile-picture 
-            [user]="comment.author"
-            class="pointer"
-            [routerLink]="['/', 'ideas', 'user', comment.author.id]"
-        ></app-profile-picture>
-        <span 
-            id="author-name" 
-            class="pointer no-margin-bottom"
-            [routerLink]="['/', 'ideas', 'user', comment.author.id]"
-        >
-            {{ comment.author.name }}
-        </span>
-    </div>
+@if (comment) {
+<div id="container">
+  <div id="author">
+    <app-profile-picture [user]="comment.author" class="pointer"
+      [routerLink]="['/', 'ideas', 'user', comment.author.id]"></app-profile-picture>
+    <span id="author-name" class="pointer no-margin-bottom" [routerLink]="['/', 'ideas', 'user', comment.author.id]">
+      {{ comment.author.name }}
+    </span>
+  </div>
 
-    <p id="ago">{{ time.makeAgo(comment.date) }}</p>
+  <p id="ago">{{ time.makeAgo(comment.date) }}</p>
 
-    <div id="content">
-        <div id="rating" class="flex column">
-            <mat-icon 
-                id="upvote"
-                [class.active]="comment.userVote === 1"
-                mat-ripple 
-                [matRippleCentered]="true" 
-                [matRippleUnbounded]="true"
-                (click)="onUpvoteClick()"
-            >
-                keyboard_arrow_up
-            </mat-icon>
-            <p 
-                id="rating-value" 
-                class="no-margin-bottom"
-                [style.color]="chooseRatingColor()"
-            >
-                {{ comment.rating }}
-            </p>
-            <mat-icon 
-                id="downvote"
-                [class.active]="comment.userVote === -1"
-                mat-ripple 
-                [matRippleCentered]="true" 
-                [matRippleUnbounded]="true"
-                (click)="onDownvoteClick()"
-            >
-                keyboard_arrow_down
-            </mat-icon>
-        </div>
-        <p>{{ comment.content }}</p>
+  <div id="content">
+    <div id="rating" class="flex column">
+      <mat-icon id="upvote" [class.active]="comment.userVote === 1" mat-ripple [matRippleCentered]="true"
+        [matRippleUnbounded]="true" (click)="onUpvoteClick()">
+        keyboard_arrow_up
+      </mat-icon>
+      <p id="rating-value" class="no-margin-bottom" [style.color]="chooseRatingColor()">
+        {{ comment.rating }}
+      </p>
+      <mat-icon id="downvote" [class.active]="comment.userVote === -1" mat-ripple [matRippleCentered]="true"
+        [matRippleUnbounded]="true" (click)="onDownvoteClick()">
+        keyboard_arrow_down
+      </mat-icon>
     </div>
+    <p>{{ comment.content }}</p>
+  </div>
 </div>
+}

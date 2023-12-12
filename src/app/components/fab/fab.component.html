@@ -1,23 +1,12 @@
-<div 
-    id="container" 
-    *ngIf="(mainNav.fabMode$|async) as m" 
-    [ngClass]="{
+@if ((mainNav.fabMode$|async); as m) {
+<div id="container" [class]="{
         'mobile': screen.isMobile$|async,
         'hidden': (screen.isMobile$|async) && mainNav.isFabHidden,
         'disabled': mainNav.isFabDisabled
-    }"
->
-    <button 
-        mat-fab 
-        [style.backgroundColor]="m.color" 
-        (click)="m.action()"
-    >
-        <mat-icon>{{ m.icon }}</mat-icon>
-    </button>
-    <span 
-        id="label" 
-        [class.mobile]="screen.isMobile$|async"
-        [style.color]="m.color" 
-        [innerHTML]="m.label"
-    ></span>
+    }">
+  <button mat-fab [style.backgroundColor]="m.color" (click)="m.action()">
+    <mat-icon>{{ m.icon }}</mat-icon>
+  </button>
+  <span id="label" [class.mobile]="screen.isMobile$|async" [style.color]="m.color" [innerHTML]="m.label"></span>
 </div>
+}

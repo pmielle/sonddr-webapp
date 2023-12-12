@@ -1,51 +1,38 @@
 <div id="container">
-    
-    <app-top-bar 
-        left-item="back"
-        [background-color]="makeBackgroundColor()"
-        [title]="(screen.isMobile$ | async) ? undefined : goal?.name"
-    >
-        <div class="flex gap">
-            <mat-icon>{{ goal?.icon }}</mat-icon>
-            <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">{{ goal?.name }}</h1>
-        </div>
-        <div class="spacer"></div>
-        <app-profile-picture 
-            class="pointer"
-            [user]="auth.user$|async" 
-            [routerLink]="['/', 'ideas', 'profile']"
-        ></app-profile-picture>
-    </app-top-bar>
 
-    <div id="header">
-        <div 
-            id="background" 
-            [style.backgroundColor]="makeBackgroundColor()"
-        ></div>
-
-        <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter">{{ goal?.name }}</h1>
-    
-        <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
-    
-        <app-h-scroll [shadow-color]="makeBackgroundColor()">
-            <app-chip 
-                label="Learn more" 
-                color="var(--foreground-color)"
-                foreground-color="var(--background-color)"
-                icon="info_outline"
-            ></app-chip>
-            <app-goal-chip 
-                *ngFor="let g of otherGoals" 
-                [goal]="g" 
-                [routerLink]="['/', 'ideas', 'goal', g.id]"
-            ></app-goal-chip>
-        </app-h-scroll>
+  <app-top-bar left-item="back" [background-color]="makeBackgroundColor()"
+    [title]="(screen.isMobile$ | async) ? undefined : goal?.name">
+    <div class="flex gap">
+      <mat-icon>{{ goal?.icon }}</mat-icon>
+      @if (!(screen.isMobile$|async)) {
+      <h1 class="no-margin-bottom">{{ goal?.name }}</h1>
+      }
     </div>
+    <div class="spacer"></div>
+    <app-profile-picture class="pointer" [user]="auth.user$|async"
+      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+  </app-top-bar>
 
-    <app-idea-list 
-        [ideas]="ideas"
-        [stuck-background-color]="makeBackgroundColor()"
-        (sort-by-change)="onSortByChange($event)"
-    ></app-idea-list>
+  <div id="header">
+    <div id="background" [style.backgroundColor]="makeBackgroundColor()"></div>
+
+    @if (screen.isMobile$ | async) {
+    <h1 id="title" class="gutter">{{ goal?.name }}</h1>
+    }
+
+    <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non
+      veritatis quod sunt quia minus molestiae. Dolores non voluptatem...</p>
+
+    <app-h-scroll [shadow-color]="makeBackgroundColor()">
+      <app-chip label="Learn more" color="var(--foreground-color)" foreground-color="var(--background-color)"
+        icon="info_outline"></app-chip>
+      @for (g of otherGoals; track g.id) {
+      <app-goal-chip [goal]="g" [routerLink]="['/', 'ideas', 'goal', g.id]"></app-goal-chip>
+      }
+    </app-h-scroll>
+  </div>
+
+  <app-idea-list [ideas]="ideas" [stuck-background-color]="makeBackgroundColor()"
+    (sort-by-change)="onSortByChange($event)"></app-idea-list>
 
 </div>

@@ -1,25 +1,35 @@
 <div id="container">
 
   <app-top-bar [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
-    <h1 *ngIf="!(screen.isMobile$|async)" class="no-margin-bottom">Messages</h1>
+    @if (!(screen.isMobile$|async)) {
+    <h1 class="no-margin-bottom">Messages</h1>
+    }
     <div class="spacer"></div>
-    <app-profile-picture
-         class="pointer"
-         [user]="auth.user$|async"
-         [routerLink]="['/', 'ideas', 'profile']"
-         ></app-profile-picture>
+    <app-profile-picture class="pointer" [user]="auth.user$|async"
+      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
   </app-top-bar>
 
-  <h1 *ngIf="screen.isMobile$ | async" id="title" class="gutter no-margin-bottom">Messages</h1>
+  @if (screen.isMobile$ | async) {
+  <h1 id="title" class="gutter no-margin-bottom">Messages</h1>
+  }
 
-  <div id="new-discussions" class="discussions" *ngIf="userData.activeDiscussions.length > 0">
+  @if (userData.activeDiscussions.length > 0) {
+  <div id="new-discussions" class="discussions">
     <p class="n-unread">{{ userData.activeDiscussions.length }} unread <app-red-dot></app-red-dot></p>
-    <app-discussion *ngFor="let d of userData.activeDiscussions" [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    @for (d of userData.activeDiscussions; track d.id) {
+    <app-discussion [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    }
   </div>
+  }
 
   <div id="old-discussions" class="discussions">
-    <p class="n-unread" *ngIf="userData.activeDiscussions.length > 0 && userData.olderDiscussions.length > 0">Earlier</p>
-    <app-discussion *ngFor="let d of userData.olderDiscussions" [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    @if (userData.activeDiscussions.length > 0 && userData.olderDiscussions.length > 0) {
+    <p class="n-unread">Earlier
+    </p>
+    }
+    @for (d of userData.olderDiscussions; track d.id) {
+    <app-discussion [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    }
   </div>
 
 </div>

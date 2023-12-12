@@ -1,45 +1,34 @@
 <div appIntersection (isIntersecting)="this.stuck=!$event"></div>
-<div 
-    id="container" 
-    class="gutter frosted flex column justify-end" 
-    [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
-    [ngClass]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}"
-    [ngSwitch]="leftItem"
-    (click)="onClick()"
->
-    <div id="content" class="flex justify-start">
+<div id="container" class="gutter frosted flex column justify-end"
+  [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
+  [class]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}" (click)="onClick()">
 
-        <div *ngSwitchCase="'logo'"
-            id="logo" 
-            class="pointer left-item"
-            [class.mobile]="screen.isMobile$|async"
-            matRipple 
-            [matRippleCentered]="true" 
-            [matRippleUnbounded]="true" 
-            [matRippleRadius]="32"
-        >
-            <img src="assets/light-logo-without-text.png" alt="logo">
-        </div>
-    
-        <div 
-            *ngSwitchCase="'back'" 
-            class="left-item"
-            [class.mobile]="screen.isMobile$|async"
-            (click)="location.back()"
-        >
-            <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
-        </div>
+  <div id="content" class="flex justify-start">
 
-        <div 
-        *ngSwitchCase="'close'" 
-        class="left-item"
-        [class.mobile]="screen.isMobile$|async"
-        (click)="location.back()"
-    >
-        <button mat-icon-button><mat-icon>close</mat-icon></button>
+    @switch (leftItem) {
+
+    @case ('logo') {
+    <div id="logo" class="pointer left-item" [class.mobile]="screen.isMobile$|async" matRipple
+      [matRippleCentered]="true" [matRippleUnbounded]="true" [matRippleRadius]="32">
+      <img src="assets/light-logo-without-text.png" alt="logo">
     </div>
-    
-        <ng-content></ng-content>
+    }
 
+    @case ('back') {
+    <div class="left-item" [class.mobile]="screen.isMobile$|async" (click)="location.back()">
+      <button mat-icon-button><mat-icon>arrow_back</mat-icon></button>
     </div>
+    }
+
+    @case ('close') {
+    <div class="left-item" [class.mobile]="screen.isMobile$|async" (click)="location.back()">
+      <button mat-icon-button><mat-icon>close</mat-icon></button>
+    </div>
+    }
+
+    }
+
+    <ng-content></ng-content>
+
+  </div>
 </div>

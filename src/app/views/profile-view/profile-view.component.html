@@ -1,46 +1,36 @@
 <div id="container">
 
-    <app-top-bar left-item="close">
-        <h2 class="no-margin-bottom">My profile</h2>
-        <div class="spacer"></div>
-        <button mat-icon-button><mat-icon>settings</mat-icon></button>
-    </app-top-bar>
+  <app-top-bar left-item="close">
+    <h2 class="no-margin-bottom">My profile</h2>
+    <div class="spacer"></div>
+    <button mat-icon-button><mat-icon>settings</mat-icon></button>
+  </app-top-bar>
 
-    <div id="cover">
-        <div 
-            id="cover-background" 
-            class="bg cover"
-            [style.backgroundImage]="'url(assets/default-cover-picture.png)'"
-        ></div>
-        <div id="profile-picture">
-            <app-profile-picture [user]="auth.user$|async" [large]="true"></app-profile-picture>
-        </div>
+  <div id="cover">
+    <div id="cover-background" class="bg cover" [style.backgroundImage]="'url(assets/default-cover-picture.png)'"></div>
+    <div id="profile-picture">
+      <app-profile-picture [user]="auth.user$|async" [large]="true"></app-profile-picture>
     </div>
+  </div>
 
-    <div id="header" class="flex column">
-        <h1 id="name" class="no-margin-bottom gutter">{{ (auth.user$|async)?.name }}</h1>
-        <div id="since" class="gutter">
-            member since {{ time.getYear((auth.user$|async)?.date) }} 
-            - {{ ideas?.length }} idea{{ ideas && ideas.length > 1 ? 's' : '' }}
-        </div>
-        <app-h-scroll id="external-links" *ngIf="(auth.user$|async)?.externalLinks?.length">
-            <app-external-link 
-                *ngFor="let el of (auth.user$|async)?.externalLinks" 
-                [external-link]="el"
-            ></app-external-link>
-            <app-chip 
-                label="Add a link" 
-                icon="add" 
-                foreground-color="var(--background-color)" 
-                color="var(--foreground-color)"
-            ></app-chip>
-        </app-h-scroll>
-        <div id="bio" class="gutter">{{ (auth.user$|async)?.bio }}</div>
+  <div id="header" class="flex column">
+    <h1 id="name" class="no-margin-bottom gutter">{{ (auth.user$|async)?.name }}</h1>
+    <div id="since" class="gutter">
+      member since {{ time.getYear((auth.user$|async)?.date) }}
+      - {{ ideas?.length }} idea{{ ideas && ideas.length > 1 ? 's' : '' }}
     </div>
-        
-    <app-idea-list 
-        [ideas]="ideas"
-        (sort-by-change)="onSortByChange($event)"
-    ></app-idea-list>
+    @if ((auth.user$|async)?.externalLinks?.length) {
+      <app-h-scroll id="external-links">
+        @for (el of (auth.user$|async)?.externalLinks; track el) {
+        <app-external-link [external-link]="el"></app-external-link>
+        }
+        <app-chip label="Add a link" icon="add" foreground-color="var(--background-color)"
+          color="var(--foreground-color)"></app-chip>
+      </app-h-scroll>
+    }
+    <div id="bio" class="gutter">{{ (auth.user$|async)?.bio }}</div>
+  </div>
+
+  <app-idea-list [ideas]="ideas" (sort-by-change)="onSortByChange($event)"></app-idea-list>
 
 </div>

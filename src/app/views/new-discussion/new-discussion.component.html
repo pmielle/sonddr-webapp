@@ -1,74 +1,41 @@
 <div id="container">
-    <app-top-bar left-item="close">
-        <h2 class="no-margin-bottom">New discussion</h2>
-        <div class="spacer"></div>
-        <app-profile-picture 
-            class="pointer"
-            [user]="auth.user$|async"
-            [routerLink]="['/', 'ideas', 'profile']"
-        ></app-profile-picture>
-    </app-top-bar>
+  <app-top-bar left-item="close">
+    <h2 class="no-margin-bottom">New discussion</h2>
+    <div class="spacer"></div>
+    <app-profile-picture class="pointer" [user]="auth.user$|async"
+      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+  </app-top-bar>
 
-    <div 
-        id="content"
-        [class.mobile]="screen.isMobile$|async"    
-    >
-        <div id="to" class="gutter">
-            <app-chip 
-                *ngIf="selectedUser as u else noSelect" 
-                id="selected"
-                [label]="u.name"
-                icon="close"
-                color="var(--foreground-color)"
-                foreground-color="var(--background-color)"
-                (click)="clearUser()"
-            ></app-chip>
-            <ng-template #noSelect>
-                <input 
-                    type="text" 
-                    placeholder="To:" 
-                    [(ngModel)]="searchString" 
-                    (keyup)="onInputKeyup($event)"
-                    #toField
-                />
-            </ng-template>
-        </div>
-
-
-        <div id="search-results">
-            <div 
-                *ngFor="let u of searchResults"
-                class="result flex column align-start small-gap"
-                mat-ripple
-                (click)="selectUser(u)"
-            >
-                <app-profile-picture class="picture" [user]="u"></app-profile-picture>
-                <p class="name no-margin-bottom">{{ u.name }}</p>
-                <p class="id no-margin-bottom">{{ u.id }}</p>
-            </div>
-        </div>
-
+  <div id="content" [class.mobile]="screen.isMobile$|async">
+    <div id="to" class="gutter">
+      @if (selectedUser; as u) {
+      <app-chip id="selected" [label]="u.name" icon="close" color="var(--foreground-color)"
+        foreground-color="var(--background-color)" (click)="clearUser()"></app-chip>
+      } @else {
+      <input type="text" placeholder="To:" [(ngModel)]="searchString" (keyup)="onInputKeyup($event)" #toField />
+      }
+      <ng-template #noSelect>
+      </ng-template>
     </div>
 
-    <div 
-        id="input" 
-        class="flex gutter frosted"
-        [class.mobile]="screen.isMobile$|async"
-    >
-        <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-        <input 
-            type="text" 
-            placeholder="Your message" 
-            [(ngModel)]="content"
-            #messageField
-        />
-        <app-chip
-            label="Message"
-            color="var(--blue)"
-            icon="send"
-            (click)="submit()"
-            [class.disabled]="!this.formIsValid()"
-        ></app-chip>
+
+    <div id="search-results">
+      @for (u of searchResults; track u.id) {
+      <div class="result flex column align-start small-gap" mat-ripple (click)="selectUser(u)">
+        <app-profile-picture class="picture" [user]="u"></app-profile-picture>
+        <p class="name no-margin-bottom">{{ u.name }}</p>
+        <p class="id no-margin-bottom">{{ u.id }}</p>
+      </div>
+      }
     </div>
+
+  </div>
+
+  <div id="input" class="flex gutter frosted" [class.mobile]="screen.isMobile$|async">
+    <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+    <input type="text" placeholder="Your message" [(ngModel)]="content" #messageField />
+    <app-chip label="Message" color="var(--blue)" icon="send" (click)="submit()"
+      [class.disabled]="!this.formIsValid()"></app-chip>
+  </div>
 
 </div>
