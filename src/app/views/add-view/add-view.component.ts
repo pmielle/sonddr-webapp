@@ -100,8 +100,9 @@ export class AddViewComponent {
     }
   }
 
-  uploadCover(file: File) {
+  onCoverChange(file: File) {
     this.cover = file;
+    this.coverPreview = URL.createObjectURL(file);
   }
 
   refreshFabDispaly() {

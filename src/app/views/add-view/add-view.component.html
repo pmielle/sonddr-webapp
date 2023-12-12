@@ -9,10 +9,11 @@
             id="cover-background"
             class="bg cover"
             [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"
+            [class.lowkey]="coverPreview"
         ></div>
 
         <div id="upload">
-          <app-file-picker (upload)="uploadCover($event)"></app-file-picker>
+          <app-file-picker (file-change)="onCoverChange($event)"></app-file-picker>
         </div>
 
         <div id="goals">

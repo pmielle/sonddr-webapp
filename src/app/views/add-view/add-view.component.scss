@@ -13,6 +13,8 @@
             height: calc(100% + var(--top-bar-height));
             width: 100%;
             background-color: var(--grey);
+
+            &.lowkey { opacity: 0.5; }
         }
 
         #upload {
@@ -32,8 +34,8 @@
 
     #form {
         position: relative;
-        margin-left: calc(2 * var(--gutter) + 32px);  
-        margin-top: var(--large-spacing);  
+        margin-left: calc(2 * var(--gutter) + 32px);
+        margin-top: var(--large-spacing);
         margin-right: var(--gutter);
 
         #title {

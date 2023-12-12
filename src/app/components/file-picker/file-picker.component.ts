@@ -8,7 +8,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 export class FilePickerComponent {
 
   @ViewChild("input") inputChild?: ElementRef;
-  @Output("upload") upload = new EventEmitter<File>();
+  @Output("file-change") fileChange = new EventEmitter<File>();
 
   onClick() {
     (this.inputChild?.nativeElement as HTMLElement).click();
@@ -17,7 +17,7 @@ export class FilePickerComponent {
   onChange(e: any) {
     const file = e.target.files[0];
     if (file) {
-      this.upload.next(file);
+      this.fileChange.next(file);
     }
   }
 
