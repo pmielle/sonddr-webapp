@@ -26,6 +26,7 @@ export class AddViewComponent {
   // attributes
   // --------------------------------------------
   mainSub?: Subscription;
+  fabSub?: Subscription;
   ideas?: Idea[];
   goals?: Goal[];
   selectedGoals: Goal[] = [];
@@ -65,7 +66,7 @@ export class AddViewComponent {
     this.mainNav.disableFab();
 
     // listen to fab clicks
-    this.mainNav.fabClick.subscribe(() => {
+    this.fabSub = this.mainNav.fabClick.subscribe(() => {
       this.submit();
     });
   }
@@ -74,6 +75,7 @@ export class AddViewComponent {
 
     // unsubscribe
     this.mainSub?.unsubscribe();
+    this.fabSub?.unsubscribe();
 
     // restore nav bar and fab
     this.mainNav.showNavBar();
