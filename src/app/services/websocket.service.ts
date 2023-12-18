@@ -16,7 +16,7 @@ export class WebsocketService {
 
   // attributes
   // --------------------------------------------
-  url = "ws://localhost:3000";
+  url = "ws://192.168.1.14:3000";
 
 
   // lifecycle hooks

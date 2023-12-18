@@ -130,7 +130,7 @@ import { FilePickerComponent } from './components/file-picker/file-picker.compon
         return () =>
         keycloak.init({
           config: {
-            url: "http://keycloak:8080",
+            url: "http://192.168.1.14:8080",
             realm: "sonddr",
             clientId: "sonddr-frontend",
           },
