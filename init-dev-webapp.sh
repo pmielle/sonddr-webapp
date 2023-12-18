@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-docker build -t sonddr-webapp .
+docker build -t angular .
 
-docker run -d --rm -p 4200:4200 --name sonddr-webapp \
-  sonddr-webapp
+docker run -d --rm --network sonddr -p 4200:4200 --name angular\
+  angular

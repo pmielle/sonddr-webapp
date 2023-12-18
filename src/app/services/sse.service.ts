@@ -15,7 +15,7 @@ export class SseService {
 
   // attributes
   // --------------------------------------------
-  private url = "http://0.0.0.0:3000";
+  private url = "http://localhost:3000";
 
 
   // lifecycle hooks
