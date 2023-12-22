@@ -15,7 +15,7 @@ export class SseService {
 
   // attributes
   // --------------------------------------------
-  private url = "http://192.168.1.14:3000";
+  private basePath = "/api";
 
 
   // lifecycle hooks
@@ -38,7 +38,7 @@ export class SseService {
   // --------------------------------------------
   private async _getAndWatch<T>(path: string): Promise<Observable<T[] | Change<T>>> {
     const token = await this.auth.getToken();
-    const source = new EventSource(`${this.url}/${path}?token=${token}`);
+    const source = new EventSource(`${this.basePath}/${path}?token=${token}`);
     return new Observable(subscriber => {
       source.onmessage = (message: MessageEvent<string>) => {
         const payload = JSON.parse(message.data, (key, value) => {

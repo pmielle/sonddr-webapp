@@ -16,7 +16,7 @@ export class WebsocketService {
 
   // attributes
   // --------------------------------------------
-  url = "ws://192.168.1.14:3000";
+  private basePath = "/api";
 
 
   // lifecycle hooks
@@ -28,7 +28,7 @@ export class WebsocketService {
   // --------------------------------------------
   async getChatRoom(discussionId: string): Promise<ChatRoom> {
     const token = await this.auth.getToken();
-    const ws = new WebSocket(`${this.url}/messages?discussionId=${discussionId}&token=${token}`);
+    const ws = new WebSocket(`${this.basePath}/messages?discussionId=${discussionId}&token=${token}`);
     return new ChatRoom(ws);
   }
 

@@ -16,7 +16,7 @@ export class HttpService {
 
   // attributes
   // --------------------------------------------
-  private url = "http://192.168.1.14:3000";
+  private basePath = "/api";
   private goals?: Goal[];
 
   // lifecycle hooks
@@ -26,7 +26,7 @@ export class HttpService {
   // public methods
   // --------------------------------------------
   getImageUrl(filename: string): string {
-    return `${this.url}/uploads/${filename}`;
+    return `${this.basePath}/uploads/${filename}`;
   }
 
   async deleteVote(commentId: string, userId: string) {
@@ -154,26 +154,26 @@ export class HttpService {
   // private methods
   // --------------------------------------------
   private async _get<T>(path: string): Promise<T> {
-    let data = await lastValueFrom(this.db.get<T>(`${this.url}/${path}`));
+    let data = await lastValueFrom(this.db.get<T>(`${this.basePath}/${path}`));
     this._convertApiDataToData(data);
     return data;
   }
 
   private async _post(path: string, payload: object): Promise<string> {
-    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.url}/${path}`, payload));
+    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.basePath}/${path}`, payload));
     return response.insertedId;
   }
 
   private async _delete(path: string): Promise<void> {
-    return lastValueFrom(this.db.delete<void>(`${this.url}/${path}`));
+    return lastValueFrom(this.db.delete<void>(`${this.basePath}/${path}`));
   }
 
   private async _put(path: string, payload: object): Promise<void> {
-    await lastValueFrom(this.db.put(`${this.url}/${path}`, payload));
+    await lastValueFrom(this.db.put(`${this.basePath}/${path}`, payload));
   }
 
   private async _patch(path: string, payload: object): Promise<void> {
-    return lastValueFrom(this.db.patch<void>(`${this.url}/${path}`, payload));
+    return lastValueFrom(this.db.patch<void>(`${this.basePath}/${path}`, payload));
   }
 
   private _convertApiDataToData(apiData: any): any {

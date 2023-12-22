@@ -1,4 +1,6 @@
-FROM node:20
+# node
+# -----------------------------------------------
+FROM node:20 as angular
 
 WORKDIR /srv/sonddr
 
@@ -8,7 +10,12 @@ RUN npm install
 COPY . .
 
 RUN (cd sonddr-shared && npm run build)
+RUN npm run build
 
-EXPOSE 4200
 
-CMD ["npm", "start"]
+# apache
+# -----------------------------------------------
+FROM httpd:2.4
+
+WORKDIR /usr/local/apache2/htdocs
+COPY --from=angular /srv/sonddr/dist/sonddr-webapp .
