@@ -17,5 +17,6 @@ RUN npm run build
 # -----------------------------------------------
 FROM httpd:2.4
 
-WORKDIR /usr/local/apache2/htdocs
-COPY --from=angular /srv/sonddr/dist/sonddr-webapp .
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+
+COPY --from=angular /srv/sonddr/dist/sonddr-webapp/ /usr/local/apache2/htdocs/
