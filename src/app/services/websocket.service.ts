@@ -16,7 +16,7 @@ export class WebsocketService {
 
   // attributes
   // --------------------------------------------
-  private basePath = "/api";
+  private baseUrl = `${location.origin.replace(/^http/, 'ws')}/api/ws`;
 
 
   // lifecycle hooks
@@ -28,7 +28,7 @@ export class WebsocketService {
   // --------------------------------------------
   async getChatRoom(discussionId: string): Promise<ChatRoom> {
     const token = await this.auth.getToken();
-    const ws = new WebSocket(`${this.basePath}/messages?discussionId=${discussionId}&token=${token}`);
+    const ws = new WebSocket(`${this.baseUrl}/messages?discussionId=${discussionId}&token=${token}`);
     return new ChatRoom(ws);
   }
 
