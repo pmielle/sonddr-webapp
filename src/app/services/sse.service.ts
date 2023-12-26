@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Change, Discussion, Notification } from 'sonddr-shared';
 import { AuthService } from './auth.service';
+import { ping_str } from 'sonddr-shared';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,8 @@ export class SseService {
           }
           return value;
         });
+        // if ping, ignore
+        if (payload === ping_str) { return; }
         // each message can be either a T[] (initial value)
         //     or a Change<T> if db has been updated
         subscriber.next(payload as T[] | Change<T>);
