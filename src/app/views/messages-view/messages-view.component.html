@@ -17,7 +17,7 @@
   <div id="new-discussions" class="discussions">
     <p class="n-unread">{{ userData.activeDiscussions.length }} unread <app-red-dot></app-red-dot></p>
     @for (d of userData.activeDiscussions; track d.id) {
-    <app-discussion [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    <app-discussion [discussion]="d" (click)="goToDiscussion(d, true)"></app-discussion>
     }
   </div>
   }
@@ -28,7 +28,7 @@
     </p>
     }
     @for (d of userData.olderDiscussions; track d.id) {
-    <app-discussion [discussion]="d" [routerLink]="['discussion', d.id]"></app-discussion>
+    <app-discussion [discussion]="d" (click)="goToDiscussion(d)"></app-discussion>
     }
   </div>
 
