@@ -53,9 +53,9 @@ export class UserDataService {
       const change = payload as Change<Discussion>;
       switch (change.type) {
         case "insert": {
-          const ref = change.payload!.lastMessage?.author.id === this.userId
-              ? this.olderDiscussions
-              : this.activeDiscussions;
+          const ref = change.payload!.readByIds.includes(this.userId!)
+            ? this.olderDiscussions
+            : this.activeDiscussions;
           ref.unshift(change.payload!);
           break;
         }
@@ -67,15 +67,17 @@ export class UserDataService {
         case "update": {
           const [sourceRef, index] = this.findDiscussion(change.docId);
           sourceRef.splice(index, 1);
-          const targetRef = change.payload!.lastMessage.author.id === this.userId
-              ? this.olderDiscussions
-              : this.activeDiscussions;
+          const targetRef = change.payload!.readByIds.includes(this.userId!)
+            ? this.olderDiscussions
+            : this.activeDiscussions;
           targetRef.unshift(change.payload!);
           break;
         }
       }
     } else {
-      this.olderDiscussions = payload as Discussion[];
+      const discussions = payload as Discussion[];
+      this.olderDiscussions = discussions.filter(d => d.readByIds.includes(this.userId!));
+      this.activeDiscussions = discussions.filter(d => ! d.readByIds.includes(this.userId!));
     }
   }
 
