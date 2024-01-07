@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { HttpService } from 'src/app/services/http.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { Notification } from "sonddr-shared";
 
 @Component({
   selector: 'app-notifications-view',
@@ -15,6 +17,7 @@ export class NotificationsViewComponent implements OnInit, OnDestroy {
   screen = inject(ScreenSizeService);
   auth = inject(AuthService);
   userData = inject(UserDataService);
+  http = inject(HttpService);
 
   // attributes
   // --------------------------------------------
@@ -26,6 +29,15 @@ export class NotificationsViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+  }
+
+  // methods
+  // --------------------------------------------
+  openNotification(notification: Notification, markAsRead: boolean = false) {
+    if (markAsRead) {
+      this.http.markNotificationAsRead(notification.id);
+    }
+    // TODO: actually go somewhere here
   }
 
 }

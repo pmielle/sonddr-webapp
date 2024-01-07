@@ -1,7 +1,6 @@
 <div id="container" class="flex column align-start small-gap pointer" mat-ripple>
     <span id="content">
-        <!-- TODO: fix this -->
-        <!-- <app-profile-picture [user]="notification?.from"></app-profile-picture> TODO: display a user here eventually -->
+        <app-notification-image></app-notification-image>
         <div class="ellipsis multi-4">{{ notification?.content }}</div>
     </span>
     <span id="ago">{{ time.makeAgo(notification?.date) }}</span>

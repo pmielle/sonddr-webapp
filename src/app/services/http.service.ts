@@ -29,6 +29,10 @@ export class HttpService {
     return this._patch(`/discussions/${discussionId}`, {});
   }
 
+  async markNotificationAsRead(notificationId: string): Promise<void> {
+    return this._patch(`/notifications/${notificationId}`, {});
+  }
+
   getImageUrl(filename: string): string {
     return `${this.basePath}/uploads/${filename}`;
   }
