@@ -86,7 +86,10 @@ export class UserDataService {
       const change = payload as Change<Notification>;
       switch (change.type) {
         case "insert": {
-          this.newNotifications.unshift(change.payload!);
+          const ref = change.payload!.readByIds.includes(this.userId!)
+            ? this.oldNotifications
+            : this.newNotifications;
+          ref.unshift(change.payload!);
           break;
         }
         case "delete": {
@@ -95,14 +98,19 @@ export class UserDataService {
           break;
         }
         case "update": {
-          const [ref, index] = this.findNotification(change.docId);
-          ref.splice(index, 1);
-          this.newNotifications.unshift(change.payload!);
+          const [sourceRef, index] = this.findNotification(change.docId);
+          sourceRef.splice(index, 1);
+          const targetRef = change.payload!.readByIds.includes(this.userId!)
+            ? this.oldNotifications
+            : this.newNotifications;
+          targetRef.unshift(change.payload!);
           break;
         }
       }
     } else {
-      this.oldNotifications = payload as Notification[];
+      const notifications = payload as Notification[];
+      this.oldNotifications = notifications.filter(n => n.readByIds.includes(this.userId!));
+      this.newNotifications = notifications.filter(n => ! n.readByIds.includes(this.userId!));
     }
   }
 
