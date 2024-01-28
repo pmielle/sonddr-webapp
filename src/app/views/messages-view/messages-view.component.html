@@ -1,6 +1,6 @@
 <div id="container">
 
-  <app-top-bar [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
+  <app-top-bar>
     @if (!(screen.isMobile$|async)) {
     <h1 class="no-margin-bottom">Messages</h1>
     }

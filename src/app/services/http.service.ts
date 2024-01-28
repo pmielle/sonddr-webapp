@@ -95,12 +95,16 @@ export class HttpService {
     return this._get<User[]>(`users?regex=${nameRegex}`);
   }
 
-  async postIdea(title: string, content: string, goalIds: string[], cover?: File): Promise<string> {
+  // images is a map with ids as keys and actual files as values
+  // it is needed because the backend needs a way to tell which image matches which img tag
+  // this id is shared between the file (originalName attr) and the tag (id attr)
+  async postIdea(title: string, content: string, goalIds: string[], cover?: File, images?: Map<string, File>): Promise<string> {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
     formData.append("goalIds", JSON.stringify(goalIds));
     if (cover) { formData.append("cover", cover); }
+    if (images) { images.forEach((file, id, _) => formData.append("images", file, id)); } // 3rd arg is the filename to use
     return this._post(`ideas`, formData);  // multer needs a multipart/form-data
   }
 

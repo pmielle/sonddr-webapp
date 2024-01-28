@@ -1,7 +1,6 @@
 <div id="container">
 
-  <app-top-bar left-item="back" [background-color]="makeBackgroundColor()"
-    [title]="(screen.isMobile$ | async) ? undefined : goal?.name">
+  <app-top-bar left-item="back" [background-color]="makeBackgroundColor()">
     <div class="flex gap">
       <mat-icon>{{ goal?.icon }}</mat-icon>
       @if (!(screen.isMobile$|async)) {

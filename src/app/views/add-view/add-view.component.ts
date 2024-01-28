@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, from } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
@@ -6,6 +6,7 @@ import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { EditorComponent } from 'src/app/components/editor/editor.component';
 
 @Component({
   selector: 'app-add-view',
@@ -33,8 +34,8 @@ export class AddViewComponent {
   selectableGoals: Goal[] = [];
   coverPreview?: string;
   title = "";
-  content = "";
   cover?: File;
+  @ViewChild(EditorComponent) editor!: EditorComponent;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -85,16 +86,17 @@ export class AddViewComponent {
   // methods
   // --------------------------------------------
   formIsValid(): boolean {
-    return (this.content && this.title && this.selectedGoals.length) ? true : false;
+    return (this.editor.content && this.title && this.selectedGoals.length) ? true : false;
   }
 
   async submit(): Promise<void> {
     if (this.formIsValid()) {
       const id = await this.http.postIdea(
         this.title,
-        this.content,
+        this.editor.content,
         this.selectedGoals.map(g => g.id),
-        this.cover
+        this.cover,
+        this.editor.images,
       );
       this.router.navigateByUrl(`/ideas/idea/${id}`, {replaceUrl: true});
     } else {
@@ -107,7 +109,7 @@ export class AddViewComponent {
     this.coverPreview = URL.createObjectURL(file);
   }
 
-  refreshFabDispaly() {
+  refreshFabDisplay() {
     if (this.formIsValid()) {
       this.mainNav.enableFab();
     } else {
@@ -125,6 +127,8 @@ export class AddViewComponent {
     if (i !== -1) {
       this.selectableGoals.splice(i, 1);
     }
+    // refresh the fab display
+    this.refreshFabDisplay();
   }
 
 }

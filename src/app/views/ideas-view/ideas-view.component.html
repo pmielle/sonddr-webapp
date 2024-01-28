@@ -1,7 +1,6 @@
 <div id="container">
 
-  <app-top-bar [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined"
-    [title]="(screen.isMobile$ | async) ? undefined : 'All Ideas'">
+  <app-top-bar [left-item]="(screen.isMobile$ | async) ? 'logo' : undefined">
     @if (!(screen.isMobile$|async)) {
     <h1 class="no-margin-bottom">All ideas</h1>
     }
@@ -12,7 +11,7 @@
 
   <div id="header">
     @if (screen.isMobile$ | async) {
-    <h1 id="title" class="gutter">All Ideas</h1>
+    <h1 id="title" class="gutter">All ideas</h1>
     }
 
     <p class="gutter">Ea quidem voluptatum qui quasi repellendus et nostrum doloremque. Suscipit officiis veritatis non

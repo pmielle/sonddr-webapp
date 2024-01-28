@@ -9,7 +9,19 @@
       [class.lowkey]="coverPreview"></div>
 
     <div id="upload">
-      <app-file-picker (file-change)="onCoverChange($event)"></app-file-picker>
+      <app-file-picker (file-change)="onCoverChange($event)">
+        <div
+            id="button"
+            class="flex column"
+            mat-ripple
+            [matRippleCentered]="true"
+            [matRippleUnbounded]="true"
+            matRippleSize="20px"
+        >
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Upload a cover</span>
+        </div>
+      </app-file-picker>
     </div>
 
     <div id="goals">
@@ -34,13 +46,10 @@
 
 
   <div id="form" class="flex column gap">
-    <input id="title" type="text" placeholder="Choose a title" (keyup)="refreshFabDispaly()" [(ngModel)]="title">
+    <input id="title" type="text" placeholder="Choose a title" (keyup)="refreshFabDisplay()" [(ngModel)]="title">
 
-    <div id="content-container">
-      <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-      <textarea id="content" placeholder="Explain your idea" (keyup)="refreshFabDispaly()"
-        [(ngModel)]="content"></textarea>
-    </div>
+    <app-editor (keyup)="refreshFabDisplay()"></app-editor>
+
   </div>
 
 </div>

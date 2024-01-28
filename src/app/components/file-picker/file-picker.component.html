@@ -1,18 +1,7 @@
-<div id="container">
+<div id="container" (click)="onClick()">
 
   <input id="input" type="file" accept="image/png,image/jpeg" (change)="onChange($event)" #input>
 
-  <div
-      id="button"
-      class="flex column"
-      mat-ripple
-      [matRippleCentered]="true"
-      [matRippleUnbounded]="true"
-      matRippleSize="20px"
-      (click)="onClick()"
-  >
-      <mat-icon>cloud_upload</mat-icon>
-      <span>Upload a cover</span>
-  </div>
+  <ng-content></ng-content>
 
 </div>

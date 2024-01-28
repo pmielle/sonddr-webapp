@@ -46,6 +46,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { RedDotComponent } from './components/red-dot/red-dot.component';
 import { FilePickerComponent } from './components/file-picker/file-picker.component';
 import { NotificationImageComponent } from './components/notification-image/notification-image.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { NotificationImageComponent } from './components/notification-image/noti
     RedDotComponent,
     FilePickerComponent,
     NotificationImageComponent,
+    EditorComponent,
   ],
   imports: [
     BrowserModule,

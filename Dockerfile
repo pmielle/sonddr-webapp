@@ -1,22 +1,7 @@
-# node
-# -----------------------------------------------
-FROM node:20 as angular
+FROM node:20
 
 WORKDIR /srv/sonddr
 
-COPY package.json .
-RUN npm install
+RUN npm install -g @angular/cli
 
-COPY . .
-
-RUN (cd sonddr-shared && npm run build)
-RUN npm run build
-
-
-# apache
-# -----------------------------------------------
-FROM httpd:2.4
-
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
-
-COPY --from=angular /srv/sonddr/dist/sonddr-webapp/ /usr/local/apache2/htdocs/
+CMD ["ng", "serve", "--host", "0.0.0.0", "--disable-host-check"]
