@@ -42,7 +42,7 @@ export class IdeaViewComponent implements OnDestroy {
       if (!id) { throw new Error("id not found in url params"); }
       this.http.getIdea(id).then(i => {
         this.idea = i;
-        this.setHasCheered(i.userHasCheered);
+        this.setHasCheered(i.userHasCheered, true);
       });
       this.http.getComments("recent", id, undefined).then(c => this.comments = c);
     });
@@ -84,6 +84,7 @@ export class IdeaViewComponent implements OnDestroy {
     if (!this.idea) { throw new Error("cannot react to fab click if idea is undefined"); }
     if (this.idea.userHasCheered) {
       this.setHasCheered(false);
+
       this.deleteCheer();
     } else {
       this.setHasCheered(true);
@@ -91,14 +92,16 @@ export class IdeaViewComponent implements OnDestroy {
     }
   }
 
-  setHasCheered(hasCheered: boolean) {
+  setHasCheered(hasCheered: boolean, firstLoad = false) {
     if (!this.idea) { throw new Error("cannot set userHasCheered if idea is undefined"); }
     if (hasCheered) {
       this.idea.userHasCheered = true;
       this.mainNav.setHasCheeredFab();
+      if (! firstLoad) { this.idea.supports += 1 }
     } else {
       this.idea.userHasCheered = false;
       this.mainNav.setCheerFab();
+      if (! firstLoad) { this.idea.supports -= 1 }
     }
   }
 

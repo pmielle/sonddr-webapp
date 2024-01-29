@@ -19,12 +19,14 @@
             background-color: var(--grey);
         }
 
-        #goals {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
+        #bottom-strip {
+          position: absolute;
+          bottom: 10px;
+          width: 100%;
+          padding-left: calc(2 * var(--gutter) + 32px);
+          padding-right: var(--gutter);
         }
-    }
+      }
 
     #page-content {
         padding-top: var(--large-spacing);
