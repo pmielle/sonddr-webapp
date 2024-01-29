@@ -24,6 +24,7 @@
           [icon]="idea.userHasCheered ? 'favorite' : 'favorite_outline'"
           [label]="idea.supports"
           color="var(--background-color)"
+          (click)="toggleCheer()"
           ></app-chip>
       }
     </div>

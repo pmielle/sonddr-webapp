@@ -46,9 +46,7 @@ export class IdeaViewComponent implements OnDestroy {
       });
       this.http.getComments("recent", id, undefined).then(c => this.comments = c);
     });
-    this.fabClickSub = this.mainNav.fabClick.subscribe(() => {
-      this.onFabClick();
-    });
+    this.fabClickSub = this.mainNav.fabClick.subscribe(() => this.toggleCheer());
   }
 
   ngOnDestroy(): void {
@@ -80,11 +78,10 @@ export class IdeaViewComponent implements OnDestroy {
     this.http.deleteVote(commentId, user.id);
   }
 
-  onFabClick() {
+  toggleCheer() {
     if (!this.idea) { throw new Error("cannot react to fab click if idea is undefined"); }
     if (this.idea.userHasCheered) {
       this.setHasCheered(false);
-
       this.deleteCheer();
     } else {
       this.setHasCheered(true);
