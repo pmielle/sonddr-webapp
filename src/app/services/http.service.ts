@@ -79,10 +79,6 @@ export class HttpService {
     return this._get<Message>(`messages/${id}`);
   }
 
-  async postMessage(discussionId: string, content: string): Promise<string> {
-    return this._post("messages", {discussionId: discussionId, content: content});
-  }
-
   async searchIdeas(titleRegex: string): Promise<Idea[]> {
     return this._get<Idea[]>(`ideas?regex=${titleRegex}`);
   }

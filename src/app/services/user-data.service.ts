@@ -53,10 +53,10 @@ export class UserDataService {
       const change = payload as Change<Discussion>;
       switch (change.type) {
         case "insert": {
-          const ref = change.payload!.readByIds.includes(this.userId!)
+          const ref = change.payload.readByIds.includes(this.userId!)
             ? this.olderDiscussions
             : this.activeDiscussions;
-          ref.unshift(change.payload!);
+          ref.unshift(change.payload);
           break;
         }
         case "delete": {
@@ -67,10 +67,10 @@ export class UserDataService {
         case "update": {
           const [sourceRef, index] = this.findDiscussion(change.docId);
           sourceRef.splice(index, 1);
-          const targetRef = change.payload!.readByIds.includes(this.userId!)
+          const targetRef = change.payload.readByIds.includes(this.userId!)
             ? this.olderDiscussions
             : this.activeDiscussions;
-          targetRef.unshift(change.payload!);
+          targetRef.unshift(change.payload);
           break;
         }
       }
@@ -86,10 +86,10 @@ export class UserDataService {
       const change = payload as Change<Notification>;
       switch (change.type) {
         case "insert": {
-          const ref = change.payload!.readByIds.includes(this.userId!)
+          const ref = change.payload.readByIds.includes(this.userId!)
             ? this.oldNotifications
             : this.newNotifications;
-          ref.unshift(change.payload!);
+          ref.unshift(change.payload);
           break;
         }
         case "delete": {
@@ -100,10 +100,10 @@ export class UserDataService {
         case "update": {
           const [sourceRef, index] = this.findNotification(change.docId);
           sourceRef.splice(index, 1);
-          const targetRef = change.payload!.readByIds.includes(this.userId!)
+          const targetRef = change.payload.readByIds.includes(this.userId!)
             ? this.oldNotifications
             : this.newNotifications;
-          targetRef.unshift(change.payload!);
+          targetRef.unshift(change.payload);
           break;
         }
       }

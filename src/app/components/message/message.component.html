@@ -1,7 +1,15 @@
-<div id="container" class="flex column gutter">
-  @if (fromUser !== undefined) {
-  <div id="bubble" [class.from-user]="fromUser">
+@if (fromUser !== undefined) {
+<div id="container" class="flex justify-start gutter" [class.from-user]=fromUser>
+  <div id="bubble">
     <p class="no-margin-bottom">{{ message?.content }}</p>
   </div>
-  }
+  <div id="options">
+    <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>more_vert</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      @if(fromUser) {
+      <button mat-menu-item (click)="delete.next()">Delete</button>
+      }
+    </mat-menu>
+  </div>
 </div>
+}

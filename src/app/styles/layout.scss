@@ -13,14 +13,14 @@
     gap: 0;
 
     &.column { flex-flow: column; }
-    
+
     &.wrap { flex-wrap: wrap; }
-    
-    &.justify-start { justify-content: start; }
-    &.justify-end { justify-content: end; }
-    
-    &.align-start { align-items: start; }
-    &.align-end { align-items: end; }
+
+    &.justify-start { justify-content: flex-start; }
+    &.justify-end { justify-content: flex-end; }
+
+    &.align-start { align-items: flex-start; }
+    &.align-end { align-items: flex-end; }
     &.align-stretch { align-items: stretch; }
 
     &.small-gap { gap: var(--small-spacing); }

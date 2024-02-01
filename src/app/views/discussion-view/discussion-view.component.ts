@@ -63,13 +63,13 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       const change = payload as Change<Message>;
       switch (change.type) {
         case "insert": {
-          this.messages!.unshift(change.payload!);
+          this.messages!.unshift(change.payload);
           this.mainNav.scrollToBottom();
           break;
         }
         case "update": {
           const index = this.findIndex(change.docId);
-          this.messages![index] = change.payload!;
+          this.messages![index] = change.payload;
           break;
         }
         case "delete": {
@@ -108,6 +108,10 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     // scroll to the bottom and reset the input
     this.mainNav.scrollToBottom();
     this.content = "";
+  }
+
+  delete(messageId: string) {
+    this.chatRoom!.delete(messageId);
   }
 
   shouldHaveSpacer(i: number): boolean {

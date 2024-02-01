@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { Change, Message, User, placeholder_id } from "sonddr-shared";
+import { Change, Message, User, placeholder_id, delete_str } from "sonddr-shared";
 
 export class ChatRoom {
 
@@ -28,6 +28,10 @@ export class ChatRoom {
   send(message: string, user: User) {
     this.ws.send(message);
     return this._makePlaceholderMessage(message, user);
+  }
+
+  delete(messageId: string) {
+    this.ws.send(`${delete_str}${messageId}`);
   }
 
 
