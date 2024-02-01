@@ -21,4 +21,13 @@
     }
 
   }
+
+  &.deleted {
+
+    #bubble p {
+      opacity: 0.5;
+    }
+
+  }
+
 }

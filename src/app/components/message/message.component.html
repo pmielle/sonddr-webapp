@@ -1,12 +1,12 @@
 @if (fromUser !== undefined) {
-<div id="container" class="flex justify-start gutter" [class.from-user]=fromUser>
+<div id="container" class="flex justify-start gutter" [ngClass]="{'from-user': fromUser, 'deleted': message?.deleted}">
   <div id="bubble">
     <p class="no-margin-bottom">{{ message?.content }}</p>
   </div>
   <div id="options">
     <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>more_vert</mat-icon></button>
     <mat-menu #menu="matMenu">
-      @if(fromUser) {
+      @if(fromUser && ! message?.deleted) {
       <button mat-menu-item (click)="delete.next()">Delete</button>
       }
     </mat-menu>

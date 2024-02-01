@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { Message } from 'sonddr-shared';
+import { Message, delete_str } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
 
 @Component({

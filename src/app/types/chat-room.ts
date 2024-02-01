@@ -44,6 +44,7 @@ export class ChatRoom {
       content: content,
       author: user,
       date: new Date(),
+      deleted: false,
     }
   }
 
