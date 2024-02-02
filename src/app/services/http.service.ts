@@ -25,6 +25,10 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  async deleteIdea(ideaId: string): Promise<void> {
+    return this._delete(`/ideas/${ideaId}`);
+  }
+
   async markDiscussionAsRead(discussionId: string): Promise<void> {
     return this._patch(`/discussions/${discussionId}`, {});
   }

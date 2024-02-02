@@ -1,5 +1,5 @@
 import { Component, OnDestroy, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Comment, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
@@ -26,6 +26,7 @@ export class IdeaViewComponent implements OnDestroy {
   screen = inject(ScreenSizeService);
   mainNav = inject(MainNavService);
   auth = inject(AuthService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -56,6 +57,11 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  async onDeleteClick() {
+    await this.http.deleteIdea(this.idea!.id);
+    this.router.navigateByUrl("/ideas");
+  }
+
   chooseCover() {
     return this.idea?.cover ? `url(${this.http.getImageUrl(this.idea.cover)}` : "";
   }
