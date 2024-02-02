@@ -1,15 +1,14 @@
 @if (fromUser !== undefined) {
-<div id="container" class="flex justify-start gutter" [ngClass]="{'from-user': fromUser, 'deleted': message?.deleted}">
-  <div id="bubble">
+<div id="container" class="flex justify-start gutter" [ngClass]="{'mobile': screen.isMobile$|async ,'from-user': fromUser, 'deleted': message?.deleted}">
+  <div id="bubble" [cdkContextMenuTriggerFor]="menu">
     <p class="no-margin-bottom">{{ message?.content }}</p>
   </div>
-  <div id="options">
-    <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>more_vert</mat-icon></button>
-    <mat-menu #menu="matMenu">
+  <ng-template #menu>
+    <div cdkMenu>
       @if(fromUser && ! message?.deleted) {
-      <button mat-menu-item (click)="delete.next()">Delete</button>
+      <button mat-flat-button cdkMenuItem (click)="delete.next()">Delete</button>
       }
-    </mat-menu>
-  </div>
+    </div>
+  </ng-template>
 </div>
 }

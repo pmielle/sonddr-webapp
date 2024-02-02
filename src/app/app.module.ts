@@ -48,6 +48,7 @@ import { FilePickerComponent } from './components/file-picker/file-picker.compon
 import { NotificationImageComponent } from './components/notification-image/notification-image.component';
 import { EditorComponent } from './components/editor/editor.component';
 import { LikeCounterComponent } from './components/like-counter/like-counter.component';
+import {CdkMenuModule} from '@angular/cdk/menu';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { LikeCounterComponent } from './components/like-counter/like-counter.com
     MatRippleModule,
     MatButtonModule,
     MatMenuModule,
+    CdkMenuModule,
     FormsModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
