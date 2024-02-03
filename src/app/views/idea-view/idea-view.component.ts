@@ -150,6 +150,7 @@ export class IdeaViewComponent implements OnDestroy {
       author: user,
       rating: 0,
       date: new Date(),
+      fromUser: true,
     };
   }
 
