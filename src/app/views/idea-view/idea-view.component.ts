@@ -122,6 +122,11 @@ export class IdeaViewComponent implements OnDestroy {
     return this.http.deleteCheer(this.idea.id, user.id);
   }
 
+  deleteComment(commentId: string) {
+    this.comments = this.comments?.filter(c => c.id !== commentId);
+    this.http.deleteComment(commentId);
+  }
+
   postComment(body: string) {
     if (!this.idea) { throw new Error("Cannot post comment if idea is not loaded"); }
     if (!this.comments) { throw new Error("Cannot post comment if comments are not loaded"); }

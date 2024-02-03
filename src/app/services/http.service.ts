@@ -29,6 +29,10 @@ export class HttpService {
     return this._delete(`/ideas/${ideaId}`);
   }
 
+  async deleteComment(commentId: string): Promise<void> {
+    return this._delete(`/comments/${commentId}`);
+  }
+
   async markDiscussionAsRead(discussionId: string): Promise<void> {
     return this._patch(`/discussions/${discussionId}`, {});
   }

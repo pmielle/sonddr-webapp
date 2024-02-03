@@ -35,6 +35,7 @@ export class CommentSectionComponent {
   @Output("upvote") upvote = new EventEmitter<string>();
   @Output("downvote") downvote = new EventEmitter<string>();
   @Output("delete-vote") deleteVote = new EventEmitter<string>();
+  @Output("delete-comment") deleteComment = new EventEmitter<string>();
 
   // attributes
   // --------------------------------------------
@@ -74,7 +75,7 @@ export class CommentSectionComponent {
     const plural = otherNb > 1;
     return `See ${otherNb} other comment${plural ? 's' : ''}`;
   }
-  
+
   splitCommentsIntoSections(comments: Comment[]): ListSection[] {
     let sections: ListSection[] = [
       this._initSection(this.sortBy == "recent" ? "Today" : "Top 10"),
@@ -86,7 +87,7 @@ export class CommentSectionComponent {
       const aDayAgo = this.time.getNDaysBefore(now, 1);
       const aWeekAgo = this.time.getNDaysBefore(now, 7);
       comments.forEach(i => {
-        let sectionIndex = i.date > aDayAgo ? 0 
+        let sectionIndex = i.date > aDayAgo ? 0
           : i.date > aWeekAgo ? 1
           : 2;
         sections[sectionIndex].comments.push(i);

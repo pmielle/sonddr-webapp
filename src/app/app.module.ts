@@ -35,7 +35,6 @@ import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { ExternalLinkComponent } from './components/external-link/external-link.component';
 import { ProfileViewComponent } from './views/profile-view/profile-view.component';
 import { UserViewComponent } from './views/user-view/user-view.component';
-import { CommentSectionPreviewComponent } from './components/comment-section-preview/comment-section-preview.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
 import { DiscussionComponent } from './components/discussion/discussion.component';
@@ -79,7 +78,6 @@ import {CdkMenuModule} from '@angular/cdk/menu';
     ExternalLinkComponent,
     ProfileViewComponent,
     UserViewComponent,
-    CommentSectionPreviewComponent,
     CommentComponent,
     CommentSectionComponent,
     DiscussionComponent,

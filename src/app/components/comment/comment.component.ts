@@ -19,6 +19,7 @@ export class CommentComponent {
   @Output('upvote') upvote = new EventEmitter<void>();
   @Output('downvote') downvote = new EventEmitter<void>();
   @Output('delete-vote') deleteVote = new EventEmitter<void>();
+  @Output('delete-comment') deleteComment = new EventEmitter<void>();
 
   // methods
   // --------------------------------------------
@@ -45,7 +46,7 @@ export class CommentComponent {
   updateRating(newUserVote: 1|-1|undefined) {
     if (! this.comment) { throw new Error("Cannot vote for an undefined comment"); }
     if (this.comment.userVote === newUserVote) { return; }
-    const ratingDiff = this.comment.userVote 
+    const ratingDiff = this.comment.userVote
       ? newUserVote ? this.comment.userVote - newUserVote : this.comment.userVote
       : newUserVote ? -1 * newUserVote : 0;
     this.comment.rating -= ratingDiff;
