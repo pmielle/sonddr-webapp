@@ -57,6 +57,10 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
+  onAddExternalLinkClick() {
+    console.log("add external link");
+  }
+
   async onDeleteClick() {
     await this.http.deleteIdea(this.idea!.id);
     this.router.navigateByUrl("/ideas");

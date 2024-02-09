@@ -40,15 +40,35 @@
           <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
         </p>
       </div>
-      @if (idea?.externalLinks?.length) {
+      @if (idea?.externalLinks?.length || idea?.fromUser) {
       <div id="external-links">
         <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
-          <mat-icon id="open-in-new">open_in_new</mat-icon>
-          @for (el of idea?.externalLinks; track el) {
-          <app-external-link [external-link]="el"></app-external-link>
-          }
-        </app-h-scroll>
+        @if (idea?.externalLinks?.length) {
+        <mat-icon id="open-in-new">open_in_new</mat-icon>
+        @for (el of idea?.externalLinks; track el) {
+        <app-external-link [external-link]="el"></app-external-link>
+        }
+        @if (idea?.fromUser) {
+        <app-chip
+          label="External link"
+          icon="add"
+          foreground-color="var(--background-color)"
+          color="var(--foreground-color)"
+          [no-label]="true"
+          (click)="onAddExternalLinkClick()"
+        ></app-chip>
+        }
         <div id="external-link-label">External links</div>
+        } @else if (idea?.fromUser) {
+        <app-chip
+          label="External link"
+          icon="add"
+          foreground-color="var(--background-color)"
+          color="var(--foreground-color)"
+          (click)="onAddExternalLinkClick()"
+        ></app-chip>
+        }
+        </app-h-scroll>
       </div>
       }
     </div>
