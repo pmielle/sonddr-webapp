@@ -55,7 +55,7 @@
           foreground-color="var(--background-color)"
           color="var(--foreground-color)"
           [no-label]="true"
-          (click)="onAddExternalLinkClick()"
+          [mat-menu-trigger-for]="menu"
         ></app-chip>
         }
         <div id="external-link-label">External links</div>
@@ -65,9 +65,13 @@
           icon="add"
           foreground-color="var(--background-color)"
           color="var(--foreground-color)"
-          (click)="onAddExternalLinkClick()"
+          [mat-menu-trigger-for]="menu"
         ></app-chip>
         }
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="addExternalLink('slack')">Slack</button>
+          <button mat-menu-item (click)="addExternalLink('discord')">Discord</button>
+        </mat-menu>
         </app-h-scroll>
       </div>
       }

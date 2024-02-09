@@ -57,8 +57,8 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  onAddExternalLinkClick() {
-    console.log("add external link");
+  addExternalLink(type: string) {
+    console.log("insert "+type+" link");
   }
 
   async onDeleteClick() {
