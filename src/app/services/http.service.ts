@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment } from 'sonddr-shared';
+import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment, ExternalLink } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 import { lastValueFrom } from 'rxjs';
 
@@ -25,6 +25,10 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  async addExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
+    return this._patch(`/ideas/${ideaId}`, {externalLink: externalLink});
+  }
+
   async deleteIdea(ideaId: string): Promise<void> {
     return this._delete(`/ideas/${ideaId}`);
   }

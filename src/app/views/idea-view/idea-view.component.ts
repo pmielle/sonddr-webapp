@@ -75,6 +75,7 @@ export class IdeaViewComponent implements OnDestroy {
           url: url,
         };
         this.idea!.externalLinks.push(link);
+        this.http.addExternalLink(this.idea!.id, link);
       }
     });
   }
