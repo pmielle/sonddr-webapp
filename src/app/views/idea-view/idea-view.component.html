@@ -40,10 +40,10 @@
           <span id="date"> - {{ time.makeAgo(idea?.date) }}</span>
         </p>
       </div>
+
       @if (idea?.externalLinks?.length || idea?.fromUser) {
       <div id="external-links">
         <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
-        @if (idea?.externalLinks?.length) {
         <mat-icon id="open-in-new">open_in_new</mat-icon>
         @for (el of idea?.externalLinks; track el) {
         <app-external-link [cdkContextMenuTriggerFor]="editMenu" [external-link]="el" ></app-external-link>
@@ -54,37 +54,26 @@
             }
           </div>
         </ng-template>
-        }
+        } <!-- @for externalLinks -->
         @if (idea?.fromUser) {
         <app-chip
-          label="External link"
-          icon="add"
-          foreground-color="var(--background-color)"
-          color="var(--foreground-color)"
-          [no-label]="true"
-          [mat-menu-trigger-for]="menu"
-        ></app-chip>
-        }
-        } @else if (idea?.fromUser) {
-        <app-chip
-          label="External link"
+          label="Add"
           icon="add"
           foreground-color="var(--background-color)"
           color="var(--foreground-color)"
           [mat-menu-trigger-for]="menu"
         ></app-chip>
-        }
         <mat-menu #menu="matMenu">
           @for (type of chooseSelectableLinkTypes(); track type) {
           <button mat-menu-item (click)="addExternalLink(type)">{{ type | titlecase }}</button>
           }
         </mat-menu>
+        } <!-- @if fromUser -->
         </app-h-scroll>
-        @if (idea?.externalLinks?.length) {
         <div id="external-link-label">External links</div>
-        }
       </div>
-      }
+      } <!-- @if externalLinks -->
+
     </div>
 
     <div id="content" [innerHTML]="idea?.content"></div>
