@@ -58,7 +58,6 @@
           [mat-menu-trigger-for]="menu"
         ></app-chip>
         }
-        <div id="external-link-label">External links</div>
         } @else if (idea?.fromUser) {
         <app-chip
           label="External link"
@@ -69,10 +68,14 @@
         ></app-chip>
         }
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="addExternalLink('slack')">Slack</button>
-          <button mat-menu-item (click)="addExternalLink('discord')">Discord</button>
+          @for (type of chooseSelectableLinkTypes(); track type) {
+          <button mat-menu-item (click)="addExternalLink(type)">{{ type | titlecase }}</button>
+          }
         </mat-menu>
         </app-h-scroll>
+        @if (idea?.externalLinks?.length) {
+        <div id="external-link-label">External links</div>
+        }
       </div>
       }
     </div>

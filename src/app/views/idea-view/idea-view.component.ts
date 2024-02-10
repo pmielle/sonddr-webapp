@@ -1,15 +1,15 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Comment, Idea } from 'sonddr-shared';
+import { Comment, ExternalLink, ExternalLinkType, Idea, placeholder_id, externalLinkTypes } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
-
-const placeholderId = "TBD";
+import { MatDialog } from '@angular/material/dialog';
+import { AddExternalLinkPopupComponent } from 'src/app/components/add-external-link-popup/add-external-link-popup.component';
 
 @Component({
   selector: 'app-idea-view',
@@ -27,11 +27,13 @@ export class IdeaViewComponent implements OnDestroy {
   mainNav = inject(MainNavService);
   auth = inject(AuthService);
   router = inject(Router);
+  dialog = inject(MatDialog);
 
   // attributes
   // --------------------------------------------
   routeSub?: Subscription;
   fabClickSub?: Subscription;
+  popupSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
 
@@ -53,12 +55,28 @@ export class IdeaViewComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
+    this.popupSub?.unsubscribe();
   }
 
   // methods
   // --------------------------------------------
+  chooseSelectableLinkTypes(): ExternalLinkType[] {
+    if (! this.idea) { return [] }
+    return externalLinkTypes
+      .filter(type => ! this.idea!.externalLinks?.map(el => el.type).includes(type as any));
+  }
+
   addExternalLink(type: string) {
-    console.log("insert "+type+" link");
+    const dialogRef = this.dialog.open(AddExternalLinkPopupComponent, { data: { type: type } });
+    this.popupSub = dialogRef.afterClosed().subscribe((url) => {
+      if (url) {
+        const link: ExternalLink = {
+          type: type as any,
+          url: url,
+        };
+        this.idea!.externalLinks.push(link);
+      }
+    });
   }
 
   async onDeleteClick() {
@@ -148,7 +166,7 @@ export class IdeaViewComponent implements OnDestroy {
     const user = this.auth.user$.getValue();
     if (!user) { throw new Error("Cannot post comment if user is not logged in"); }
     return {
-      id: placeholderId,
+      id: placeholder_id,
       ideaId: ideaId,
       content: body,
       author: user,
@@ -160,8 +178,8 @@ export class IdeaViewComponent implements OnDestroy {
 
   replacePlaceholderComment(comment: Comment) {
     if (!this.comments) { throw new Error("Cannot replace placeholder comment if comments is undefined"); }
-    const indexOfPlaceholder = this.comments.findIndex(c => c.id === placeholderId);
-    if (indexOfPlaceholder === -1) { throw new Error(`Found no comment with id ${placeholderId}`); }
+    const indexOfPlaceholder = this.comments.findIndex(c => c.id === placeholder_id);
+    if (indexOfPlaceholder === -1) { throw new Error(`Found no comment with id ${placeholder_id}`); }
     const newComments = [...this.comments];  // otherwise same reference, and @Input is not updated
     newComments[indexOfPlaceholder] = comment;
     this.comments = newComments;

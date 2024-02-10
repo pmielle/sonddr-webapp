@@ -48,6 +48,8 @@ import { NotificationImageComponent } from './components/notification-image/noti
 import { EditorComponent } from './components/editor/editor.component';
 import { LikeCounterComponent } from './components/like-counter/like-counter.component';
 import {CdkMenuModule} from '@angular/cdk/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import { AddExternalLinkPopupComponent } from './components/add-external-link-popup/add-external-link-popup.component';
 
 
 @NgModule({
@@ -89,6 +91,7 @@ import {CdkMenuModule} from '@angular/cdk/menu';
     NotificationImageComponent,
     EditorComponent,
     LikeCounterComponent,
+    AddExternalLinkPopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +105,7 @@ import {CdkMenuModule} from '@angular/cdk/menu';
     MatMenuModule,
     CdkMenuModule,
     FormsModule,
+    MatDialogModule,
     RouterModule.forRoot([
       {path: "", redirectTo: "ideas", pathMatch: "full"},
       {path: "ideas", component: IdeasTabComponent, children: [
