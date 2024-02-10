@@ -46,7 +46,14 @@
         @if (idea?.externalLinks?.length) {
         <mat-icon id="open-in-new">open_in_new</mat-icon>
         @for (el of idea?.externalLinks; track el) {
-        <app-external-link [external-link]="el"></app-external-link>
+        <app-external-link [cdkContextMenuTriggerFor]="editMenu" [external-link]="el" ></app-external-link>
+        <ng-template #editMenu>
+          <div cdkMenu>
+            @if(idea?.fromUser) {
+            <button mat-flat-button cdkMenuItem (click)="deleteExternalLink(el)">Delete</button>
+            }
+          </div>
+        </ng-template>
         }
         @if (idea?.fromUser) {
         <app-chip

@@ -25,8 +25,12 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  async deleteExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
+    return this._patch(`/ideas/${ideaId}`, {removeExternalLink: externalLink});
+  }
+
   async addExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
-    return this._patch(`/ideas/${ideaId}`, {externalLink: externalLink});
+    return this._patch(`/ideas/${ideaId}`, {addExternalLink: externalLink});
   }
 
   async deleteIdea(ideaId: string): Promise<void> {

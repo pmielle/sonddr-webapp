@@ -66,6 +66,11 @@ export class IdeaViewComponent implements OnDestroy {
       .filter(type => ! this.idea!.externalLinks?.map(el => el.type).includes(type as any));
   }
 
+  deleteExternalLink(link: ExternalLink) {
+    this.idea!.externalLinks = this.idea!.externalLinks.filter(el => el.type !== link.type);
+    this.http.deleteExternalLink(this.idea!.id, link);
+  }
+
   addExternalLink(type: string) {
     const dialogRef = this.dialog.open(AddExternalLinkPopupComponent, { data: { type: type } });
     this.popupSub = dialogRef.afterClosed().subscribe((url) => {
