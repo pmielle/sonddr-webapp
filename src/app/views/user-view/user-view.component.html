@@ -1,9 +1,13 @@
 <div id="container">
 
-  <app-top-bar left-item="back">
+  <app-top-bar [left-item]="user?.isUser ? 'close' : 'back'">
+    @if(! user?.isUser) {
     <div class="spacer"></div>
     <app-profile-picture class="pointer" [user]="auth.user$|async"
-      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+      (click)="auth.goToProfile()"></app-profile-picture>
+    } @else {
+    <h2 class="no-margin-bottom">My profile</h2>
+    }
   </app-top-bar>
 
   <div id="cover">

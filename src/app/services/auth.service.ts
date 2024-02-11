@@ -4,6 +4,7 @@ import { User } from 'sonddr-shared';
 import { HttpService } from './http.service';
 import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,11 @@ export class AuthService {
   // --------------------------------------------
   keycloak = inject(KeycloakService);
   http = inject(HttpService);
-  user$ = new BehaviorSubject<User | undefined>(undefined);
+  router = inject(Router);
 
+  // attributes
+  // --------------------------------------------
+  user$ = new BehaviorSubject<User | undefined>(undefined);
 
   // lifecycle hooks
   // --------------------------------------------
@@ -26,6 +30,12 @@ export class AuthService {
 
   // public methods
   // --------------------------------------------
+  goToProfile() {
+    const user = this.user$.getValue();
+    if (! user) { throw new Error("User is undefined"); }
+    this.router.navigateByUrl(`/ideas/user/${user.id}`);
+  }
+
   async getToken(): Promise<string> {
     return this.keycloak.getToken();
   }

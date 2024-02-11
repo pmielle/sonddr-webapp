@@ -33,7 +33,6 @@ import { IdeaCardComponent } from './components/idea-card/idea-card.component';
 import { ProfilePictureComponent } from './components/profile-picture/profile-picture.component';
 import { IdeaViewComponent } from './views/idea-view/idea-view.component';
 import { ExternalLinkComponent } from './components/external-link/external-link.component';
-import { ProfileViewComponent } from './views/profile-view/profile-view.component';
 import { UserViewComponent } from './views/user-view/user-view.component';
 import { CommentComponent } from './components/comment/comment.component';
 import { CommentSectionComponent } from './components/comment-section/comment-section.component';
@@ -78,7 +77,6 @@ import { AddExternalLinkPopupComponent } from './components/add-external-link-po
     GoalViewComponent,
     IdeaViewComponent,
     ExternalLinkComponent,
-    ProfileViewComponent,
     UserViewComponent,
     CommentComponent,
     CommentSectionComponent,
@@ -113,7 +111,6 @@ import { AddExternalLinkPopupComponent } from './components/add-external-link-po
         {path: "idea/:id", component: IdeaViewComponent},
         {path: "goal/:id", component: GoalViewComponent},
         {path: "add", component: AddViewComponent},
-        {path: "profile", component: ProfileViewComponent},
         {path: "user/:id", component: UserViewComponent},
       ]},
       {path: "search", component: SearchViewComponent},

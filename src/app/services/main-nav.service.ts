@@ -60,6 +60,28 @@ export class MainNavService {
     });
   }
 
+  setOtherUserFab(userId: string) {
+    this.fabMode$.next({
+        icon: "add",
+        color: "var(--blue)",
+        label: "send a<br>message",
+        action: () => {this.router.navigateByUrl(`/messages/new-discussion?preselected=${userId}`)}
+    });
+  }
+
+  setLoggedInUserFab() {
+    this.fabMode$.next({
+        icon: "logout",
+        color: "var(--red)",
+        label: "Log out",
+        action: () => {console.log("log out")}
+    });
+  }
+
+  setUndefinedFab() {
+    this.fabMode$.next(undefined);
+  }
+
   goToTab(tab: Tab) {
     this.router.navigateByUrl(`/${tab}`);
   }
@@ -126,17 +148,7 @@ export class MainNavService {
         label: "Share<br>an idea",
         action: () => {this.router.navigateByUrl(`/ideas/add?preselected=${goalId}`)}
       });
-    } else if (url.startsWith("/ideas/user/")) {
-      const userId = url.split(/\//)[3];
-      this.fabMode$.next({
-        icon: "add",
-        color: "var(--blue)",
-        label: "Send a<br>message",
-        action: () => {this.router.navigateByUrl(`/messages/new-discussion?preselected=${userId}`)}
-      });
-    } else if (url.startsWith("/ideas/idea/")) {
-      this.fabMode$.next(undefined);  // handled by the view depending on the cheering status
-    } else if (url === "/messages") {
+    }  else if (url === "/messages") {
       this.fabMode$.next({
         icon: "add",
         color: "var(--blue)",
@@ -150,15 +162,12 @@ export class MainNavService {
         label: "Share",
         action: () => {this.fabClick.next();}
       });
-    } else if (url.startsWith("/messages/new-discussion")) {
+    } else if (url.startsWith("/ideas/user/")) {
+      this.fabMode$.next(undefined); // handled by the view depending on who the user is
+    } else if (url.startsWith("/ideas/idea/")) {
+      this.fabMode$.next(undefined);  // handled by the view depending on the cheering status
+    }else if (url.startsWith("/messages/new-discussion")) {
       this.fabMode$.next(undefined);
-    } else if (url === "/ideas/profile") {
-      this.fabMode$.next({
-        icon: "logout",
-        color: "var(--red)",
-        label: "Log out",
-        action: () => {console.log("click in profile")}
-      });
     } else if (url.startsWith("/messages/discussion/")) {
       this.fabMode$.next(undefined);
     } else if (url === "/notifications") {

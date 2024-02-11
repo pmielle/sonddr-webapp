@@ -8,7 +8,7 @@
     }
     <div class="spacer"></div>
     <app-profile-picture class="pointer" [user]="auth.user$|async"
-      [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+      (click)="auth.goToProfile()"></app-profile-picture>
   </app-top-bar>
 
   @if (auth.user$|async; as loggedInUser) {

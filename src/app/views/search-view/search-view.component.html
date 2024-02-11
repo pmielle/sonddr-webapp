@@ -5,7 +5,7 @@
         <mat-icon>{{ searchString.length > 0 ? 'close' : 'search' }}</mat-icon>
       </button>
       <input type="text" placeholder="Search" [(ngModel)]="searchString" (keydown.enter)="search()" #input>
-      <app-profile-picture [user]="(auth.user$|async)" [routerLink]="['/', 'ideas', 'profile']"></app-profile-picture>
+      <app-profile-picture [user]="(auth.user$|async)" (click)="auth.goToProfile()"></app-profile-picture>
     </div>
   </app-top-bar>
 
