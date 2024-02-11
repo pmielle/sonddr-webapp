@@ -29,7 +29,7 @@ export class WebsocketService {
   async getChatRoom(discussionId: string): Promise<ChatRoom> {
     const token = await this.auth.getToken();
     const ws = new WebSocket(`${this.baseUrl}/messages?discussionId=${discussionId}&token=${token}`);
-    return new ChatRoom(ws);
+    return new ChatRoom(ws, this.auth.user$);
   }
 
 }

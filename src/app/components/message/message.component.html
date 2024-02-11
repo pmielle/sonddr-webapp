@@ -1,14 +1,12 @@
-@if (fromUser !== undefined) {
-<div id="container" class="flex justify-start gutter" [ngClass]="{'mobile': screen.isMobile$|async ,'from-user': fromUser, 'deleted': message?.deleted}">
+<div id="container" class="flex justify-start gutter" [ngClass]="{'mobile': screen.isMobile$|async ,'from-user': message?.author?.isUser, 'deleted': message?.deleted}">
   <div id="bubble" [cdkContextMenuTriggerFor]="menu">
     <p class="no-margin-bottom">{{ message?.content }}</p>
   </div>
   <ng-template #menu>
     <div cdkMenu>
-      @if(fromUser && ! message?.deleted) {
+      @if(message?.author?.isUser && ! message?.deleted) {
       <button mat-flat-button cdkMenuItem (click)="delete.next()">Delete</button>
       }
     </div>
   </ng-template>
 </div>
-}

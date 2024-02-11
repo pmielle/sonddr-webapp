@@ -1,24 +1,26 @@
-import { Observable } from "rxjs";
-import { Change, Message, User, placeholder_id, delete_str } from "sonddr-shared";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Change, Message, User, placeholder_id, delete_str, } from "sonddr-shared";
 
 export class ChatRoom {
 
   ws: WebSocket;
+  user$: BehaviorSubject<User|undefined>;
 
-  constructor(ws: WebSocket) {
+  constructor(ws: WebSocket, user$: BehaviorSubject<User|undefined>) {
     this.ws = ws;
+    this.user$ = user$;
   }
 
   listen(): Observable<Message[]|Change<Message>> {
     return new Observable<Message[]|Change<Message>>(subscriber => {
       this.ws.onmessage = (message: MessageEvent<string>) => {
-        const payload = JSON.parse(message.data, (key, value) => {
+        const data = JSON.parse(message.data, (key, value) => {
           if (/[Dd]ate$/.test(key)) {
             value = new Date(value);
           }
           return value;
         });
-        subscriber.next(payload);
+        subscriber.next(data);
       };
       this.ws.onerror = (e) => subscriber.error(e);
       return () => this.ws.close();

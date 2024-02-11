@@ -17,7 +17,6 @@
     <app-message
       [class.with-spacer]="shouldHaveSpacer(i)"
       [message]="m"
-      [from-user]="loggedInUser.id === m.author.id"
       (delete)="delete(m.id)"
     ></app-message>
     }

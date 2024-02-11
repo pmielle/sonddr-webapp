@@ -18,7 +18,6 @@ export class MessageComponent {
   // I/O
   // --------------------------------------------
   @Input("message") message?: Message;
-  @Input("from-user") fromUser?: boolean;
   @Output("delete") delete = new EventEmitter<void>();
 
 }
