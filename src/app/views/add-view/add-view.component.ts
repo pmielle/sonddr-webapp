@@ -85,6 +85,14 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  onInputFocus() {
+    this.mainNav.hideFab();
+  }
+
+  onInputBlur() {
+    this.mainNav.showFab();
+  }
+
   formIsValid(): boolean {
     return (this.editor.content && this.title && this.selectedGoals.length) ? true : false;
   }

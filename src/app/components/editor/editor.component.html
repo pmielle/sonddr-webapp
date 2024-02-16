@@ -61,8 +61,8 @@
     contenteditable="true"
     placeholder="Explain your idea..."
     (keyup)="onKeyUp($event)"
-    (focus)="inFocus = true"
-    (blur)="inFocus = false"
+    (focus)="onInputFocus()"
+    (blur)="onInputBlur()"
     #contentDiv
   ></div>
 

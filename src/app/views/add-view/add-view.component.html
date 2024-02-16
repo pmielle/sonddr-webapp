@@ -42,13 +42,22 @@
     </div>
   </div>
 
-  <!-- ... -->
-
-
   <div id="form" class="flex column gap">
-    <input id="title" type="text" placeholder="Choose a title" (keyup)="refreshFabDisplay()" [(ngModel)]="title">
+    <input
+      id="title"
+      type="text"
+      placeholder="Choose a title"
+      (keyup)="refreshFabDisplay()"
+      [(ngModel)]="title"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+    >
 
-    <app-editor (keyup)="refreshFabDisplay()"></app-editor>
+    <app-editor
+      (keyup)="refreshFabDisplay()"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+    ></app-editor>
 
   </div>
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, ViewChild, inject } from '@angular/core';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 const invisible_space = '\u200B';
@@ -14,6 +14,10 @@ export class EditorComponent {
   // --------------------------------------------
   screen = inject(ScreenSizeService);
 
+  // I/O
+  // --------------------------------------------
+  @Output("focus") focus = new EventEmitter<void>();
+  @Output("blur") blur = new EventEmitter<void>();
   @ViewChild("contentDiv") contentDiv?: ElementRef;
   @ViewChild("link") link?: ElementRef;
   @HostListener('document:selectionchange') onSelectionChange() {
@@ -37,6 +41,16 @@ export class EditorComponent {
 
   // methods
   // --------------------------------------------
+  onInputFocus() {
+    this.focus.next();
+    this.inFocus = true;
+  }
+
+  onInputBlur() {
+    this.blur.next();
+    this.inFocus = false;
+  }
+
   onKeyUp(event: KeyboardEvent): void {
     this.refreshContent();
     if (this.isEmpty(this.contentDiv?.nativeElement)) {
