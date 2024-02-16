@@ -41,38 +41,12 @@
         </p>
       </div>
 
-      @if (idea?.externalLinks?.length || idea?.author?.isUser) {
-      <div id="external-links">
-        <app-h-scroll left-padding="calc(2 * var(--gutter) + 32px)">
-        <mat-icon id="open-in-new">open_in_new</mat-icon>
-        @for (el of idea?.externalLinks; track el) {
-        <app-external-link [cdkContextMenuTriggerFor]="editMenu" [external-link]="el" ></app-external-link>
-        <ng-template #editMenu>
-          <div cdkMenu>
-            @if(idea?.author?.isUser) {
-            <button mat-flat-button cdkMenuItem (click)="deleteExternalLink(el)">Delete</button>
-            }
-          </div>
-        </ng-template>
-        } <!-- @for externalLinks -->
-        @if (idea?.author?.isUser) {
-        <app-chip
-          label="Add"
-          icon="add"
-          foreground-color="var(--background-color)"
-          color="var(--foreground-color)"
-          [mat-menu-trigger-for]="menu"
-        ></app-chip>
-        <mat-menu #menu="matMenu">
-          @for (type of chooseSelectableLinkTypes(); track type) {
-          <button mat-menu-item (click)="addExternalLink(type)">{{ type | titlecase }}</button>
-          }
-        </mat-menu>
-        } <!-- @if author?.isUser -->
-        </app-h-scroll>
-        <div id="external-link-label">External links</div>
-      </div>
-      } <!-- @if externalLinks -->
+      <app-external-links
+        [is-logged-in-user]="idea?.author?.isUser"
+        [external-links]="idea?.externalLinks"
+        (add)="addExternalLink($event)"
+        (delete)="deleteExternalLink($event)"
+      ></app-external-links>
 
     </div>
 

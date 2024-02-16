@@ -25,12 +25,20 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
-  async deleteExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
-    return this._patch(`/ideas/${ideaId}`, {removeExternalLink: externalLink});
+  async addIdeaExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
+    return this._addExternalLink("idea", ideaId, externalLink);
   }
 
-  async addExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
-    return this._patch(`/ideas/${ideaId}`, {addExternalLink: externalLink});
+  async deleteIdeaExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
+    return this._deleteExternalLink("idea", ideaId, externalLink);
+  }
+
+  async addUserExternalLink(userId: string, externalLink: ExternalLink): Promise<void> {
+    return this._addExternalLink("user", userId, externalLink);
+  }
+
+  async deleteUserExternalLink(userId: string, externalLink: ExternalLink): Promise<void> {
+    return this._deleteExternalLink("user", userId, externalLink);
   }
 
   async deleteIdea(ideaId: string): Promise<void> {
@@ -177,6 +185,14 @@ export class HttpService {
 
   // private methods
   // --------------------------------------------
+  async _deleteExternalLink(type: "user"|"idea", id: string, externalLink: ExternalLink): Promise<void> {
+    return this._patch(`/${type}s/${id}`, {removeExternalLink: externalLink});
+  }
+
+  async _addExternalLink(type: "user"|"idea", id: string, externalLink: ExternalLink): Promise<void> {
+    return this._patch(`/${type}s/${id}`, {addExternalLink: externalLink});
+  }
+
   private async _get<T>(path: string): Promise<T> {
     let data = await lastValueFrom(this.db.get<T>(`${this.basePath}/${path}`));
     this._convertApiDataToData(data);

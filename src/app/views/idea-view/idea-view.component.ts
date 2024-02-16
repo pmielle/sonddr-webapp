@@ -60,29 +60,14 @@ export class IdeaViewComponent implements OnDestroy {
 
   // methods
   // --------------------------------------------
-  chooseSelectableLinkTypes(): ExternalLinkType[] {
-    if (! this.idea) { return [] }
-    return externalLinkTypes
-      .filter(type => ! this.idea!.externalLinks?.map(el => el.type).includes(type as any));
-  }
-
   deleteExternalLink(link: ExternalLink) {
     this.idea!.externalLinks = this.idea!.externalLinks.filter(el => el.type !== link.type);
-    this.http.deleteExternalLink(this.idea!.id, link);
+    this.http.deleteIdeaExternalLink(this.idea!.id, link);
   }
 
-  addExternalLink(type: string) {
-    const dialogRef = this.dialog.open(AddExternalLinkPopupComponent, { data: { type: type } });
-    this.popupSub = dialogRef.afterClosed().subscribe((url) => {
-      if (url) {
-        const link: ExternalLink = {
-          type: type as any,
-          url: url,
-        };
-        this.idea!.externalLinks.push(link);
-        this.http.addExternalLink(this.idea!.id, link);
-      }
-    });
+  addExternalLink(link: ExternalLink) {
+    this.idea!.externalLinks.push(link);
+    this.http.addIdeaExternalLink(this.idea!.id, link);
   }
 
   async onDeleteClick() {

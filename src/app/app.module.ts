@@ -49,6 +49,7 @@ import { LikeCounterComponent } from './components/like-counter/like-counter.com
 import {CdkMenuModule} from '@angular/cdk/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddExternalLinkPopupComponent } from './components/add-external-link-popup/add-external-link-popup.component';
+import { ExternalLinksComponent } from './components/external-links/external-links.component';
 
 
 @NgModule({
@@ -90,6 +91,7 @@ import { AddExternalLinkPopupComponent } from './components/add-external-link-po
     EditorComponent,
     LikeCounterComponent,
     AddExternalLinkPopupComponent,
+    ExternalLinksComponent,
   ],
   imports: [
     BrowserModule,

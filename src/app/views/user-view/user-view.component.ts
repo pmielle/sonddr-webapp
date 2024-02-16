@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { User, Idea } from 'sonddr-shared';
+import { User, Idea, ExternalLink } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -71,6 +71,16 @@ export class UserViewComponent {
 
   // methods
   // --------------------------------------------
+  addExternalLink(link: ExternalLink) {
+    this.user!.externalLinks.push(link);
+    this.http.addUserExternalLink(this.user!.id, link);
+  }
+
+  deleteExternalLink(link: ExternalLink) {
+    this.user!.externalLinks = this.user!.externalLinks.filter(el => el.type !== link.type);
+    this.http.deleteUserExternalLink(this.user!.id, link);
+  }
+
   onSortByChange(sortBy: SortBy) {
     if (!this.user) {
       throw new Error("this.user should be defined at this point");

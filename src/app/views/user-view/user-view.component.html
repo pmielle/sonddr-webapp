@@ -23,17 +23,14 @@
       member since {{ time.getYear(user?.date) }}
       - {{ ideas?.length }} idea{{ ideas && ideas.length > 1 ? 's' : '' }}
     </div>
-    @if (user?.externalLinks?.length) {
-    <div id="external-links">
-      <app-h-scroll>
-        <mat-icon id="open-in-new">open_in_new</mat-icon>
-        @for (el of user?.externalLinks; track el) {
-        <app-external-link [external-link]="el"></app-external-link>
-        }
-      </app-h-scroll>
-      <div id="external-link-label">External links</div>
-    </div>
-    }
+
+    <app-external-links
+        [is-logged-in-user]="user?.isUser"
+        [external-links]="user?.externalLinks"
+        (add)="addExternalLink($event)"
+        (delete)="deleteExternalLink($event)"
+        ></app-external-links>
+
     <div id="bio" class="gutter">{{ user?.bio }}</div>
   </div>
 
