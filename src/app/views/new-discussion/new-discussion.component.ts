@@ -48,7 +48,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => this.toField?.nativeElement.focus(), 100);
+    this.toField?.nativeElement.focus(); // throws a NG0100 but doesn't open keyboard on mobile if in setTimeout...
   }
 
   ngOnDestroy(): void {
