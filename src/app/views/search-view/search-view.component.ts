@@ -1,20 +1,21 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
-import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MainNavService } from 'src/app/services/main-nav.service';
 
 @Component({
   selector: 'app-search-view',
   templateUrl: './search-view.component.html',
   styleUrls: ['./search-view.component.scss']
 })
-export class SearchViewComponent implements AfterViewInit {
+export class SearchViewComponent implements AfterViewInit, OnDestroy {
 
   // dependencies
   // --------------------------------------------
   auth = inject(AuthService);
   http = inject(HttpService);
+  mainNav = inject(MainNavService);
 
   // attributes
   // --------------------------------------------
@@ -28,8 +29,21 @@ export class SearchViewComponent implements AfterViewInit {
     this.input?.nativeElement.focus();
   }
 
+  ngOnDestroy(): void {
+      this.mainNav.showNavBar();
+  }
+
   // methods
   // --------------------------------------------
+  onInputFocus() {
+    this.mainNav.hideNavBar();
+    setTimeout(() => this.mainNav.scrollToTop(), 100); // otherwise weird
+  }
+
+  onInputBlur() {
+    this.mainNav.showNavBar();
+  }
+
   makeSearchResultsLabel(): string {
     if (!this.ideas) { return ""; }
     const nb = this.ideas.length;
