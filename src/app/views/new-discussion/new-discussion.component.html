@@ -12,7 +12,15 @@
       <app-chip id="selected" [label]="u.name" icon="close" color="var(--foreground-color)"
         foreground-color="var(--background-color)" (click)="clearUser()"></app-chip>
       } @else {
-      <input type="text" placeholder="To:" [(ngModel)]="searchString" (keyup)="onInputKeyup($event)" #toField />
+      <input
+        type="text"
+        placeholder="To:"
+        [(ngModel)]="searchString"
+        (keyup)="onInputKeyup($event)"
+        (focus)="onInputFocus(true)"
+        (blur)="onInputBlur()"
+        #toField
+      />
       }
       <ng-template #noSelect>
       </ng-template>
@@ -31,11 +39,20 @@
 
   </div>
 
+  @if(! inTo) {
   <div id="input" class="flex gutter frosted" [class.mobile]="screen.isMobile$|async">
     <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-    <input type="text" placeholder="Your message" [(ngModel)]="content" #messageField />
+    <input
+      type="text"
+      placeholder="Your message"
+      [(ngModel)]="content"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+      #messageField
+    />
     <app-chip label="Message" color="var(--blue)" icon="send" (click)="submit()"
       [class.disabled]="!this.formIsValid()"></app-chip>
   </div>
+  }
 
 </div>

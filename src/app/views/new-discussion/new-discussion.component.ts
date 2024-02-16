@@ -5,6 +5,7 @@ import { User } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { MainNavService } from 'src/app/services/main-nav.service';
 
 @Component({
   selector: 'app-new-discussion',
@@ -20,6 +21,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   route = inject(ActivatedRoute);
   http = inject(HttpService);
   router = inject(Router);
+  mainNav = inject(MainNavService);
 
   // attributes
   // --------------------------------------------
@@ -28,6 +30,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   searchString = "";
   searchResults?: User[];
   content = "";
+  inTo = false;
   @ViewChild('toField') toField?: ElementRef;
   @ViewChild('messageField') messageField?: ElementRef;
 
@@ -50,10 +53,24 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe;
+    this.mainNav.showNavBar();
   }
 
   // methods
   // --------------------------------------------
+  onInputFocus(toField: boolean = false) {
+    this.mainNav.hideNavBar();
+    if (toField) {
+      setTimeout(() => this.mainNav.scrollToTop(), 100);
+      this.inTo = true;
+    }
+  }
+
+  onInputBlur() {
+    this.inTo = false;
+    this.mainNav.showNavBar();
+  }
+
   formIsValid(): boolean {
     return (this.selectedUser && this.content.length) ? true : false;
   }

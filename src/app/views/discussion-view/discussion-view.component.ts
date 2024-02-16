@@ -58,6 +58,15 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
 
   // methods
   // --------------------------------------------
+  onInputFocus() {
+    this.mainNav.hideNavBar();
+    setTimeout(() => this.mainNav.scrollToTop(), 100);
+  }
+
+  onInputBlur() {
+    this.mainNav.showNavBar();
+  }
+
   onChatRoomUpdate(payload: Message[]|Change<Message>) {
     if (isChange(payload)) {
       const change = payload as Change<Message>;

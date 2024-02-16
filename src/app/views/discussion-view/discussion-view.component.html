@@ -25,7 +25,14 @@
 
   <div id="input" class="flex gutter frosted" [class.mobile]="screen.isMobile$|async">
     <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-    <input type="text" placeholder="Your message" [(ngModel)]="content" (keydown.enter)="formIsValid() && send()" />
+    <input
+      type="text"
+      placeholder="Your message"
+      [(ngModel)]="content"
+      (keydown.enter)="formIsValid() && send()"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+    />
     <app-chip label="Message" color="var(--blue)" icon="send" (click)="send()"
       [class.disabled]="!this.formIsValid()"></app-chip>
   </div>
