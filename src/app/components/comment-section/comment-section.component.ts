@@ -36,6 +36,8 @@ export class CommentSectionComponent {
   @Output("downvote") downvote = new EventEmitter<string>();
   @Output("delete-vote") deleteVote = new EventEmitter<string>();
   @Output("delete-comment") deleteComment = new EventEmitter<string>();
+  @Output("focus") focus = new EventEmitter<void>();
+  @Output("blur") blur = new EventEmitter<void>();
 
   // attributes
   // --------------------------------------------

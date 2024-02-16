@@ -36,6 +36,7 @@ export class IdeaViewComponent implements OnDestroy {
   popupSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
+  inInput = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -56,10 +57,24 @@ export class IdeaViewComponent implements OnDestroy {
     this.routeSub?.unsubscribe();
     this.fabClickSub?.unsubscribe();
     this.popupSub?.unsubscribe();
+    this.mainNav.showNavBar();
+    this.mainNav.showFab();
   }
 
   // methods
   // --------------------------------------------
+  onInputFocus() {
+    this.mainNav.hideNavBar();
+    this.mainNav.hideFab();
+    this.inInput = true;
+  }
+
+  onInputBlur() {
+    this.mainNav.showNavBar();
+    this.mainNav.showFab();
+    this.inInput = false;
+  }
+
   deleteExternalLink(link: ExternalLink) {
     this.idea!.externalLinks = this.idea!.externalLinks.filter(el => el.type !== link.type);
     this.http.deleteIdeaExternalLink(this.idea!.id, link);

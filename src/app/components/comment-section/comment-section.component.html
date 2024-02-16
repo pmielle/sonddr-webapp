@@ -2,8 +2,15 @@
 
   <div id="input" class="flex gutter">
     <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
-    <input type="text" placeholder="What do you think?" [(ngModel)]="commentBody" (keydown.enter)="onPostComment()"
-      #input />
+    <input
+      type="text"
+      placeholder="What do you think?"
+      [(ngModel)]="commentBody"
+      (keydown.enter)="onPostComment()"
+      (focus)="focus.next()"
+      (blur)="blur.next()"
+      #input
+    />
     <app-chip label="Comment" color="var(--green)" icon="send" [class.disabled]="!this.formIsValid()"
       (click)="onPostComment()"></app-chip>
   </div>
