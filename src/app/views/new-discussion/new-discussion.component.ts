@@ -48,7 +48,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   ngAfterViewInit(): void {
-    this.toField?.nativeElement.focus();
+    setTimeout(() => this.toField?.nativeElement.focus(), 100);
   }
 
   ngOnDestroy(): void {

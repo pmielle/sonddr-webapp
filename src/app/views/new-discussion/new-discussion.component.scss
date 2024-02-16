@@ -1,20 +1,20 @@
 #container {
 
     #content {
-            
+
         &.mobile {
             min-height: calc(
-                100vh 
-                - var(--nav-bar-height) 
-                - var(--top-bar-height) 
+                100vh
+                - var(--nav-bar-height)
+                - var(--top-bar-height)
                 - 67px
             );
         }
 
         &:not(.mobile) {
             min-height: calc(
-                100vh 
-                - var(--top-bar-height) 
+                100vh
+                - var(--top-bar-height)
                 - 67px
             );
         }
@@ -22,11 +22,11 @@
         #to {
             padding-top: var(--spacing);
             padding-bottom: var(--spacing);
-            
+
             #selected {
                 margin-left: 4px;
             }
-            
+
             input {
                 width: 100%;
                 padding-left: calc(4px + 10px + 24px + 5px);
@@ -65,6 +65,10 @@
 
         &.mobile {
             bottom: var(--nav-bar-height);
+
+           &.invisible {
+             opacity: 0;
+           }
         }
 
         &:not(.mobile) {

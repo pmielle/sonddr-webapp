@@ -39,8 +39,7 @@
 
   </div>
 
-  @if(! inTo) {
-  <div id="input" class="flex gutter frosted" [class.mobile]="screen.isMobile$|async">
+  <div id="input" class="flex gutter frosted" [ngClass]="{'mobile': screen.isMobile$|async, 'invisible': inTo}">
     <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
     <input
       type="text"
@@ -53,6 +52,5 @@
     <app-chip label="Message" color="var(--blue)" icon="send" (click)="submit()"
       [class.disabled]="!this.formIsValid()"></app-chip>
   </div>
-  }
 
 </div>
