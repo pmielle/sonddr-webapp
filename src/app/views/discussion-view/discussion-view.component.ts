@@ -60,7 +60,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   onInputFocus() {
     this.mainNav.hideNavBar();
-    setTimeout(() => this.mainNav.scrollToTop(), 100);
+    setTimeout(() => this.mainNav.scrollToBottom(), 100);
   }
 
   onInputBlur() {
