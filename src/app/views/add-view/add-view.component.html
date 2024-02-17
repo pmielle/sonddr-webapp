@@ -51,6 +51,7 @@
       [(ngModel)]="title"
       (focus)="onInputFocus()"
       (blur)="onInputBlur(true)"
+      (keydown.tab)="onTitleTab($event)"
     >
 
     <app-editor

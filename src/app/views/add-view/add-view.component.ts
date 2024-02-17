@@ -85,6 +85,11 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  onTitleTab(e: Event) {
+    e.preventDefault();
+    this.editor.contentDiv?.nativeElement.focus();
+  }
+
   onInputFocus() {
     this.mainNav.hideFab();
   }
