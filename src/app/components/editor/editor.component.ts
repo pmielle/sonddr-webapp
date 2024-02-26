@@ -105,6 +105,11 @@ export class EditorComponent {
     this.rangeBkp = undefined;
   }
 
+  setContent(content: string) {
+    this.contentDiv!.nativeElement.innerHTML = content;
+    this.refreshContent();
+  }
+
   refreshContent() {
     this.content = this.isEmpty(this.contentDiv?.nativeElement)
       ? ""

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment, ExternalLink } from 'sonddr-shared';
+import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment, ExternalLink, DbIdea } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 import { lastValueFrom } from 'rxjs';
 
@@ -25,6 +25,19 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  // images is a map with ids as keys and actual files as values
+  // it is needed because the backend needs a way to tell which image matches which img tag
+  // this id is shared between the file (originalName attr) and the tag (id attr)
+  async editIdea(ideaId: string, title?: string, content?: string, goals?: Goal[], cover?: File, images?: Map<string, File>) {
+    const formData = new FormData();
+    if (title !== undefined) { formData.append("title", title); }
+    if (content !== undefined) { formData.append("content", content); }
+    if (goals !== undefined) { formData.append("goalIds", JSON.stringify(goals.map(g => g.id))); }
+    if (cover) { formData.append("cover", cover); }
+    if (images) { images.forEach((file, id, _) => formData.append("images", file, id)); } // 3rd arg is the filename to use
+    this._patch(`/ideas/${ideaId}`, formData);
+  }
+
   async addIdeaExternalLink(ideaId: string, externalLink: ExternalLink): Promise<void> {
     return this._addExternalLink("idea", ideaId, externalLink);
   }

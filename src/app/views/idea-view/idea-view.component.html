@@ -5,6 +5,7 @@
     @if (idea?.author?.isUser) {
     <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>more_vert</mat-icon></button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onEditClick()">Edit</button>
       <button mat-menu-item (click)="onDeleteClick()">Delete</button>
     </mat-menu>
     }

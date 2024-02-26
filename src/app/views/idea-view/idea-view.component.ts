@@ -90,6 +90,10 @@ export class IdeaViewComponent implements OnDestroy {
     this.router.navigateByUrl("/ideas");
   }
 
+  async onEditClick() {
+    this.router.navigateByUrl(`/ideas/add?edit=${this.idea!.id}`);
+  }
+
   chooseCover() {
     return this.idea?.cover ? `url(${this.http.getImageUrl(this.idea.cover)}` : "";
   }

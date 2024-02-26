@@ -35,6 +35,10 @@ export class AddViewComponent {
   coverPreview?: string;
   title = "";
   cover?: File;
+  editIdeaId?: string;
+  initialContent?: string;
+  initialTitle?: string;
+  initialGoals?: Goal[];
   @ViewChild(EditorComponent) editor!: EditorComponent;
 
   // lifecycle hooks
@@ -51,12 +55,23 @@ export class AddViewComponent {
       this.goals = goals;
       this.selectableGoals = goals;
 
-      // preselect a goal if query param
-      const id = map.get("preselected");
-      if (id) {
-        const goal = goals.find(g => g.id === id);
+      // depending on query:
+      // - preselect a goal
+      // - edit an existing idea
+      const editIdeaId = map.get("edit");
+      const preselectedGoalId = map.get("preselected");
+      this.editIdeaId = undefined;
+      if (editIdeaId) {
+        this.editIdeaId = editIdeaId;
+        this.http.getIdea(editIdeaId).then(idea => {
+          if (! idea.author.isUser) { throw new Error("Unauthorized"); }
+          this.setupEdit(idea);
+        });
+
+      } else if (preselectedGoalId) {
+        const goal = goals.find(g => g.id === preselectedGoalId);
         if (!goal) {
-          throw new Error(`Failed to preselect ${id}: no matching goal found`);
+          throw new Error(`Failed to preselect ${preselectedGoalId}: no matching goal found`);
         }
         this.selectGoal(goal);
       }
@@ -68,7 +83,11 @@ export class AddViewComponent {
 
     // listen to fab clicks
     this.fabSub = this.mainNav.fabClick.subscribe(() => {
-      this.submit();
+      if (this.editIdeaId) {
+        this.submitEdit();
+      } else {
+        this.submit();
+      }
     });
   }
 
@@ -85,6 +104,17 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  setupEdit(idea: Idea) {
+    this.title = idea.title;
+    idea.goals.forEach(g => this.selectGoal(g));
+    this.editor.setContent(idea.content);
+    this.initialTitle = idea.title;
+    this.initialContent = idea.content;
+    this.initialGoals = idea.goals;
+    if (idea.cover) { this.coverPreview = this.http.getImageUrl(idea.cover); }
+    this.refreshFabDisplay();
+  }
+
   onTitleTab(e: Event) {
     e.preventDefault();
     this.editor.contentDiv?.nativeElement.focus();
@@ -101,6 +131,21 @@ export class AddViewComponent {
 
   formIsValid(): boolean {
     return (this.editor.content && this.title && this.selectedGoals.length) ? true : false;
+  }
+
+  async submitEdit(): Promise<void> {
+    if (! this.formIsValid() || ! this.somethingHasBeenEdited()) {
+      throw new Error("submit should not be callable if one input is empty or if nothing has changed");
+    }
+    await this.http.editIdea(
+      this.editIdeaId!,
+      this.titleHasChanged() ? this.title : undefined,
+      this.contentHasChanged() ? this.editor.content : undefined,
+      this.goalsHaveChanged() ? this.selectedGoals : undefined,
+      this.cover,
+      this.editor.images,
+    );
+    setTimeout(() => this.router.navigateByUrl(`/ideas/idea/${this.editIdeaId!}`), 100); // otherwise doesn't refresh for some reason
   }
 
   async submit(): Promise<void> {
@@ -121,14 +166,47 @@ export class AddViewComponent {
   onCoverChange(file: File) {
     this.cover = file;
     this.coverPreview = URL.createObjectURL(file);
+    this.refreshFabDisplay();
   }
 
   refreshFabDisplay() {
-    if (this.formIsValid()) {
-      this.mainNav.enableFab();
+    if (this.editIdeaId) {
+      if (this.formIsValid() && this.somethingHasBeenEdited()) {
+        this.mainNav.enableFab();
+      } else {
+        this.mainNav.disableFab();
+      }
     } else {
-      this.mainNav.disableFab();
+      if (this.formIsValid()) {
+        this.mainNav.enableFab();
+      } else {
+        this.mainNav.disableFab();
+      }
     }
+  }
+
+  somethingHasBeenEdited(): boolean {
+    return this.coverHasChanged() || this.titleHasChanged() || this.contentHasChanged() || this.goalsHaveChanged();
+  }
+
+  titleHasChanged(): boolean {
+    return this.title !== this.initialTitle;
+  }
+
+  contentHasChanged(): boolean {
+    return this.editor.content !== this.initialContent;
+  }
+
+  coverHasChanged(): boolean {
+    return this.cover !== undefined;
+  }
+
+  goalsHaveChanged(): boolean {
+    return ! this.areGoalsEq(this.selectedGoals, this.initialGoals);
+  }
+
+  areGoalsEq(a: Goal[]|undefined, b: Goal[]|undefined): boolean {
+    return a?.toString() === b?.toString();
   }
 
   selectGoal(goal: Goal) {
