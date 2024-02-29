@@ -53,7 +53,9 @@ export class EditorComponent {
 
   onKeyUp(event: KeyboardEvent): void {
     this.refreshContent();
-    if (this.isEmpty(this.contentDiv?.nativeElement)) {
+    if (event.key === "Escape") {
+      this.contentDiv?.nativeElement.blur();
+    } else if (this.isEmpty(this.contentDiv?.nativeElement)) {
       this.contentDiv!.nativeElement.innerHTML = "";
     } else if (event.key === "ArrowRight") {
       if (this.selection?.type === "Caret") {
