@@ -124,9 +124,8 @@ export class AddViewComponent {
     this.mainNav.hideFab();
   }
 
-  onInputBlur(scrollToTop: boolean = false) {
+  onInputBlur() {
     this.mainNav.showFab();
-    if (scrollToTop) { setTimeout(() => this.mainNav.scrollToTop(), 100); }
   }
 
   formIsValid(): boolean {

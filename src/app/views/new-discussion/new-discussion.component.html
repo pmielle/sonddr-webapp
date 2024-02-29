@@ -6,7 +6,10 @@
       (click)="auth.goToProfile()"></app-profile-picture>
   </app-top-bar>
 
-  <div id="content" [class.mobile]="screen.isMobile$|async">
+  <div
+    id="content"
+    [ngClass]="{'focus': inFocus, 'mobile': screen.isMobile$|async}"
+  >
     <div id="to" class="gutter">
       @if (selectedUser; as u) {
       <app-chip id="selected" [label]="u.name" icon="close" color="var(--foreground-color)"
@@ -17,9 +20,6 @@
         placeholder="To:"
         [(ngModel)]="searchString"
         (keyup)="onInputKeyup($event)"
-        (focus)="onInputFocus(true)"
-        (blur)="onInputBlur()"
-        #toField
       />
       }
       <ng-template #noSelect>
@@ -39,7 +39,11 @@
 
   </div>
 
-  <div id="input" class="flex gutter frosted" [ngClass]="{'mobile': screen.isMobile$|async, 'invisible': inTo}">
+  <div
+    id="input"
+    class="flex gutter frosted"
+    [ngClass]="{'focus': inFocus, 'mobile': screen.isMobile$|async}"
+  >
     <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
     <input
       type="text"
@@ -47,7 +51,6 @@
       [(ngModel)]="content"
       (focus)="onInputFocus()"
       (blur)="onInputBlur()"
-      #messageField
     />
     <app-chip label="Message" color="var(--blue)" icon="send" (click)="submit()"
       [class.disabled]="!this.formIsValid()"></app-chip>

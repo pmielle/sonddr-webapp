@@ -10,7 +10,6 @@
         [(ngModel)]="searchString"
         (keydown.enter)="search()"
         (focus)="onInputFocus()"
-        (blur)="onInputBlur()"
         #input
       >
       <app-profile-picture [user]="(auth.user$|async)" (click)="auth.goToProfile()"></app-profile-picture>

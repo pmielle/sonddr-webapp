@@ -32,12 +32,7 @@ export class SearchViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   onInputFocus() {
-    this.mainNav.hideNavBar();
     this.mainNav.scrollToTop();
-  }
-
-  onInputBlur() {
-    this.mainNav.showNavBar();
   }
 
   makeSearchResultsLabel(): string {

@@ -9,6 +9,14 @@
                 - var(--top-bar-height)
                 - 67px
             );
+
+            &.focus {
+              min-height: calc(
+                  100vh
+                  - var(--top-bar-height)
+                  - 67px
+              );
+            }
         }
 
         &:not(.mobile) {
@@ -59,21 +67,23 @@
     #input {
         position: sticky;
         left: 0;
+        bottom: 0;
         padding-top: var(--spacing);
         padding-bottom: var(--spacing);
         width: 100%;
 
         &.mobile {
-            bottom: var(--nav-bar-height);
+          bottom: var(--nav-bar-height);
 
-           &.invisible {
-             opacity: 0;
-           }
+          &.focus {
+            bottom: 0;
+          }
         }
 
         &:not(.mobile) {
             bottom: 0;
         }
+
 
         input {
             margin-left: var(--gutter);

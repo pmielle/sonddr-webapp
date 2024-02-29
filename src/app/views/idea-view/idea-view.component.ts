@@ -36,7 +36,6 @@ export class IdeaViewComponent implements OnDestroy {
   popupSub?: Subscription;
   idea?: Idea;
   comments?: Comment[];
-  inInput = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -64,15 +63,11 @@ export class IdeaViewComponent implements OnDestroy {
   // methods
   // --------------------------------------------
   onInputFocus() {
-    this.mainNav.hideNavBar();
     this.mainNav.hideFab();
-    this.inInput = true;
   }
 
   onInputBlur() {
-    this.mainNav.showNavBar();
     this.mainNav.showFab();
-    this.inInput = false;
   }
 
   deleteExternalLink(link: ExternalLink) {

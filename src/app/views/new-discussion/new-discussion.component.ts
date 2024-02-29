@@ -12,7 +12,7 @@ import { MainNavService } from 'src/app/services/main-nav.service';
   templateUrl: './new-discussion.component.html',
   styleUrls: ['./new-discussion.component.scss']
 })
-export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy {
+export class NewDiscussionComponent implements OnInit, OnDestroy {
 
   // dependencies
   // --------------------------------------------
@@ -30,9 +30,7 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
   searchString = "";
   searchResults?: User[];
   content = "";
-  inTo = false;
-  @ViewChild('toField') toField?: ElementRef;
-  @ViewChild('messageField') messageField?: ElementRef;
+  inFocus = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -42,13 +40,8 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
       if (id) {
         const user = await this.http.getUser(id);
         this.selectedUser = user;
-        this.messageField?.nativeElement.focus();
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    this.toField?.nativeElement.focus(); // throws a NG0100 but doesn't open keyboard on mobile if in setTimeout...
   }
 
   ngOnDestroy(): void {
@@ -58,17 +51,14 @@ export class NewDiscussionComponent implements OnInit, AfterViewInit, OnDestroy 
 
   // methods
   // --------------------------------------------
-  onInputFocus(toField: boolean = false) {
+  onInputFocus() {
     this.mainNav.hideNavBar();
-    if (toField) {
-      setTimeout(() => this.mainNav.scrollToTop(), 100);
-      this.inTo = true;
-    }
+    this.inFocus = true;
   }
 
   onInputBlur() {
-    this.inTo = false;
     this.mainNav.showNavBar();
+    this.inFocus = false;
   }
 
   formIsValid(): boolean {

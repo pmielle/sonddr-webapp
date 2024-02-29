@@ -7,5 +7,9 @@
 
     &.mobile {
         padding-bottom: var(--nav-bar-height);
+
+        &.hidden-nav-bar {
+          padding-bottom: 0;
+        }
     }
 }

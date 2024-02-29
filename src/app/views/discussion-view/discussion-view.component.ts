@@ -34,6 +34,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   content: string = "";
   chatRoom?: ChatRoom;
   chatRoomSub?: Subscription;
+  inFocus = false;
 
   // lifecycle hooks
   // --------------------------------------------
@@ -60,11 +61,12 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   // --------------------------------------------
   onInputFocus() {
     this.mainNav.hideNavBar();
-    setTimeout(() => this.mainNav.scrollToBottom(), 100);
+    this.inFocus = true;
   }
 
   onInputBlur() {
     this.mainNav.showNavBar();
+    this.inFocus = false;
   }
 
   onChatRoomUpdate(payload: Message[]|Change<Message>) {
