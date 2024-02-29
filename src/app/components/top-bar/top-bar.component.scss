@@ -3,13 +3,10 @@
     top: 0;
     z-index: 9;  // must be > 1 otherwise behind idea list section headers
     height: var(--top-bar-height);
-    
+    transition: background-color 300ms;
+
     &:not(.mobile) {
         padding-bottom: 10px;  // otherwise not aligned with logo
-    }
-
-    &.stuck {
-        background-color: red;
     }
 
     #content {
@@ -19,7 +16,7 @@
         .left-item {
             margin-right: 1px;  // mobile alignment with idea card
         }
-        
+
         #logo {
             position: relative;
             height: 32px;

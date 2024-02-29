@@ -1,4 +1,3 @@
-<div appIntersection (isIntersecting)="this.stuck=!$event"></div>
 <div id="container" class="gutter frosted flex column justify-end"
   [style.backgroundColor]=" stuck ? color.transparentColor(this.backgroundColor, .66) : 'transparent'"
   [class]="{'frosted': stuck, 'mobile': (screen.isMobile$ | async)}" (click)="onClick()">
@@ -32,3 +31,6 @@
 
   </div>
 </div>
+
+<!-- right below so that it does not transition if scroll down is only a few pixels -->
+<div appIntersection (isIntersecting)="this.stuck=!$event"></div>
