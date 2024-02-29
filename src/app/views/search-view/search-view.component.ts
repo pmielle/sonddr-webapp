@@ -9,7 +9,7 @@ import { MainNavService } from 'src/app/services/main-nav.service';
   templateUrl: './search-view.component.html',
   styleUrls: ['./search-view.component.scss']
 })
-export class SearchViewComponent implements AfterViewInit, OnDestroy {
+export class SearchViewComponent implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
@@ -25,10 +25,6 @@ export class SearchViewComponent implements AfterViewInit, OnDestroy {
 
   // lifecycle hooks
   // --------------------------------------------
-  ngAfterViewInit(): void {
-    this.input?.nativeElement.focus();
-  }
-
   ngOnDestroy(): void {
       this.mainNav.showNavBar();
   }
@@ -37,7 +33,7 @@ export class SearchViewComponent implements AfterViewInit, OnDestroy {
   // --------------------------------------------
   onInputFocus() {
     this.mainNav.hideNavBar();
-    setTimeout(() => this.mainNav.scrollToTop(), 100); // otherwise weird
+    this.mainNav.scrollToTop();
   }
 
   onInputBlur() {
