@@ -41,22 +41,22 @@ export class UserDataService {
     }
     this.userId = user.id;
     this.discussionsSub = (await this.sse.getDiscussions()).subscribe(
-      payload => this.onDiscussionsUpdate(payload)
+      data => this.onDiscussionsUpdate(data)
     );
     this.notificationsSub = (await this.sse.getNotifications()).subscribe(
-      payload => this.onNotificationsUpdate(payload)
+      data => this.onNotificationsUpdate(data)
     );
   }
 
-  onDiscussionsUpdate(payload: Discussion[] | Change<Discussion>) {
-    if (isChange(payload)) {
-      const change = payload as Change<Discussion>;
+  onDiscussionsUpdate(data: Discussion[] | Change<Discussion>) {
+    if (isChange(data)) {
+      const change = data as Change<Discussion>;
       switch (change.type) {
         case "insert": {
-          const ref = change.payload.readByIds.includes(this.userId!)
+          const ref = change.docAfter!.readByIds.includes(this.userId!)
             ? this.olderDiscussions
             : this.activeDiscussions;
-          ref.unshift(change.payload);
+          ref.unshift(change.docAfter!);
           break;
         }
         case "delete": {
@@ -67,29 +67,29 @@ export class UserDataService {
         case "update": {
           const [sourceRef, index] = this.findDiscussion(change.docId);
           sourceRef.splice(index, 1);
-          const targetRef = change.payload.readByIds.includes(this.userId!)
+          const targetRef = change.docAfter!.readByIds.includes(this.userId!)
             ? this.olderDiscussions
             : this.activeDiscussions;
-          targetRef.unshift(change.payload);
+          targetRef.unshift(change.docAfter!);
           break;
         }
       }
     } else {
-      const discussions = payload as Discussion[];
+      const discussions = data as Discussion[];
       this.olderDiscussions = discussions.filter(d => d.readByIds.includes(this.userId!));
       this.activeDiscussions = discussions.filter(d => ! d.readByIds.includes(this.userId!));
     }
   }
 
-  onNotificationsUpdate(payload: Notification[] | Change<Notification>) {
-    if (isChange(payload)) {
-      const change = payload as Change<Notification>;
+  onNotificationsUpdate(data: Notification[] | Change<Notification>) {
+    if (isChange(data)) {
+      const change = data as Change<Notification>;
       switch (change.type) {
         case "insert": {
-          const ref = change.payload.readByIds.includes(this.userId!)
+          const ref = change.docAfter!.readByIds.includes(this.userId!)
             ? this.oldNotifications
             : this.newNotifications;
-          ref.unshift(change.payload);
+          ref.unshift(change.docAfter!);
           break;
         }
         case "delete": {
@@ -100,15 +100,15 @@ export class UserDataService {
         case "update": {
           const [sourceRef, index] = this.findNotification(change.docId);
           sourceRef.splice(index, 1);
-          const targetRef = change.payload.readByIds.includes(this.userId!)
+          const targetRef = change.docAfter!.readByIds.includes(this.userId!)
             ? this.oldNotifications
             : this.newNotifications;
-          targetRef.unshift(change.payload);
+          targetRef.unshift(change.docAfter!);
           break;
         }
       }
     } else {
-      const notifications = payload as Notification[];
+      const notifications = data as Notification[];
       this.oldNotifications = notifications.filter(n => n.readByIds.includes(this.userId!));
       this.newNotifications = notifications.filter(n => ! n.readByIds.includes(this.userId!));
     }

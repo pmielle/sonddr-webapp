@@ -46,7 +46,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       await this.http.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
       this.chatRoom = await this.websocket.getChatRoom(id);
       this.chatRoomSub = this.chatRoom.listen().subscribe(
-        (payload) => this.onChatRoomUpdate(payload)
+        (data) => this.onChatRoomUpdate(data)
       );
     });
   }
@@ -69,18 +69,18 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     this.inFocus = false;
   }
 
-  onChatRoomUpdate(payload: Message[]|Change<Message>) {
-    if (isChange(payload)) {
-      const change = payload as Change<Message>;
+  onChatRoomUpdate(data: Message[]|Change<Message>) {
+    if (isChange(data)) {
+      const change = data as Change<Message>;
       switch (change.type) {
         case "insert": {
-          this.messages!.unshift(change.payload);
+          this.messages!.unshift(change.docAfter!);
           this.mainNav.scrollToBottom();
           break;
         }
         case "update": {
           const index = this.findIndex(change.docId);
-          this.messages![index] = change.payload;
+          this.messages![index] = change.docAfter!;
           break;
         }
         case "delete": {
@@ -90,7 +90,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
         }
       }
     } else {
-      this.messages = payload as Message[];
+      this.messages = data as Message[];
       this.mainNav.scrollToBottom(); // does not work for some weird timing reason
     }
   }
