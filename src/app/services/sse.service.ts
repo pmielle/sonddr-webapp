@@ -42,17 +42,17 @@ export class SseService {
     const source = new EventSource(`${this.basePath}/${path}?token=${token}`);
     return new Observable(subscriber => {
       source.onmessage = (message: MessageEvent<string>) => {
-        const payload = JSON.parse(message.data, (key, value) => {
+        const data = JSON.parse(message.data, (key, value) => {
           if (/[Dd]ate$/.test(key)) {
             value = new Date(value);
           }
           return value;
         });
         // if ping, ignore
-        if (payload === ping_str) { return; }
+        if (data === ping_str) { return; }
         // each message can be either a T[] (initial value)
         //     or a Change<T> if db has been updated
-        subscriber.next(payload as T[] | Change<T>);
+        subscriber.next(data as T[] | Change<T>);
       };
       source.onerror = (err) => subscriber.error(err);
       return () => {

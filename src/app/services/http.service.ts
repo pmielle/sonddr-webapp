@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment, ExternalLink, DbIdea } from 'sonddr-shared';
+import { Cheer, Discussion, Goal, Idea, Message, PostResponse, User, makeCheerId, makeVoteId, Comment, ExternalLink } from 'sonddr-shared';
 import { SortBy } from '../components/idea-list/idea-list.component';
 import { lastValueFrom } from 'rxjs';
 
@@ -212,8 +212,8 @@ export class HttpService {
     return data;
   }
 
-  private async _post(path: string, payload: object): Promise<string> {
-    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.basePath}/${path}`, payload));
+  private async _post(path: string, body: object): Promise<string> {
+    const response = await lastValueFrom(this.db.post<PostResponse>(`${this.basePath}/${path}`, body));
     return response.insertedId;
   }
 
@@ -221,12 +221,12 @@ export class HttpService {
     return lastValueFrom(this.db.delete<void>(`${this.basePath}/${path}`));
   }
 
-  private async _put(path: string, payload: object): Promise<void> {
-    await lastValueFrom(this.db.put(`${this.basePath}/${path}`, payload));
+  private async _put(path: string, body: object): Promise<void> {
+    await lastValueFrom(this.db.put(`${this.basePath}/${path}`, body));
   }
 
-  private async _patch(path: string, payload: object): Promise<void> {
-    return lastValueFrom(this.db.patch<void>(`${this.basePath}/${path}`, payload));
+  private async _patch(path: string, body: object): Promise<void> {
+    return lastValueFrom(this.db.patch<void>(`${this.basePath}/${path}`, body));
   }
 
   private _convertApiDataToData(apiData: any): any {
