@@ -43,7 +43,10 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.paramMap.subscribe(async map => {
       const id = map.get("id");
       if (!id) { throw new Error("Missing id route param"); }
-      await this.http.getDiscussion(id).then(d => this.discussion = d); // needs to be await-ed otherwise scrollToBottom does not work
+      await this.http.getDiscussion(id).then(d => {
+        console.log(d);
+        this.discussion = d;
+      }); // needs to be await-ed otherwise scrollToBottom does not work
       this.chatRoom = await this.websocket.getChatRoom(id);
       this.chatRoomSub = this.chatRoom.listen().subscribe(
         (data) => this.onChatRoomUpdate(data)
@@ -133,10 +136,9 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
     return !fromSameAuthor;
   }
 
-  findOtherUser(loggedInUser: User|undefined|null): User|undefined {
+  findOtherUser(): User|undefined {
     if (!this.discussion) { return undefined; }
-    if (!loggedInUser) { return undefined; }
-    let otherUsers = this.discussion.users.filter(u => u.id !== loggedInUser.id);
+    let otherUsers = this.discussion.users.filter(u => !u.isUser);
     if (!otherUsers.length) {
       throw new Error(`Failed to find another user for discussion ${this.discussion.id}`);
     }
