@@ -118,7 +118,10 @@ export class EditUserViewComponent {
       this.bioHasChanged() ? this.editor.content : undefined,
       this.cover,
     );
-    setTimeout(() => this.router.navigateByUrl(`/ideas/user/${this.user!.id}`), 100); // otherwise doesn't refresh for some reason
+    setTimeout(() => this.router.navigateByUrl(
+      `/ideas/user/${this.user!.id}`,
+      {skipLocationChange: true}
+    ), 100); // otherwise doesn't refresh for some reason
   }
 
   onCoverChange(file: File) {

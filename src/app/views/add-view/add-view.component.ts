@@ -144,7 +144,10 @@ export class AddViewComponent {
       this.cover,
       this.editor.images,
     );
-    setTimeout(() => this.router.navigateByUrl(`/ideas/idea/${this.editIdeaId!}`), 100); // otherwise doesn't refresh for some reason
+    setTimeout(() => this.router.navigateByUrl(
+      `/ideas/idea/${this.editIdeaId!}`,
+      {skipLocationChange: true}
+    ), 100); // otherwise doesn't refresh for some reason
   }
 
   async submit(): Promise<void> {
@@ -156,7 +159,10 @@ export class AddViewComponent {
         this.cover,
         this.editor.images,
       );
-      this.router.navigateByUrl(`/ideas/idea/${id}`, {replaceUrl: true});
+      this.router.navigateByUrl(
+        `/ideas/idea/${id}`,
+        {replaceUrl: true}
+      );
     } else {
       throw new Error("submit should not be callable if one input is empty");
     }

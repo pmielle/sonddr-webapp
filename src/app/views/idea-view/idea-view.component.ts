@@ -86,7 +86,10 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   async onEditClick() {
-    this.router.navigateByUrl(`/ideas/add?edit=${this.idea!.id}`);
+    this.router.navigateByUrl(
+      `/ideas/add?edit=${this.idea!.id}`,
+      {skipLocationChange: true}
+    );
   }
 
   chooseCover() {

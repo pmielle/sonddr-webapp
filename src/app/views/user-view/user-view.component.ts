@@ -77,7 +77,10 @@ export class UserViewComponent {
   }
 
   async onEditClick() {
-    this.router.navigateByUrl(`/ideas/user-edit/${this.user!.id}`);
+    this.router.navigateByUrl(
+      `/ideas/user-edit/${this.user!.id}`,
+      {skipLocationChange: true}
+    );
   }
 
   addExternalLink(link: ExternalLink) {
