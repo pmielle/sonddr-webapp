@@ -3,43 +3,45 @@
   <div id="toolbar" [ngClass]="{'mobile': screen.isMobile$|async, 'invisible': ! inFocus && ! showLinkPopup }">
 
     <app-h-scroll>
-    <button mat-icon-button (click)="onFormatButtonClick('b')" [color]="chooseButtonColor('b')">
-      <mat-icon>format_bold</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="onFormatButtonClick('i')" [color]="chooseButtonColor('i')">
-      <mat-icon>format_italic</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="onFormatButtonClick('u')" [color]="chooseButtonColor('u')">
-      <mat-icon>format_underline</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="onFormatButtonClick('h1')" [color]="chooseButtonColor('h1')">
-      <mat-icon>title</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="onLinkButtonClick()" [color]="chooseButtonColor('a')">
-      <mat-icon>link</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="onFormatButtonClick('blockquote')" [color]="chooseButtonColor('blockquote')">
-      <mat-icon>format_quote</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="formatList('ul')" [color]="chooseButtonColor('ul')">
-      <mat-icon>format_list_bulleted</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="formatList('ol')" [color]="chooseButtonColor('ol')">
-      <mat-icon>format_list_numbered</mat-icon>
-    </button>
-
-    <app-file-picker (file-change)="addImage($event)">
-      <button mat-icon-button>
-        <mat-icon>image</mat-icon>
+      <button mat-icon-button (click)="onFormatButtonClick('b')" [color]="chooseButtonColor('b')">
+        <mat-icon>format_bold</mat-icon>
       </button>
-    </app-file-picker>
+
+      <button mat-icon-button (click)="onFormatButtonClick('i')" [color]="chooseButtonColor('i')">
+        <mat-icon>format_italic</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="onFormatButtonClick('u')" [color]="chooseButtonColor('u')">
+        <mat-icon>format_underline</mat-icon>
+      </button>
+
+      @if (! textOnly) {
+      <button mat-icon-button (click)="onFormatButtonClick('h1')" [color]="chooseButtonColor('h1')">
+        <mat-icon>title</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="onLinkButtonClick()" [color]="chooseButtonColor('a')">
+        <mat-icon>link</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="onFormatButtonClick('blockquote')" [color]="chooseButtonColor('blockquote')">
+        <mat-icon>format_quote</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="formatList('ul')" [color]="chooseButtonColor('ul')">
+        <mat-icon>format_list_bulleted</mat-icon>
+      </button>
+
+      <button mat-icon-button (click)="formatList('ol')" [color]="chooseButtonColor('ol')">
+        <mat-icon>format_list_numbered</mat-icon>
+      </button>
+
+      <app-file-picker (file-change)="addImage($event)">
+        <button mat-icon-button>
+          <mat-icon>image</mat-icon>
+        </button>
+      </app-file-picker>
+      }
     </app-h-scroll>
 
     @if(showLinkPopup) {
@@ -56,14 +58,7 @@
 
   </div>
 
-  <div
-    id="content-div"
-    contenteditable="true"
-    placeholder="Explain your idea..."
-    (keyup)="onKeyUp($event)"
-    (focus)="onInputFocus()"
-    (blur)="onInputBlur()"
-    #contentDiv
-  ></div>
+  <div id="content-div" contenteditable="true" placeholder="Explain your idea..." (keyup)="onKeyUp($event)"
+    (focus)="onInputFocus()" (blur)="onInputBlur()" #contentDiv></div>
 
 </div>

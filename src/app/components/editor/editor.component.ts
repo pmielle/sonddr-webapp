@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Output, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild, inject } from '@angular/core';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 
 const invisible_space = '\u200B';
@@ -16,6 +16,7 @@ export class EditorComponent {
 
   // I/O
   // --------------------------------------------
+  @Input("text-only") textOnly = false;
   @Output("focus") focus = new EventEmitter<void>();
   @Output("blur") blur = new EventEmitter<void>();
   @ViewChild("contentDiv") contentDiv?: ElementRef;
