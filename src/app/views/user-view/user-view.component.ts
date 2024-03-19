@@ -24,6 +24,7 @@ export class UserViewComponent {
   auth = inject(AuthService);
   time = inject(TimeService);
   mainNav = inject(MainNavService);
+  router = inject(Router);
 
   // attributes
   // --------------------------------------------
@@ -71,6 +72,14 @@ export class UserViewComponent {
 
   // methods
   // --------------------------------------------
+  chooseCover() {
+    return this.user?.cover ? `url(${this.http.getImageUrl(this.user.cover)}` : "";
+  }
+
+  async onEditClick() {
+    this.router.navigateByUrl(`/ideas/user-edit/${this.user!.id}`);
+  }
+
   addExternalLink(link: ExternalLink) {
     this.user!.externalLinks.push(link);
     this.http.addUserExternalLink(this.user!.id, link);

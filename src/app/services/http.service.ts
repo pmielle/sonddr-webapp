@@ -25,6 +25,14 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
+  async editUser(userId: string, name?: string, bio?: string, cover?: File) {
+    const formData = new FormData();
+    if (name !== undefined) { formData.append("name", name); }
+    if (bio !== undefined) { formData.append("bio", bio); }
+    if (cover) { formData.append("cover", cover); }
+    this._patch(`/users/${userId}`, formData);
+  }
+
   // images is a map with ids as keys and actual files as values
   // it is needed because the backend needs a way to tell which image matches which img tag
   // this id is shared between the file (originalName attr) and the tag (id attr)

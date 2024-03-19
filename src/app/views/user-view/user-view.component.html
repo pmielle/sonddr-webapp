@@ -7,11 +7,16 @@
       (click)="auth.goToProfile()"></app-profile-picture>
     } @else {
     <h2 class="no-margin-bottom">My profile</h2>
+    <div class="spacer"></div>
+    <button mat-icon-button [mat-menu-trigger-for]="menu"><mat-icon>more_vert</mat-icon></button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="onEditClick()">Edit</button>
+    </mat-menu>
     }
   </app-top-bar>
 
   <div id="cover">
-    <div id="cover-background" class="bg cover" [style.backgroundImage]="'url(assets/default-cover-picture.png)'"></div>
+    <div id="cover-background" class="bg cover" [style.backgroundImage]="chooseCover()"></div>
     <div id="profile-picture">
       <app-profile-picture [user]="user" [large]="true"></app-profile-picture>
     </div>

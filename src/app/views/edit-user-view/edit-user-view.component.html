@@ -1,0 +1,50 @@
+<div id="container">
+
+  <app-top-bar left-item="close">
+    <h2 class="no-margin-bottom">Edit my profile</h2>
+  </app-top-bar>
+
+  <div id="cover">
+
+    <div id="cover-background" class="bg cover" [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"
+      [class.lowkey]="coverPreview"></div>
+
+    <div id="upload">
+      <app-file-picker (file-change)="onCoverChange($event)">
+        <div
+            id="button"
+            class="flex column"
+            mat-ripple
+            [matRippleCentered]="true"
+            [matRippleUnbounded]="true"
+            matRippleSize="20px"
+        >
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Upload a cover</span>
+        </div>
+      </app-file-picker>
+    </div>
+
+  </div>
+
+  <div id="form" class="flex column gap">
+    <input
+      id="name"
+      type="text"
+      placeholder="Choose a name"
+      (keyup)="refreshFabDisplay()"
+      [(ngModel)]="name"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+      (keydown.tab)="onNameTab($event)"
+    >
+
+    <app-editor
+      (keyup)="refreshFabDisplay()"
+      (focus)="onInputFocus()"
+      (blur)="onInputBlur()"
+    ></app-editor>
+
+  </div>
+
+</div>

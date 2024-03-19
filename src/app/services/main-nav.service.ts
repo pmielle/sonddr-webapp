@@ -165,6 +165,13 @@ export class MainNavService {
         label: label,
         action: () => {this.fabClick.next();}
       });
+    } else if (url.startsWith("/ideas/user-edit/")) {
+      this.fabMode$.next({
+        icon: "done",
+        color: "var(--green)",
+        label: "Done",
+        action: () => {this.fabClick.next();}
+      });
     } else if (url.startsWith("/ideas/user/")) {
       this.fabMode$.next(undefined); // handled by the view depending on who the user is
     } else if (url.startsWith("/ideas/idea/")) {

@@ -12,6 +12,7 @@
             left: 0;
             height: calc(100% + var(--top-bar-height));
             width: 100%;
+            background-color: var(--grey);
         }
 
         #profile-picture {
@@ -21,7 +22,7 @@
             transform: translate(-50%, 25%);
         }
     }
-        
+
     #header {
         width: 100%;
         gap: var(--spacing);

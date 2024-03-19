@@ -50,6 +50,7 @@ import {CdkMenuModule} from '@angular/cdk/menu';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AddExternalLinkPopupComponent } from './components/add-external-link-popup/add-external-link-popup.component';
 import { ExternalLinksComponent } from './components/external-links/external-links.component';
+import { EditUserViewComponent } from './views/edit-user-view/edit-user-view.component';
 
 
 @NgModule({
@@ -92,6 +93,7 @@ import { ExternalLinksComponent } from './components/external-links/external-lin
     LikeCounterComponent,
     AddExternalLinkPopupComponent,
     ExternalLinksComponent,
+    EditUserViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +116,7 @@ import { ExternalLinksComponent } from './components/external-links/external-lin
         {path: "goal/:id", component: GoalViewComponent},
         {path: "add", component: AddViewComponent},
         {path: "user/:id", component: UserViewComponent},
+        {path: "user-edit/:id", component: EditUserViewComponent},
       ]},
       {path: "search", component: SearchViewComponent},
       {path: "messages", component: MessagesTabComponent, children: [
