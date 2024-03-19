@@ -31,6 +31,10 @@ export class AuthService {
 
   // public methods
   // --------------------------------------------
+  logOut() {
+    this.keycloak.logout();
+  }
+
   goToProfile() {
     const user = this.user$.getValue();
     if (! user) { throw new Error("User is undefined"); }

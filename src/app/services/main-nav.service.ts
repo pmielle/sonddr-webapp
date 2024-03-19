@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable, OnDestroy, OnInit, inject } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription, filter } from 'rxjs';
+import { AuthService } from './auth.service';
 
 export type Tab = "ideas" | "search" | "messages" | "notifications";
 export type FabMode = {
@@ -18,6 +19,7 @@ export class MainNavService {
   // dependencies
   // --------------------------------------------
   router = inject(Router);
+  auth = inject(AuthService);
 
   // attributes
   // --------------------------------------------
@@ -74,7 +76,7 @@ export class MainNavService {
         icon: "logout",
         color: "var(--red)",
         label: "Log out",
-        action: () => {console.log("log out")}
+        action: () => { this.auth.logOut(); }
     });
   }
 
