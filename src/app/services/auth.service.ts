@@ -5,6 +5,7 @@ import { HttpService } from './http.service';
 import { BehaviorSubject } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { KeycloakProfile } from 'keycloak-js';
 
 @Injectable({
   providedIn: 'root'
@@ -43,9 +44,8 @@ export class AuthService {
   async loadUser() {
     const userProfile = await this.keycloak.loadUserProfile();
     const id = userProfile.id;
-    const name = userProfile.username;
     if (id === undefined) { throw new Error("id missing from keycloak profile"); }
-    if (name === undefined) { throw new Error("name missing from keycloak profile"); }
+    const name = this._choose_name(userProfile);
     let user: User;
     try {
       user = await this.http.getUser(id);
@@ -58,5 +58,18 @@ export class AuthService {
       }
     }
     this.user$.next(user);
+  }
+
+  // private
+  // --------------------------------------------
+  _choose_name(profile: KeycloakProfile): string {
+    const firstName = profile.firstName;
+    const lastName = profile.lastName;
+    const name = (firstName && lastName) ? `${firstName} ${lastName}` : profile.username;
+    if (!name) {
+      throw new Error(`Failed to choose username for ${profile.id}`);
+    }
+    return name;
+
   }
 }
