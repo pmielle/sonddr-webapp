@@ -158,10 +158,11 @@ export class MainNavService {
         action: () => {this.router.navigateByUrl(`/messages/new-discussion`)}
       });
     } else if (url.startsWith("/ideas/add")) {
+      const label = url.includes("edit=") ? "Done" : "Share";
       this.fabMode$.next({
         icon: "done",
         color: "var(--green)",
-        label: "Share",
+        label: label,
         action: () => {this.fabClick.next();}
       });
     } else if (url.startsWith("/ideas/user/")) {
