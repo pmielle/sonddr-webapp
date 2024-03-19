@@ -17,6 +17,7 @@ export class EditorComponent {
   // I/O
   // --------------------------------------------
   @Input("text-only") textOnly = false;
+  @Input("placeholder") placeholder?: string;
   @Output("focus") focus = new EventEmitter<void>();
   @Output("blur") blur = new EventEmitter<void>();
   @ViewChild("contentDiv") contentDiv?: ElementRef;

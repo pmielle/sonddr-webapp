@@ -58,7 +58,7 @@
 
   </div>
 
-  <div id="content-div" contenteditable="true" placeholder="Explain your idea..." (keyup)="onKeyUp($event)"
+  <div id="content-div" contenteditable="true" [attr.placeholder]="placeholder" (keyup)="onKeyUp($event)"
     (focus)="onInputFocus()" (blur)="onInputBlur()" #contentDiv></div>
 
 </div>

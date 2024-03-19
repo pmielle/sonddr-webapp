@@ -10,16 +10,10 @@
 
     <div id="upload">
       <app-file-picker (file-change)="onCoverChange($event)">
-        <div
-            id="button"
-            class="flex column"
-            mat-ripple
-            [matRippleCentered]="true"
-            [matRippleUnbounded]="true"
-            matRippleSize="20px"
-        >
-            <mat-icon>cloud_upload</mat-icon>
-            <span>Upload a cover</span>
+        <div id="button" class="flex column" mat-ripple [matRippleCentered]="true" [matRippleUnbounded]="true"
+          matRippleSize="20px">
+          <mat-icon>cloud_upload</mat-icon>
+          <span>Upload a cover</span>
         </div>
       </app-file-picker>
     </div>
@@ -43,22 +37,11 @@
   </div>
 
   <div id="form" class="flex column gap">
-    <input
-      id="title"
-      type="text"
-      placeholder="Choose a title"
-      (keyup)="refreshFabDisplay()"
-      [(ngModel)]="title"
-      (focus)="onInputFocus()"
-      (blur)="onInputBlur()"
-      (keydown.tab)="onTitleTab($event)"
-    >
+    <input id="title" type="text" placeholder="Choose a title" (keyup)="refreshFabDisplay()" [(ngModel)]="title"
+      (focus)="onInputFocus()" (blur)="onInputBlur()" (keydown.tab)="onTitleTab($event)">
 
-    <app-editor
-      (keyup)="refreshFabDisplay()"
-      (focus)="onInputFocus()"
-      (blur)="onInputBlur()"
-    ></app-editor>
+    <app-editor placeholder="Explain your idea..." (keyup)="refreshFabDisplay()" (focus)="onInputFocus()"
+      (blur)="onInputBlur()"></app-editor>
 
   </div>
 
