@@ -1,4 +1,5 @@
 #container {
+  padding-bottom: calc(var(--nav-bar-height) + 56px + 2 * var(--spacing));  // fab size
 
     #cover {
         position: relative;
