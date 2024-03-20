@@ -19,6 +19,13 @@
       </app-file-picker>
     </div>
 
+    <div id="profile-picture">
+      <app-file-picker (file-change)="onProfilePictureChange($event)">
+        <app-profile-picture [user]="user" [large]="true"
+          [override]="profilePicturePreview ? 'url('+profilePicturePreview+')' : ''"></app-profile-picture>
+      </app-file-picker>
+    </div>
+
   </div>
 
   <div id="form" class="flex column gap">

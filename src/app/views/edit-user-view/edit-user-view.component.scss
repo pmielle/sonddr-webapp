@@ -24,6 +24,13 @@
             transform: translate(-50%, -50%);
             color: var(--background-color);
         }
+
+        #profile-picture {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 25%);
+        }
     }
 
     #form {

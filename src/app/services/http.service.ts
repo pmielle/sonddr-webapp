@@ -25,11 +25,12 @@ export class HttpService {
 
   // public methods
   // --------------------------------------------
-  async editUser(userId: string, name?: string, bio?: string, cover?: File) {
+  async editUser(userId: string, name?: string, bio?: string, cover?: File, profilePicture?: File) {
     const formData = new FormData();
     if (name !== undefined) { formData.append("name", name); }
     if (bio !== undefined) { formData.append("bio", bio); }
     if (cover) { formData.append("cover", cover); }
+    if (profilePicture) { formData.append("profilePicture", profilePicture); }
     this._patch(`/users/${userId}`, formData);
   }
 

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { User } from 'sonddr-shared';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-profile-picture',
@@ -8,7 +9,18 @@ import { User } from 'sonddr-shared';
 })
 export class ProfilePictureComponent {
 
+  http = inject(HttpService);
+
   @Input('large') large = false;
   @Input('user') user?: User|null;
+  @Input('override') override?: string;
+
+  choosePicture() {
+    return this.override
+      ? this.override
+      : this.user?.profilePicture
+        ? `url(${this.http.getImageUrl(this.user.profilePicture)}`
+        : "";
+  }
 
 }

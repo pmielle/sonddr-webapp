@@ -29,8 +29,10 @@ export class EditUserViewComponent {
   mainSub?: Subscription;
   fabSub?: Subscription;
   coverPreview?: string;
+  profilePicturePreview?: string;
   name = "";
   cover?: File;
+  profilePicture?: File;
   initialName?: string;
   initialBio?: string;
   user?: User;
@@ -88,6 +90,7 @@ export class EditUserViewComponent {
     this.initialBio = user.bio;
     this.initialName = user.name;
     if (user.cover) { this.coverPreview = this.http.getImageUrl(user.cover); }
+    if (user.profilePicture) { this.profilePicturePreview = this.http.getImageUrl(user.profilePicture); }
     this.refreshFabDisplay();
   }
 
@@ -117,11 +120,18 @@ export class EditUserViewComponent {
       this.nameHasChanged() ? this.name : undefined,
       this.bioHasChanged() ? this.editor.content : undefined,
       this.cover,
+      this.profilePicture,
     );
     setTimeout(() => this.router.navigateByUrl(
       `/ideas/user/${this.user!.id}`,
       {skipLocationChange: true}
     ), 100); // otherwise doesn't refresh for some reason
+  }
+
+  onProfilePictureChange(file: File) {
+    this.profilePicture = file;
+    this.profilePicturePreview = URL.createObjectURL(file);
+    this.refreshFabDisplay();
   }
 
   onCoverChange(file: File) {
@@ -139,7 +149,7 @@ export class EditUserViewComponent {
   }
 
   somethingHasBeenEdited(): boolean {
-    return this.coverHasChanged() || this.nameHasChanged() || this.bioHasChanged();
+    return this.coverHasChanged() || this.profilePictureHasChanged() || this.nameHasChanged() || this.bioHasChanged();
   }
 
   nameHasChanged(): boolean {
@@ -152,6 +162,10 @@ export class EditUserViewComponent {
 
   coverHasChanged(): boolean {
     return this.cover !== undefined;
+  }
+
+  profilePictureHasChanged(): boolean {
+    return this.profilePicture !== undefined;
   }
 
 }
