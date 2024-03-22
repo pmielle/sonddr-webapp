@@ -39,7 +39,8 @@ export class UserDataService {
   // public methods
   // --------------------------------------------
   async refreshUser() {
-    this.user$.next(await this.http.getUser(this._getUser()!.id));
+    const newUser = await this.http.getUser(this._getUser()!.id);
+    this.user$.next(newUser);
   }
 
   goToProfile() {

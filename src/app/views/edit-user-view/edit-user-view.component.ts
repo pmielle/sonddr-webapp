@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, switchMap } from 'rxjs';
 import { User } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { EditorComponent } from 'src/app/components/editor/editor.component';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-edit-user-view',
@@ -20,7 +20,7 @@ export class EditUserViewComponent {
   route = inject(ActivatedRoute);
   http = inject(HttpService);
   screen = inject(ScreenSizeService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   mainNav = inject(MainNavService);
   router = inject(Router);
 
@@ -122,10 +122,10 @@ export class EditUserViewComponent {
       this.cover,
       this.profilePicture,
     );
-    setTimeout(() => this.router.navigateByUrl(
-      `/ideas/user/${this.user!.id}`,
-      {skipLocationChange: true}
-    ), 100); // otherwise doesn't refresh for some reason
+    setTimeout(() => {
+      this.userData.refreshUser();
+      this.router.navigateByUrl(`/ideas/user/${this.user!.id}`, { skipLocationChange: true });
+    }, 100); // otherwise doesn't refresh for some reason
   }
 
   onProfilePictureChange(file: File) {
