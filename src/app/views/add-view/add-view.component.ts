@@ -78,8 +78,10 @@ export class AddViewComponent {
     });
 
     // hide bottom bar and disable fab
-    this.mainNav.hideNavBar();
-    this.mainNav.disableFab();
+    setTimeout(() => {
+      this.mainNav.hideNavBar();
+      this.mainNav.disableFab();
+    }, 100); // otherwise NG0100
 
     // listen to fab clicks
     this.fabSub = this.mainNav.fabClick.subscribe(() => {
