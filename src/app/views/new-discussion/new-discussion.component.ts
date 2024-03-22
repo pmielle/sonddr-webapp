@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { User } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-new-discussion',
@@ -16,7 +16,7 @@ export class NewDiscussionComponent implements OnInit, OnDestroy {
 
   // dependencies
   // --------------------------------------------
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   screen = inject(ScreenSizeService);
   route = inject(ActivatedRoute);
   http = inject(HttpService);

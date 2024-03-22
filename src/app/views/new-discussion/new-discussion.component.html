@@ -2,8 +2,8 @@
   <app-top-bar left-item="close">
     <h2 class="no-margin-bottom">New discussion</h2>
     <div class="spacer"></div>
-    <app-profile-picture class="pointer" [user]="auth.user$|async"
-      (click)="auth.goToProfile()"></app-profile-picture>
+    <app-profile-picture class="pointer" [user]="userData.user$|async"
+      (click)="userData.goToProfile()"></app-profile-picture>
   </app-top-bar>
 
   <div
@@ -44,7 +44,7 @@
     class="flex gutter frosted"
     [ngClass]="{'focus': inFocus, 'mobile': screen.isMobile$|async}"
   >
-    <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+    <app-profile-picture [user]="userData.user$|async"></app-profile-picture>
     <input
       type="text"
       placeholder="Your message"

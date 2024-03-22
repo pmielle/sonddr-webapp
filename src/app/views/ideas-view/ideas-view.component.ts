@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Goal, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-ideas-view',
@@ -16,7 +16,7 @@ export class IdeasViewComponent implements OnInit {
   // --------------------------------------------
   http = inject(HttpService);
   screen = inject(ScreenSizeService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
 
 
   // attributes

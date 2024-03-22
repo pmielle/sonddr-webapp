@@ -1,5 +1,5 @@
 <div id="container" class="flex column align-start small-gap pointer" mat-ripple>
-  @if (findOtherUser(auth.user$|async); as u) {
+  @if (findOtherUser(userData.user$|async); as u) {
   <span id="title">
     <app-profile-picture [user]="u"></app-profile-picture>
     <b>{{ u.name }}</b>

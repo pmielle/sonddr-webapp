@@ -4,10 +4,10 @@ import { Subscription } from 'rxjs';
 import { User, Idea, ExternalLink } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-user-view',
@@ -21,7 +21,7 @@ export class UserViewComponent {
   route = inject(ActivatedRoute);
   http = inject(HttpService);
   screen = inject(ScreenSizeService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   time = inject(TimeService);
   mainNav = inject(MainNavService);
   router = inject(Router);

@@ -1,9 +1,9 @@
 import { Component, ElementRef, EventEmitter, Input, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { Comment, Idea } from 'sonddr-shared';
-import { AuthService } from 'src/app/services/auth.service';
+import { Comment } from 'sonddr-shared';
 import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 export type SortBy = "recent" | "popular";
 
@@ -25,7 +25,7 @@ export class CommentSectionComponent {
   screen = inject(ScreenSizeService);
   color = inject(ColorService);
   time = inject(TimeService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
 
   // i/o
   // --------------------------------------------

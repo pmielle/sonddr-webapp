@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import { Idea } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-search-view',
@@ -13,7 +13,7 @@ export class SearchViewComponent implements OnDestroy {
 
   // dependencies
   // --------------------------------------------
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   http = inject(HttpService);
   mainNav = inject(MainNavService);
 

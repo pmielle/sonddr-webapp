@@ -1,15 +1,14 @@
 import { Component, OnDestroy, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Comment, ExternalLink, ExternalLinkType, Idea, placeholder_id, externalLinkTypes } from 'sonddr-shared';
+import { Comment, ExternalLink, Idea, placeholder_id } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { TimeService } from 'src/app/services/time.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddExternalLinkPopupComponent } from 'src/app/components/add-external-link-popup/add-external-link-popup.component';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-idea-view',
@@ -25,7 +24,7 @@ export class IdeaViewComponent implements OnDestroy {
   time = inject(TimeService);
   screen = inject(ScreenSizeService);
   mainNav = inject(MainNavService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   router = inject(Router);
   dialog = inject(MatDialog);
 
@@ -97,19 +96,19 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   upvoteComment(commentId: string) {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!user) { throw new Error("cannot upvote if user is undefined"); }
     this.http.upvoteComment(commentId, user.id);
   }
 
   downvoteComment(commentId: string) {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!user) { throw new Error("cannot downvote if user is undefined"); }
     this.http.downvoteComment(commentId, user.id);
   }
 
   deleteCommentVote(commentId: string) {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!user) { throw new Error("cannot downvote if user is undefined"); }
     this.http.deleteVote(commentId, user.id);
   }
@@ -139,14 +138,14 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   async cheer() {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!this.idea) { throw new Error("cannot cheer if idea is undefined"); }
     if (!user) { throw new Error("cannot cheer if user is undefined"); }
     return this.http.cheer(this.idea.id, user.id);
   }
 
   async deleteCheer() {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!this.idea) { throw new Error("cannot delete cheer if idea is undefined"); }
     if (!user) { throw new Error("cannot delete cheer if user is undefined"); }
     return this.http.deleteCheer(this.idea.id, user.id);
@@ -171,7 +170,7 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   makePlaceholderComment(body: string, ideaId: string): Comment {
-    const user = this.auth.user$.getValue();
+    const user = this.userData.user$.getValue();
     if (!user) { throw new Error("Cannot post comment if user is not logged in"); }
     return {
       id: placeholder_id,

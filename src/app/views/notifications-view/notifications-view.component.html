@@ -5,8 +5,8 @@
     <h1 class="no-margin-bottom">Notifications</h1>
     }
     <div class="spacer"></div>
-    <app-profile-picture class="pointer" [user]="auth.user$|async"
-      (click)="auth.goToProfile()"></app-profile-picture>
+    <app-profile-picture class="pointer" [user]="userData.user$|async"
+      (click)="userData.goToProfile()"></app-profile-picture>
   </app-top-bar>
 
   @if (screen.isMobile$ | async) {

@@ -7,11 +7,11 @@
       otherUser.name }}</h2>
     }
     <div class="spacer"></div>
-    <app-profile-picture class="pointer" [user]="auth.user$|async"
-      (click)="auth.goToProfile()"></app-profile-picture>
+    <app-profile-picture class="pointer" [user]="userData.user$|async"
+      (click)="userData.goToProfile()"></app-profile-picture>
   </app-top-bar>
 
-  @if (auth.user$|async; as loggedInUser) {
+  @if (userData.user$|async; as loggedInUser) {
   <div
     id="messages"
     class="flex justify-start small-gap"
@@ -32,7 +32,7 @@
     class="flex gutter frosted"
     [ngClass]="{'mobile': screen.isMobile$|async, 'focus': inFocus}"
   >
-    <app-profile-picture [user]="auth.user$|async"></app-profile-picture>
+    <app-profile-picture [user]="userData.user$|async"></app-profile-picture>
     <input
       type="text"
       placeholder="Your message"

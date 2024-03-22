@@ -13,16 +13,13 @@ export class SseService {
   // --------------------------------------------
   auth = inject(AuthService);
 
-
   // attributes
   // --------------------------------------------
   private basePath = "/api";
 
-
   // lifecycle hooks
   // --------------------------------------------
   constructor() { }
-
 
   // public methods
   // --------------------------------------------
@@ -33,7 +30,6 @@ export class SseService {
   async getNotifications(): Promise<Observable<Change<Notification> | Notification[]>> {
     return this._getAndWatch<Notification>("notifications");
   }
-
 
   // private methods
   // --------------------------------------------

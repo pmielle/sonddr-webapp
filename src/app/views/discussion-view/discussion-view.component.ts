@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Discussion, Message, User, Change, isChange } from 'sonddr-shared';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { MainNavService } from 'src/app/services/main-nav.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
 import { ChatRoom } from 'src/app/types/chat-room';
 import { WebsocketService } from 'src/app/services/websocket.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
   route = inject(ActivatedRoute);
   http = inject(HttpService);
   screen = inject(ScreenSizeService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   mainNav = inject(MainNavService);
   websocket = inject(WebsocketService);
 
@@ -110,10 +110,7 @@ export class DiscussionViewComponent implements OnInit, OnDestroy {
       throw new Error("send() should not be callable if content is empty");
     }
     // post the message asynchronously
-    const placeholder = this.chatRoom!.send(
-      this.content,
-      this.auth.user$.getValue()!
-    );
+    const placeholder = this.chatRoom!.send(this.content);
     // add a placeholder message while waiting for the real one
     this.messages!.unshift(placeholder);
     // scroll to the bottom and reset the input

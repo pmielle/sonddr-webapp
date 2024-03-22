@@ -6,9 +6,9 @@ export class ChatRoom {
   ws: WebSocket;
   user$: BehaviorSubject<User|undefined>;
 
-  constructor(ws: WebSocket, user$: BehaviorSubject<User|undefined>) {
+  constructor(ws: WebSocket, user: BehaviorSubject<User|undefined>) {
     this.ws = ws;
-    this.user$ = user$;
+    this.user$ = user;
   }
 
   listen(): Observable<Message[]|Change<Message>> {
@@ -27,9 +27,9 @@ export class ChatRoom {
     });
   }
 
-  send(message: string, user: User) {
+  send(message: string) {
     this.ws.send(message);
-    return this._makePlaceholderMessage(message, user);
+    return this._makePlaceholderMessage(message);
   }
 
   delete(messageId: string) {
@@ -39,12 +39,12 @@ export class ChatRoom {
 
   // private
   // --------------------------------------------
-  _makePlaceholderMessage(content: string, user: User): Message {
+  _makePlaceholderMessage(content: string): Message {
     return {
       id: placeholder_id,
       discussionId: placeholder_id,
       content: content,
-      author: user,
+      author: this.user$.getValue()!,
       date: new Date(),
       deleted: false,
     }

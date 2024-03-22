@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { Discussion, User } from 'sonddr-shared';
-import { AuthService } from 'src/app/services/auth.service';
 import { TimeService } from 'src/app/services/time.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-discussion',
@@ -12,7 +12,7 @@ export class DiscussionComponent {
 
   // dependencies
   // --------------------------------------------
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
   time = inject(TimeService);
 
   // I/O
@@ -25,8 +25,8 @@ export class DiscussionComponent {
     if (!this.discussion) { return undefined; }
     if (!loggedInUser) { return undefined; }
     let otherUsers = this.discussion.users.filter(u => u.id !== loggedInUser.id);
-    if (!otherUsers.length) { 
-      throw new Error(`Failed to find another user for discussion ${this.discussion.id}`); 
+    if (!otherUsers.length) {
+      throw new Error(`Failed to find another user for discussion ${this.discussion.id}`);
     }
     if (otherUsers.length > 1) {
       console.warn("Display of more than 1 other user is not yet supported: using the first one");

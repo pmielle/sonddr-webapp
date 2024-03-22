@@ -4,9 +4,9 @@ import { Subscription } from 'rxjs';
 import { Goal, Idea } from 'sonddr-shared';
 import { SortBy } from 'src/app/components/idea-list/idea-list.component';
 import { HttpService } from 'src/app/services/http.service';
-import { AuthService } from 'src/app/services/auth.service';
 import { ColorService } from 'src/app/services/color.service';
 import { ScreenSizeService } from 'src/app/services/screen-size.service';
+import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-goal-view',
@@ -21,7 +21,7 @@ export class GoalViewComponent implements OnInit, OnDestroy {
   http = inject(HttpService);
   screen = inject(ScreenSizeService);
   color = inject(ColorService);
-  auth = inject(AuthService);
+  userData = inject(UserDataService);
 
   // attributes
   // --------------------------------------------
