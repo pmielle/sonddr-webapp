@@ -92,7 +92,8 @@ export class IdeaViewComponent implements OnDestroy {
   }
 
   chooseCover() {
-    return this.idea?.cover ? `url(${this.http.getImageUrl(this.idea.cover)}` : "";
+    const gradient = 'var(--cover-gradient)';
+    return this.idea?.cover ? `${gradient}, url(${this.http.getImageUrl(this.idea.cover)}` : gradient;
   }
 
   upvoteComment(commentId: string) {

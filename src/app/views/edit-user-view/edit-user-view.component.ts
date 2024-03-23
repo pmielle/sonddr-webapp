@@ -86,6 +86,11 @@ export class EditUserViewComponent {
 
   // methods
   // --------------------------------------------
+  chooseCover() {
+    const gradient = 'var(--cover-gradient)';
+    return this.coverPreview ? `${gradient}, url(${this.coverPreview})` : gradient;
+  }
+
   setupEdit(user: User) {
     this.name = user.name;
     this.editor.setContent(user.bio);

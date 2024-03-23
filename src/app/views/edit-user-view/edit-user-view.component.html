@@ -6,7 +6,7 @@
 
   <div id="cover">
 
-    <div id="cover-background" class="bg cover" [style.backgroundImage]="coverPreview ? 'url('+coverPreview+')' : ''"
+    <div id="cover-background" class="bg cover" [style.backgroundImage]="chooseCover()"
       [class.lowkey]="coverPreview"></div>
 
     <div id="upload">

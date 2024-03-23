@@ -106,6 +106,11 @@ export class AddViewComponent {
 
   // methods
   // --------------------------------------------
+  chooseCover() {
+    const gradient = 'var(--cover-gradient)';
+    return this.coverPreview ? `${gradient}, url(${this.coverPreview})` : gradient;
+  }
+
   setupEdit(idea: Idea) {
     this.title = idea.title;
     idea.goals.forEach(g => this.selectGoal(g));

@@ -73,7 +73,8 @@ export class UserViewComponent {
   // methods
   // --------------------------------------------
   chooseCover() {
-    return this.user?.cover ? `url(${this.http.getImageUrl(this.user.cover)}` : "";
+    const gradient = 'var(--cover-gradient)';
+    return this.user?.cover ? `${gradient}, url(${this.http.getImageUrl(this.user.cover)}` : gradient;
   }
 
   async onEditClick() {
