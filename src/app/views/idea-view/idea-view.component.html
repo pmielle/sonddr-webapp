@@ -12,7 +12,7 @@
   </app-top-bar>
 
   <div id="cover">
-    <div id="cover-background" class="bg cover" [style.backgroundImage]="chooseCover()"></div>
+    <div id="cover-background" class="bg cover" [style.backgroundImage]="chooseCover()" [appOpenImage]="idea?.cover"></div>
 
     <div id="bottom-strip" class="flex gap justify-start">
       @for (g of idea?.goals; track g.id) {

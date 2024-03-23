@@ -51,6 +51,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { AddExternalLinkPopupComponent } from './components/add-external-link-popup/add-external-link-popup.component';
 import { ExternalLinksComponent } from './components/external-links/external-links.component';
 import { EditUserViewComponent } from './views/edit-user-view/edit-user-view.component';
+import { OpenImageDirective } from './directives/open-image.directive';
 
 
 @NgModule({
@@ -94,6 +95,7 @@ import { EditUserViewComponent } from './views/edit-user-view/edit-user-view.com
     AddExternalLinkPopupComponent,
     ExternalLinksComponent,
     EditUserViewComponent,
+    OpenImageDirective,
   ],
   imports: [
     BrowserModule,
